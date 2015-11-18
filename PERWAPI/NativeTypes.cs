@@ -105,8 +105,10 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class NativeArray : NativeType
     {
-        NativeType elemType;
-        uint len = 0, parNum = 0, elemMult = 1;
+        readonly NativeType elemType;
+        readonly uint len = 0;
+        readonly uint parNum = 0;
+        readonly uint elemMult = 1;
         internal static readonly byte ArrayTag = 0x2A;
 
         /*-------------------- Constructors ---------------------------------*/

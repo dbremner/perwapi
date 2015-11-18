@@ -38,7 +38,7 @@ namespace QUT.PERWAPI
         private Stream outStream;
         private Assembly thisAssembly;
         PEWriter output;
-        MetaDataOut metaData;
+        readonly MetaDataOut metaData;
 
         System.IO.FileStream unmanagedResources;   // Unmanaged resources read from a file.
 
@@ -46,7 +46,7 @@ namespace QUT.PERWAPI
         internal MetaDataTables metaDataTables;
         internal PEFileVersionInfo versionInfo;
 
-        private Dictionary<string, AssemblyRef> asmRefDict = new Dictionary<string, AssemblyRef>();
+        private readonly Dictionary<string, AssemblyRef> asmRefDict = new Dictionary<string, AssemblyRef>();
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -530,7 +530,7 @@ namespace QUT.PERWAPI
     internal class PEFileVersionInfo
     {
 
-        private static char[] nulls = { '\0' };
+        private static readonly char[] nulls = { '\0' };
         internal bool fromExisting;
         internal ushort characteristics;
         internal bool isDLL;

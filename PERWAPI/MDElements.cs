@@ -239,9 +239,10 @@ namespace QUT.PERWAPI
     /// </summary>
     public class GenericParamConstraint : MetaDataElement
     {
-        uint parentIx, constraintIx;
+        readonly uint parentIx;
+        readonly uint constraintIx;
         GenericParam parent;
-        Type constraint;
+        readonly Type constraint;
         // Class constraint;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -293,10 +294,12 @@ namespace QUT.PERWAPI
     public class ImplMap : MetaDataElement
     {
         private static readonly ushort NoMangle = 0x01;
-        ushort flags;
+        readonly ushort flags;
         MethodDef meth;
-        string importName;
-        uint iNameIx, scopeIx = 0, memForIndex = 0;
+        readonly string importName;
+        uint iNameIx;
+        readonly uint scopeIx = 0;
+        readonly uint memForIndex = 0;
         ModuleRef importScope;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -531,7 +534,8 @@ namespace QUT.PERWAPI
     {
         ClassDef theClass;
         Class theInterface;
-        uint classIx = 0, interfacesIndex = 0;
+        readonly uint classIx = 0;
+        readonly uint interfacesIndex = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -607,7 +611,8 @@ namespace QUT.PERWAPI
         string mrName;
         MetaDataElement impl;  // can be AssemblyRef, ResourceFile or ModuleFile
         uint fileOffset = 0;
-        uint nameIx = 0, implIx = 0;
+        uint nameIx = 0;
+        readonly uint implIx = 0;
         uint flags = 0;
         PEFile pefile;
         byte[] resourceBytes;
@@ -769,8 +774,11 @@ namespace QUT.PERWAPI
     /// </summary>
     public class MapElem : MetaDataElement
     {
-        ClassDef theClass, parent;
-        uint elemIx, classIx, endIx = 0;
+        ClassDef theClass;
+        readonly ClassDef parent;
+        readonly uint elemIx;
+        readonly uint classIx;
+        uint endIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -900,7 +908,9 @@ namespace QUT.PERWAPI
     {
         ClassDef parent;
         Method header, body;
-        uint classIx = 0, methBodyIx = 0, methDeclIx = 0;
+        readonly uint classIx = 0;
+        readonly uint methBodyIx = 0;
+        readonly uint methDeclIx = 0;
         bool resolved = true;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -1035,10 +1045,11 @@ namespace QUT.PERWAPI
     /// </summary>
     public class MethodSemantics : MetaDataElement
     {
-        MethodType type;
+        readonly MethodType type;
         MethodDef meth;
         Feature eventOrProp;
-        uint methIx = 0, assocIx = 0;
+        readonly uint methIx = 0;
+        readonly uint assocIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -1307,8 +1318,9 @@ namespace QUT.PERWAPI
     internal class ConstantElem : MetaDataElement
     {
         MetaDataElement parent;
-        Constant cValue;
-        uint valIx = 0, parentIx = 0;
+        readonly Constant cValue;
+        uint valIx = 0;
+        readonly uint parentIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -1383,10 +1395,11 @@ namespace QUT.PERWAPI
     /// </summary>
     public class DeclSecurity : MetaDataElement
     {
-        SecurityAction action;
+        readonly SecurityAction action;
         MetaDataElement parent;
-        uint parentIx = 0, permissionIx;
-        byte[] permissionSet;
+        readonly uint parentIx = 0;
+        uint permissionIx;
+        readonly byte[] permissionSet;
 
         /*-------------------- Constructors ---------------------------------*/
 

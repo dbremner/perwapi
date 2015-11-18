@@ -41,7 +41,7 @@ using System.Reflection; // For the assembly attributes
 //
 namespace QUT.PERWAPI {
   internal class MetaDataTables {
-    private TableRow[][] tables;
+    private readonly TableRow[][] tables;
 
     internal MetaDataTables(TableRow[][] tabs) {
       tables = tabs;
@@ -221,14 +221,14 @@ namespace QUT.PERWAPI {
   /// </summary>
   internal class MetaDataStream : BinaryWriter {
     private static readonly uint StreamHeaderSize = 8;
-    private static uint maxSmlIxSize = 0xFFFF;
+    private static readonly uint maxSmlIxSize = 0xFFFF;
 
     private uint start = 0;
     uint size = 0, tide = 1;
     bool largeIx = false;
-    uint sizeOfHeader;
+      readonly uint sizeOfHeader;
     internal char[] name;
-    Hashtable htable = new Hashtable();
+      readonly Hashtable htable = new Hashtable();
 
     internal MetaDataStream(char[] name, bool addInitByte)
       : base(new MemoryStream()) {

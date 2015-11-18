@@ -542,7 +542,8 @@ namespace QUT.PERWAPI
     public class FieldLayout : MetaDataElement
     {
         FieldDef field;
-        uint offset, fieldIx = 0;
+        readonly uint offset;
+        readonly uint fieldIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

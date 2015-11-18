@@ -132,7 +132,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ResourceFile : FileRef
     {
-        static ArrayList files = new ArrayList();
+        static readonly ArrayList files = new ArrayList();
 
         /*-------------------- Constructors ---------------------------------*/
 

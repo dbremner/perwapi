@@ -74,7 +74,7 @@ namespace QUT.PERWAPI
     {
         protected bool fatFormat = false;
         protected ushort flags = 0;
-        ArrayList handlers = new ArrayList();
+        readonly ArrayList handlers = new ArrayList();
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -197,7 +197,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class Catch : HandlerBlock
     {
-        Class exceptType;
+        readonly Class exceptType;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -236,7 +236,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class Filter : HandlerBlock
     {
-        CILLabel filterLabel;
+        readonly CILLabel filterLabel;
 
         /*-------------------- Constructors ---------------------------------*/
 

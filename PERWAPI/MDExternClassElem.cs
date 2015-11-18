@@ -31,9 +31,12 @@ namespace QUT.PERWAPI
     internal class ExternClass : MetaDataElement
     {
         MetaDataElement implementation;
-        uint flags, typeDefId = 0;
-        uint implIx = 0, nameIx = 0, nameSpaceIx = 0;
-        string nameSpace, name;
+        readonly uint flags;
+        uint typeDefId = 0;
+        readonly uint implIx = 0;
+        uint nameIx = 0, nameSpaceIx = 0;
+        readonly string nameSpace;
+        readonly string name;
 
         /*-------------------- Constructors ---------------------------------*/
 

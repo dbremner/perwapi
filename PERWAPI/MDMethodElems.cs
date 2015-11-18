@@ -603,7 +603,7 @@ namespace QUT.PERWAPI
         private static readonly int DefaultMaxStackDepth = 8;
 
         CILInstructions code;
-        uint rva;
+        readonly uint rva;
         Param[] parList;
         Local[] locals;
         bool initLocals;

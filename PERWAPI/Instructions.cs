@@ -72,7 +72,7 @@ namespace QUT.PERWAPI {
     int numReplace = 0;
     uint codeSize = 0, exceptSize = 0;
     bool tinyFormat, fatExceptionFormat = false, inserting = false;
-    MethodDef thisMeth;
+      readonly MethodDef thisMeth;
 
     internal Scope currentScope;
 
@@ -1433,7 +1433,7 @@ namespace QUT.PERWAPI {
       internal int DeltaDistance;
       internal int MaxDepth;
       internal CILLabel EntryLabel;
-      internal ArrayList NextBlocks = new ArrayList(); // List of CodeBlock objects
+      internal readonly ArrayList NextBlocks = new ArrayList(); // List of CodeBlock objects
       // internal int Visits;
       internal int LastVisitEntryDepth;
       internal bool RequireEmptyEntry;
@@ -1589,7 +1589,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class CILByte : CILInstruction {
-    byte byteVal;
+      readonly byte byteVal;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1708,7 +1708,7 @@ namespace QUT.PERWAPI {
   /**************************************************************************/
   public class IntInstr : Instr {
     int val;
-    bool byteNum;
+      readonly bool byteNum;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1752,7 +1752,7 @@ namespace QUT.PERWAPI {
   /**************************************************************************/
   public class UIntInstr : Instr {
     uint val;
-    bool byteNum;
+      readonly bool byteNum;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1982,9 +1982,11 @@ namespace QUT.PERWAPI {
   /// Defines a line instruction.
   /// </summary>
   public class Line : DebugInst {
-    private static uint MaxCol = 100;
-    uint startLine, startCol, endLine, endCol;
-    bool hasEnd = false;
+    private static readonly uint MaxCol = 100;
+      readonly uint startLine;
+      readonly uint startCol;
+      uint endLine, endCol;
+      bool hasEnd = false;
     internal SourceFile sourceFile;
 
     /*-------------------- Constructors ---------------------------------*/
@@ -2172,10 +2174,10 @@ namespace QUT.PERWAPI {
   /// Used to declare constants that exist in a given scope.
   /// </summary>
   public class ConstantBinding : DebugInst {
-    private string _name;
-    private object _value;
-    private Type _type;
-    private uint _token;
+    private readonly string _name;
+    private readonly object _value;
+    private readonly Type _type;
+    private readonly uint _token;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2257,8 +2259,8 @@ namespace QUT.PERWAPI {
   /**************************************************************************/
   public class SwitchInstr : Instr {
     CILLabel[] cases;
-    uint numCases = 0;
-    int[] targets;
+      readonly uint numCases = 0;
+      readonly int[] targets;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2308,8 +2310,8 @@ namespace QUT.PERWAPI {
 
 
   public class Scope {
-    private ArrayList _localBindings = new ArrayList();
-    private ArrayList _constantBindings = new ArrayList();
+    private readonly ArrayList _localBindings = new ArrayList();
+    private readonly ArrayList _constantBindings = new ArrayList();
     internal Scope _parent;
     internal MethodDef _thisMeth;
 

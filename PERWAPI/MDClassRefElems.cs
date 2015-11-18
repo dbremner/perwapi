@@ -586,7 +586,7 @@ namespace QUT.PERWAPI
     /// </summary>
     internal class SystemClass : ClassRef
     {
-        PrimitiveType elemType;
+        readonly PrimitiveType elemType;
         internal bool added = false;
 
         internal SystemClass(AssemblyRef paren, PrimitiveType eType)

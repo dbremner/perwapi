@@ -31,7 +31,8 @@ namespace QUT.PERWAPI
     {
         MetaDataElement field;
         NativeType nt;
-        uint ntIx, parentIx;
+        uint ntIx;
+        readonly uint parentIx;
 
         /*-------------------- Added by Carlo Kok ---------------------------------*/
 

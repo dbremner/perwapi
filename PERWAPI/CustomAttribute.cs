@@ -33,7 +33,9 @@ namespace QUT.PERWAPI
         private static readonly int initSize = 5;
         MetaDataElement parent;
         Method type;
-        uint valIx, parentIx, typeIx;
+        uint valIx;
+        readonly uint parentIx;
+        readonly uint typeIx;
         Constant[] argVals, vals;
         byte[] byteVal;
         ushort numNamed = 0;

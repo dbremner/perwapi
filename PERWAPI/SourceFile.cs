@@ -28,7 +28,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class SourceFile
     {
-        static ArrayList sourceFiles = new ArrayList();
+        static readonly ArrayList sourceFiles = new ArrayList();
         internal string name;
         internal Guid language, vendor, document;
 

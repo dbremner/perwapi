@@ -33,14 +33,14 @@ namespace QUT.PERWAPI
         uint numStreams = 5;
         uint tildeTide = 0, tildePadding = 0, tildeStart = 0;
         uint numTables = 0, resourcesSize = 0;
-        ArrayList byteCodes = new ArrayList();
+        readonly ArrayList byteCodes = new ArrayList();
         uint codeSize = 0, byteCodePadding = 0, metaDataSize = 0;
         internal PEWriter output;
         private byte heapSizes = 0;
         MetaDataElement entryPoint;
         long mdStart;
         ArrayList resources;
-        private ArrayList[] tables = new ArrayList[NumMetaDataTables];
+        private readonly ArrayList[] tables = new ArrayList[NumMetaDataTables];
 
         // Allow the debug mode to be set.
         public bool Debug = false;
@@ -60,7 +60,7 @@ namespace QUT.PERWAPI
             (method as MethodDef).TraverseCode(this);
         }
 
-        Hashtable debugsigs = new Hashtable();
+        readonly Hashtable debugsigs = new Hashtable();
 
         /// <summary>
         /// Get the debug signature for a local.

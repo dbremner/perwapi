@@ -32,7 +32,7 @@ namespace QUT.PERWAPI
         ClassDef parent;
         ushort packSize = 0;
         uint classSize = 0;
-        uint parentIx = 0;
+        readonly uint parentIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

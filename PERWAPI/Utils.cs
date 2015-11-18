@@ -257,8 +257,8 @@ namespace QUT.PERWAPI
     /// </summary>
     public class InstructionException : System.Exception
     {
-        IType iType;
-        uint op;
+        readonly IType iType;
+        readonly uint op;
 
         internal InstructionException(IType iType, uint op)
         {

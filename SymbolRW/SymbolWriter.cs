@@ -37,7 +37,7 @@ using System.Diagnostics.SymbolStore;
 
 namespace QUT.Symbols {
   public class SymbolWriter {
-    private ISymUnmanagedWriter2 writer;
+    private readonly ISymUnmanagedWriter2 writer;
 
     public SymbolWriter(string binaryFile, string pdbFile) {
       object dispenser = null;

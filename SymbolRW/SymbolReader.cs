@@ -37,7 +37,7 @@ using System.Diagnostics.SymbolStore;
 
 namespace QUT.Symbols {
   public class SymbolReader : ISymbolReader {
-    private ISymUnmanagedReader private_reader;
+    private readonly ISymUnmanagedReader private_reader;
 
     /// <summary>
     /// Constructor for SymbolReader.
@@ -243,7 +243,7 @@ namespace QUT.Symbols {
   /// </summary>
   public class SymbolMethod : ISymbolMethod {
     private const int INVALID = -1;
-    private ISymUnmanagedMethod private_method;
+    private readonly ISymUnmanagedMethod private_method;
 
     internal SymbolMethod(ISymUnmanagedMethod unMeth) {
       private_method = unMeth;
@@ -383,7 +383,7 @@ namespace QUT.Symbols {
   /// come from metadata.
   /// </summary>
   public class SymbolScope : ISymbolScope {
-    private ISymUnmanagedScope private_scope;
+    private readonly ISymUnmanagedScope private_scope;
 
     internal SymbolScope(ISymUnmanagedScope unScope) {
       private_scope = unScope;
@@ -488,7 +488,7 @@ namespace QUT.Symbols {
   /// Managed wrapper for ISymUnmanagedNamespace
   /// </summary>
   public class SymbolNamespace : ISymbolNamespace {
-    private ISymUnmanagedNamespace private_namespace;
+    private readonly ISymUnmanagedNamespace private_namespace;
 
     internal SymbolNamespace(ISymUnmanagedNamespace unNmsp) {
       private_namespace = unNmsp;
@@ -534,7 +534,7 @@ namespace QUT.Symbols {
   /// Managed wrapper for ISymUnmanagedDocument
   /// </summary>
   public class SymbolDocument : ISymbolDocument {
-    private ISymUnmanagedDocument private_document;
+    private readonly ISymUnmanagedDocument private_document;
 
     /// <summary>
     /// Constructor for SymbolDocument
@@ -682,7 +682,7 @@ namespace QUT.Symbols {
   /// Managed wrapper for ISymUnmanagedVariable
   /// </summary>
   public class SymbolVariable : ISymbolVariable {
-    private ISymUnmanagedVariable private_variable;
+    private readonly ISymUnmanagedVariable private_variable;
 
     internal SymbolVariable(ISymUnmanagedVariable unVar) {
       private_variable = unVar;

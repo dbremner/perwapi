@@ -79,7 +79,7 @@ namespace QUT.PERWAPI
       public ushort MinVer { get { return minver; } set { minver = value; } }
 
       //private ArrayList subItems = new ArrayList();
-      private List<PEResourceElement> elements = new List<PEResourceElement>();
+      private readonly List<PEResourceElement> elements = new List<PEResourceElement>();
 
       public int Count() { return elements.Count; }
 

@@ -182,7 +182,7 @@ namespace QUT.PERWAPI
     public class Event : Feature
     {
         Type eventType;
-        uint typeIx = 0;
+        readonly uint typeIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

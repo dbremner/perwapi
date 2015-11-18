@@ -41,11 +41,11 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PDBWriter
     {
-        private ArrayList _docWriters = new ArrayList();
-        private ArrayList methods = new ArrayList();
+        private readonly ArrayList _docWriters = new ArrayList();
+        private readonly ArrayList methods = new ArrayList();
         private Method currentMethod = null;
         private Scope currentScope = null;
-        private string filename;
+        private readonly string filename;
         private byte[] debugInfo;
         private SymbolToken entryPoint;
 
@@ -448,11 +448,11 @@ namespace QUT.PERWAPI
         /// </summary>
         private class SequencePointList
         {
-            internal ArrayList offsets = new ArrayList();
-            internal ArrayList lines = new ArrayList();
-            internal ArrayList cols = new ArrayList();
-            internal ArrayList endLines = new ArrayList();
-            internal ArrayList endCols = new ArrayList();
+            internal readonly ArrayList offsets = new ArrayList();
+            internal readonly ArrayList lines = new ArrayList();
+            internal readonly ArrayList cols = new ArrayList();
+            internal readonly ArrayList endLines = new ArrayList();
+            internal readonly ArrayList endCols = new ArrayList();
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace QUT.PERWAPI
         {
             internal SymbolToken Token;
             internal Scope Scope = null;
-            internal Hashtable SequencePointList = new Hashtable();
+            internal readonly Hashtable SequencePointList = new Hashtable();
         }
 
         /// <summary>
@@ -487,9 +487,9 @@ namespace QUT.PERWAPI
             internal int OffsetStart;
             internal int OffsetEnd;
             internal Scope ParentScope = null;
-            internal ArrayList Locals = new ArrayList();
+            internal readonly ArrayList Locals = new ArrayList();
             internal ArrayList Constants = new ArrayList();
-            internal ArrayList ChildScopes = new ArrayList();
+            internal readonly ArrayList ChildScopes = new ArrayList();
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace QUT.PERWAPI
     {
         //private static Guid IID_IMetaDataImport = new Guid("7DAC8207-D3AE-4c75-9B67-92801A497D44");
         //private static Guid CLSID_CorSymBinder = new Guid("AA544D41-28CB-11d3-BD22-0000F80849BD");
-        private ISymbolReader _reader;
+        private readonly ISymbolReader _reader;
         private string _fileName;
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PDBMethod
     {
-        private ISymbolMethod _meth;
+        private readonly ISymbolMethod _meth;
 
         /// <summary>
         /// Create a new PDB method object from an ISymbolMethod object.
@@ -609,7 +609,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PDBScope
     {
-        private ISymbolScope _scope;
+        private readonly ISymbolScope _scope;
 
         /// <summary>
         /// Create a new scope from a ISymbolScope
@@ -779,7 +779,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PDBVariable
     {
-        private ISymbolVariable _var;
+        private readonly ISymbolVariable _var;
 
         /// <summary>
         /// Create a new PDBVariable object from an ISymbolVariable object.
@@ -819,7 +819,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PDBDocument
     {
-        private ISymbolDocument _doc;
+        private readonly ISymbolDocument _doc;
 
         /// <summary>
         /// Create a new document object from an existing document.
@@ -881,8 +881,8 @@ namespace QUT.PERWAPI
 
     internal class MergeBuffer
     {
-        private CILInstruction[] _buffer;
-        private ArrayList _debugBuffer;
+        private readonly CILInstruction[] _buffer;
+        private readonly ArrayList _debugBuffer;
         private int _current;
 
         public MergeBuffer(CILInstruction[] buffer)

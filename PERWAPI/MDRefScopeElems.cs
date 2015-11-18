@@ -734,7 +734,7 @@ namespace QUT.PERWAPI
     {
         internal static MSCorLib mscorlib = new MSCorLib();
         internal SystemClass ObjectClass;
-        private ClassRef valueType;
+        private readonly ClassRef valueType;
 
         internal MSCorLib()
             : base("mscorlib")
@@ -776,7 +776,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ModuleRef : ReferenceScope
     {
-        ArrayList exportedClasses = new ArrayList();
+        readonly ArrayList exportedClasses = new ArrayList();
         internal ModuleFile modFile;
         internal Module defOf;
         internal bool ismscorlib = false;

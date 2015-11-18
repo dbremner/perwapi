@@ -50,10 +50,10 @@ namespace QUT.PERWAPI
         uint extendsIx;
         internal ClassRef refOf;
         internal uint eventIx = 0, propIx = 0;
-        ArrayList events = new ArrayList();
-        ArrayList properties = new ArrayList();
+        readonly ArrayList events = new ArrayList();
+        readonly ArrayList properties = new ArrayList();
         ArrayList interfaces = new ArrayList();
-        ArrayList methodImpls = new ArrayList();
+        readonly ArrayList methodImpls = new ArrayList();
 
         /*-------------------- Constructors ---------------------------------*/
 

@@ -32,8 +32,9 @@ namespace QUT.PERWAPI
         private Section text, sdata, rsrc = null;
         ArrayList data;  // Used for accumulating data for the .sdata Section.
         PEResourceDirectory unmanagedResourceRoot;
-        BinaryWriter reloc = new BinaryWriter(new MemoryStream());
-        uint dateStamp = 0, codeStart = 0;
+        readonly BinaryWriter reloc = new BinaryWriter(new MemoryStream());
+        readonly uint dateStamp = 0;
+        uint codeStart = 0;
         uint numSections = 2; // always have .text  and .reloc sections
         internal PEFileVersionInfo verInfo;
         //internal bool delaySign;
@@ -44,8 +45,9 @@ namespace QUT.PERWAPI
         uint debugOffset = 0, debugSize = 0, debugRVA = 0;
         long debugBytesStartOffset = 0;
         MetaDataOut metaData;
-        char[] runtimeEngine = FileImage.runtimeEngineName.ToCharArray(), hintNameTable;
-        bool closeStream = true;
+        readonly char[] runtimeEngine = FileImage.runtimeEngineName.ToCharArray();
+        char[] hintNameTable;
+        readonly bool closeStream = true;
         int debugBytesSize = 25; // NOTE: I don't know that this should be 25 but the debug bytes size seems to be 25 plus the size of the PDB filename. AKB 06-01-2007
         internal PDBWriter pdbWriter;
 

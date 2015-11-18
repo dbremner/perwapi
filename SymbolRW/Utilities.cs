@@ -48,14 +48,14 @@ namespace QUT.Symbols {
 
   [StructLayout(LayoutKind.Sequential)]
   public struct ImageDebugDirectory {
-    private int Characteristics;
-    private int TimeDateStamp;
-    private short MajorVersion;
-    private short MinorVersion;
-    private int Type;
-    private int SizeOfData;
-    private int AddressOfRawData;
-    private int PointerToRawData;
+    private readonly int Characteristics;
+    private readonly int TimeDateStamp;
+    private readonly short MajorVersion;
+    private readonly short MinorVersion;
+    private readonly int Type;
+    private readonly int SizeOfData;
+    private readonly int AddressOfRawData;
+    private readonly int PointerToRawData;
     // public override string ToString();
   }
 

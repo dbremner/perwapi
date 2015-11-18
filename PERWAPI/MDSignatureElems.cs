@@ -235,7 +235,7 @@ namespace QUT.PERWAPI
     {
         internal static readonly byte LocalSigByte = 0x7;
         Local[] locals;
-        bool resolved = true;
+        readonly bool resolved = true;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -304,8 +304,8 @@ namespace QUT.PERWAPI
     public class DebugLocalSig : Signature
     {
         internal static readonly byte LocalSigByte = 0x6;
-        bool resolved = true;
-        byte[] loc;
+        readonly bool resolved = true;
+        readonly byte[] loc;
 
         /*-------------------- Constructors ---------------------------------*/
 

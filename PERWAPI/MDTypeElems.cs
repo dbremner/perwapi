@@ -228,8 +228,8 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PrimitiveType : TypeSpec
     {
-        private string name;
-        private int systemTypeIndex;
+        private readonly string name;
+        private readonly int systemTypeIndex;
         internal static int NumSystemTypes = 18;
 
         public static readonly PrimitiveType Void = new PrimitiveType(0x01, "Void", 0);
@@ -324,16 +324,18 @@ namespace QUT.PERWAPI
     {
         private static readonly byte VAR = 0x13;
         private static readonly byte MVAR = 0x1E;
-        ushort flags, index, kind = 0;
-        uint parentIx, nameIx;
-        string name;
+        ushort flags, index;
+        readonly ushort kind = 0;
+        readonly uint parentIx;
+        uint nameIx;
+        readonly string name;
         MetaDataElement parent;
 
       // Users add and remove constraintTypes to this list.
       // The constraints list is used during metadata output
       // and contains objects of GenericParamConstraint type.
-        private List<Type> constraintTypes = new List<Type>();
-        private List<GenericParamConstraint> constraints = new List<GenericParamConstraint>();
+        private readonly List<Type> constraintTypes = new List<Type>();
+        private readonly List<GenericParamConstraint> constraints = new List<GenericParamConstraint>();
 
         internal static bool extraField = true;
 
@@ -620,7 +622,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     internal class UnresolvedTypeSpec : TypeSpec
     {
-        uint blobIx;
+        readonly uint blobIx;
 
         internal UnresolvedTypeSpec(PEReader buff, int i)
             : base(0)
@@ -646,8 +648,8 @@ namespace QUT.PERWAPI
     public class GenericParTypeSpec : TypeSpec
     {
         GenericParam gPar;
-        bool isClassPar;
-        uint index;
+        readonly bool isClassPar;
+        readonly uint index;
 
         internal GenericParTypeSpec(GenericParam gPar)
             : base(gPar.GetTypeIndex())
@@ -730,9 +732,9 @@ namespace QUT.PERWAPI
     /// </summary>
     public class BoundArray : Array
     {
-        int[] lowerBounds;
-        int[] sizes;
-        uint numDims;
+        readonly int[] lowerBounds;
+        readonly int[] sizes;
+        readonly uint numDims;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -903,8 +905,8 @@ namespace QUT.PERWAPI
     public class MethPtrType : TypeSpec
     {
         // MethPtrType == FNPTR
-        Method meth;
-        MethSig mSig;
+        readonly Method meth;
+        readonly MethSig mSig;
 
         /*-------------------- Constructors ---------------------------------*/
 

@@ -36,8 +36,9 @@ namespace QUT.PERWAPI
       /// <summary>
       /// Eight characters exactly, null padded if necessary.
       /// </summary>
-        char[] name;
-        string nameString;
+      readonly char[] name;
+
+        readonly string nameString;
 
       /// <summary>
       /// Total size of the section in bytes. If this value is 
@@ -69,7 +70,7 @@ namespace QUT.PERWAPI
       /// Flags of section: code = 0x20, init-data = 0x40, un-init-data = 0x80, 
       /// execute = 0x20000000, read = 0x40000000, write = 0x80000000.
       /// </summary>
-        uint flags;
+      readonly uint flags;
 
         uint relocTide = 0;
         uint padding = 0;

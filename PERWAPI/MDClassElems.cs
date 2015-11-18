@@ -363,9 +363,9 @@ namespace QUT.PERWAPI
     /// </summary> 
     public class ClassSpec : Class
     {
-        Class genClass;
+        readonly Class genClass;
         uint sigIx;
-        private static byte GENERICINST = 0x15;
+        private static readonly byte GENERICINST = 0x15;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -535,7 +535,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ConstructedTypeSpec : Class
     {
-        TypeSpec constrType;
+        readonly TypeSpec constrType;
 
         public ConstructedTypeSpec(TypeSpec tySpec)
             : base()
