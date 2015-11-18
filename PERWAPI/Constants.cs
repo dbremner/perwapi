@@ -303,18 +303,11 @@ namespace QUT.PERWAPI
     /// </summary>
     public abstract class DataConstant : Constant
     {
-        private uint dataOffset = 0;
-
         /*-------------------- Constructors ---------------------------------*/
 
         internal DataConstant() { }
 
-        public uint DataOffset
-        {
-            get { return dataOffset; }
-            set { dataOffset = value; }
-        }
-
+        public uint DataOffset { get; set; } = 0;
     }
 
     /**************************************************************************/

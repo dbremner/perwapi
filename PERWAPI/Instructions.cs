@@ -1918,7 +1918,6 @@ namespace QUT.PERWAPI {
   public class CILLabel : CILInstruction {
     private static int labelNum = 0;
     private int num = -1;
-    private CILInstructions buffer;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1939,10 +1938,7 @@ namespace QUT.PERWAPI {
       return "Label" + num;
     }
 
-    internal CILInstructions Buffer {
-      get { return buffer; }
-      set { buffer = value; }
-    }
+    internal CILInstructions Buffer { get; set; }
 
     internal override void BuildCILInfo(CILWriter output) {
       if (num == -1) {
@@ -2174,11 +2170,6 @@ namespace QUT.PERWAPI {
   /// Used to declare constants that exist in a given scope.
   /// </summary>
   public class ConstantBinding : DebugInst {
-    private readonly string _name;
-    private readonly object _value;
-    private readonly Type _type;
-    private readonly uint _token;
-
     /*-------------------- Constructors ---------------------------------*/
 
     /// <summary>
@@ -2188,39 +2179,31 @@ namespace QUT.PERWAPI {
     /// <param name="value">The value of the constant.</param>
     /// <param name="type">The data type of the constant.</param>
     internal ConstantBinding(string name, object value, Type type, uint token) {
-      _value = value;
-      _name = name;
-      _type = type;
-      _token = token;
+      Value = value;
+      Name = name;
+      Type = type;
+      Token = token;
     }
 
     /// <summary>
     /// Value of the constant.
     /// </summary>
-    public object Value {
-      get { return _value; }
-    }
+    public object Value { get; }
 
     /// <summary>
     /// The name of the constant.
     /// </summary>
-    public string Name {
-      get { return _name; }
-    }
+    public string Name { get; }
 
     /// <summary>
     /// The data type of the constant.
     /// </summary>
-    public Type Type {
-      get { return _type; }
-    }
+    public Type Type { get; }
 
     /// <summary>
     /// The token for this constant.
     /// </summary>
-    public uint Token {
-      get { return _token; }
-    }
+    public uint Token { get; }
 
     /// <summary>
     /// Get the type signature for this constant.
@@ -2228,7 +2211,7 @@ namespace QUT.PERWAPI {
     /// <returns>A byte array of the type signature.</returns>
     public byte[] GetSig() {
       MemoryStream str = new MemoryStream();
-      _type.TypeSig(str);
+      Type.TypeSig(str);
       return str.ToArray();
     }
 

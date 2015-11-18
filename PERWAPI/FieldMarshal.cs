@@ -36,26 +36,20 @@ namespace QUT.PERWAPI
 
         /*-------------------- Added by Carlo Kok ---------------------------------*/
 
-        private SafeArrayType safeArraySubType;
-        public SafeArrayType SafeArraySubType { get { return safeArraySubType; ; } set { safeArraySubType = value; } }
+        public SafeArrayType SafeArraySubType { get; set; }
 
-        private string safeArrayUserDefinedSubType;
-        public string SafeArrayUserDefinedSubType { get { return safeArrayUserDefinedSubType; } set { safeArrayUserDefinedSubType = value; } }
+        public string SafeArrayUserDefinedSubType { get; set; }
 
         private NativeTypeIx arraySubType = (NativeTypeIx)0x50; // default, important
         public NativeTypeIx ArraySubType { get { return arraySubType; } set { arraySubType = value; } }
 
-        private int sizeConst = -1;
-        public int SizeConst { get { return sizeConst; } set { sizeConst = value; } }
+        public int SizeConst { get; set; } = -1;
 
-        private int sizeParamIndex = -1;
-        public int SizeParamIndex { get { return sizeParamIndex; } set { sizeParamIndex = value; } }
+        public int SizeParamIndex { get; set; } = -1;
 
-        private string customMarshallingType;
-        public string CustomMarshallingType { get { return customMarshallingType; } set { customMarshallingType = value; } }
+        public string CustomMarshallingType { get; set; }
 
-        private string customMarshallingCookie;
-        public string CustomMarshallingCookie { get { return customMarshallingCookie; } set { customMarshallingCookie = value; } }
+        public string CustomMarshallingCookie { get; set; }
 
         /*-------------------- Constructors ---------------------------------*/
 

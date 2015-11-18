@@ -30,25 +30,13 @@ namespace QUT.PERWAPI
   /// </summary>
     public abstract class PEResourceElement
     {
+      protected PEResourceElement() { }
 
-        private int id;
-        private string name;
+      public int Id { get; set; }
 
-        public PEResourceElement() { }
+      public string Name { get; set; }
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        protected internal abstract uint Size();
+      protected internal abstract uint Size();
 
       /// <summary>
       /// Write out the unmanaged resource data.
@@ -69,16 +57,11 @@ namespace QUT.PERWAPI
     /// as type struct _IMAGE_RESOURCE_DIRECTORY.
     /// </summary>
     public class PEResourceDirectory : PEResourceElement {
+        public uint Date { get; set; } = 0;
+        public ushort MajVer { get; set; } = 1;
+        public ushort MinVer { get; set; } = 0;
 
-      private uint date = 0;
-      private ushort majver = 1;
-      private ushort minver = 0;
-
-      public uint Date { get { return date; } set { date = value; } }
-      public ushort MajVer { get { return majver; } set { majver = value; } }
-      public ushort MinVer { get { return minver; } set { minver = value; } }
-
-      //private ArrayList subItems = new ArrayList();
+        //private ArrayList subItems = new ArrayList();
       private readonly List<PEResourceElement> elements = new List<PEResourceElement>();
 
       public int Count() { return elements.Count; }
@@ -98,10 +81,10 @@ namespace QUT.PERWAPI
         PEResourceDirectory resDirectory;
         PEResourceData resData;
 
-        int junk = reader.ReadInt32(); // Must be zero.
-        this.date = reader.ReadUInt32();    // Time stamp.
-        this.majver = reader.ReadUInt16();
-        this.minver = reader.ReadUInt16();
+          int junk = reader.ReadInt32(); // Must be zero.
+        this.Date = reader.ReadUInt32();    // Time stamp.
+        this.MajVer = reader.ReadUInt16();
+        this.MinVer = reader.ReadUInt16();
 
         int numNameEntries = reader.ReadUInt16(); // Number of named entries.
         int numIdntEntries = reader.ReadUInt16(); // Number of ID entries.
@@ -215,9 +198,9 @@ namespace QUT.PERWAPI
         uint nameOffset = currentOffset + this.dirSize;
         uint targetOffset = currentOffset + this.dirSize;
         dest.Write((uint)0); // characteristics
-        dest.Write(date);    // datetime
-        dest.Write(majver);
-        dest.Write(minver);
+        dest.Write(Date);    // datetime
+        dest.Write(MajVer);
+        dest.Write(MinVer);
         dest.Write((ushort)numNamed);
         dest.Write((ushort)numIds);
         currentOffset += HeaderSize;

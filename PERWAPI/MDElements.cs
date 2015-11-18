@@ -30,7 +30,7 @@ namespace QUT.PERWAPI
     public abstract class TableRow
     {
         internal PEReader buffer;
-        private uint row = 0;
+
         /// <summary>
         /// The index of the Meta Data Table containing this element
         /// </summary>
@@ -43,18 +43,14 @@ namespace QUT.PERWAPI
         internal TableRow(PEReader buff, uint ix, MDTable tableIx)
         {
             buffer = buff;
-            row = ix;
+            Row = ix;
             tabIx = tableIx;
         }
 
         /// <summary>
         /// The row number of this element in the Meta Data Table
         /// </summary>
-        public uint Row
-        {
-            get { return row; }
-            set { row = value; }
-        }
+        public uint Row { get; set; } = 0;
     }
 
     /****************************************************/
