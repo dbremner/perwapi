@@ -231,6 +231,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// Exception for features yet to be implemented
     /// </summary>
+    [SerializableAttribute]
     public class NotYetImplementedException : System.Exception
     {
         /// <summary>
@@ -243,6 +244,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// Error in a type signature
     /// </summary>
+    [SerializableAttribute]
     public class TypeSignatureException : System.Exception
     {
         /// <summary>
@@ -255,6 +257,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// Error with a CIL instruction
     /// </summary>
+    [SerializableAttribute]
     public class InstructionException : System.Exception
     {
         readonly IType iType;
@@ -285,6 +288,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// Error with descriptor types
     /// </summary>
+    [SerializableAttribute]
     public class DescriptorException : System.Exception
     {
 
@@ -308,6 +312,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// Error for invalid PE file
     /// </summary>
+    [SerializableAttribute]
     public class PEFileException : System.Exception
     {
         /// <summary>
@@ -320,6 +325,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// When the maximum stack depth could not be found dynamically.
     /// </summary>
+    [SerializableAttribute]
     public class CouldNotFindMaxStackDepth : System.Exception
     {
         /// <summary>
@@ -331,6 +337,7 @@ namespace QUT.PERWAPI
     /// <summary>
     /// When the stack depth is not valid for the current position.
     /// </summary>
+    [SerializableAttribute]
     public class InvalidStackDepth : System.Exception
     {
         /// <summary>
