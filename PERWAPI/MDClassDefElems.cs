@@ -1214,7 +1214,7 @@ namespace QUT.PERWAPI
         {
             output.Write(".class ");
             WriteFlags(output);
-            if ((nameSpace != null) && (nameSpace != ""))
+            if (!string.IsNullOrEmpty(nameSpace))
             {
                 output.Write(nameSpace + ".");
             }
@@ -1295,7 +1295,7 @@ namespace QUT.PERWAPI
         {
             string nameString = "";
             if (scope != null) nameString = "[" + scope.NameString() + "]";
-            if ((nameSpace != null) && (nameSpace.Length > 0)) nameString += nameSpace + ".";
+            if (!string.IsNullOrEmpty(nameSpace)) nameString += nameSpace + ".";
             nameString += name;
             return nameString;
         }

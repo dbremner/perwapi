@@ -837,7 +837,7 @@ namespace QUT.PERWAPI
         {
             get
             {
-                return _doc.Language; ;
+                return _doc.Language;
             }
         }
 
@@ -870,7 +870,7 @@ namespace QUT.PERWAPI
         {
             get
             {
-                return _doc.URL; ;
+                return _doc.URL;
             }
         }
 

@@ -78,8 +78,6 @@ namespace QUT.PERWAPI
       /// <param name="reader"></param>
       internal void PopulateResourceDirectory(PEReader reader, long baseOffset) {
         PEResourceElement resElement = null;
-        PEResourceDirectory resDirectory;
-        PEResourceData resData;
 
           int junk = reader.ReadInt32(); // Must be zero.
         this.Date = reader.ReadUInt32();    // Time stamp.
@@ -112,15 +110,21 @@ namespace QUT.PERWAPI
           this.AddElement(resElement);
         }
         // Now recurse to get subdirectories/the real data.
-        foreach (PEResourceElement elem in this.elements) {
-          if ((resDirectory = elem as PEResourceDirectory) != null) {
+        foreach (PEResourceElement elem in this.elements)
+        {
+            PEResourceDirectory resDirectory;
+            if ((resDirectory = elem as PEResourceDirectory) != null) {
             reader.BaseStream.Seek(resDirectory.offset, SeekOrigin.Begin);
             resDirectory.PopulateResourceDirectory(reader, baseOffset);
           }
-          else if ((resData = elem as PEResourceData) != null) {
-            reader.BaseStream.Seek(resData.offset, SeekOrigin.Begin);
-            resData.PopulateResourceData(reader, baseOffset);
-          }
+          else
+            {
+                PEResourceData resData;
+                if ((resData = elem as PEResourceData) != null) {
+                    reader.BaseStream.Seek(resData.offset, SeekOrigin.Begin);
+                    resData.PopulateResourceData(reader, baseOffset);
+                }
+            }
         }
       }
 

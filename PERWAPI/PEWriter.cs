@@ -624,7 +624,7 @@ namespace QUT.PERWAPI
         internal void Write3Bytes(uint val)
         {
             byte b3 = (byte)((val & FileImage.iByteMask[2]) >> 16);
-            byte b2 = (byte)((val & FileImage.iByteMask[1]) >> 8); ;
+            byte b2 = (byte)((val & FileImage.iByteMask[1]) >> 8);
             byte b1 = (byte)(val & FileImage.iByteMask[0]);
             Write(b1);
             Write(b2);

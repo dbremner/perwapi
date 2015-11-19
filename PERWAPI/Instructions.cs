@@ -2103,7 +2103,7 @@ namespace QUT.PERWAPI {
     }
 
     public override string ToString() { 
-      return String.Format("line {0}:{1}-{2}:{3}", this.startLine, this.startCol, this.endLine, this.endCol); 
+      return $"line {this.startLine}:{this.startCol}-{this.endLine}:{this.endCol}"; 
     }
   }
 

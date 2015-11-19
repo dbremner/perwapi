@@ -370,7 +370,7 @@ namespace QUT.PERWAPI {
       else {
         byte b1 = (byte)((val >> 24) | 0xC0);
         byte b2 = (byte)((val & FileImage.iByteMask[2]) >> 16);
-        byte b3 = (byte)((val & FileImage.iByteMask[1]) >> 8); ;
+        byte b3 = (byte)((val & FileImage.iByteMask[1]) >> 8);
         byte b4 = (byte)(val & FileImage.iByteMask[0]);
         Write(b1);
         Write(b2);

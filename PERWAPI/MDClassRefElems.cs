@@ -470,7 +470,7 @@ namespace QUT.PERWAPI
         {
             string nameString = "";
             if (scope != null) nameString = "[" + scope.NameString() + "]";
-            if ((nameSpace != null) && (nameSpace.Length > 0)) nameString += nameSpace + ".";
+            if (!string.IsNullOrEmpty(nameSpace)) nameString += nameSpace + ".";
             nameString += name;
             return nameString;
         }

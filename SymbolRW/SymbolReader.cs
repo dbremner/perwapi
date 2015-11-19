@@ -47,24 +47,24 @@ namespace QUT.Symbols {
     /// </summary>
     /// <param name="filename"></param>
     public SymbolReader(string filename) {
-      object ppb = null;
-      object pUnk = null;
-      object pBnd = null;
-      IntPtr importer = IntPtr.Zero;
-      object retVal = null;
+        IntPtr importer = IntPtr.Zero;
 
-      try {
-        OLE32.CoCreateInstance(ref XGuid.dispenserClassID, null, 1, ref XGuid.dispenserIID, out ppb);
-        OLE32.CoCreateInstance(ref XGuid.binderCLSID, null, 1, ref XGuid.binderIID, out pBnd);
+        try {
+            object ppb = null;
+            OLE32.CoCreateInstance(ref XGuid.dispenserClassID, null, 1, ref XGuid.dispenserIID, out ppb);
+          object pBnd = null;
+          OLE32.CoCreateInstance(ref XGuid.binderCLSID, null, 1, ref XGuid.binderIID, out pBnd);
 
         // Get the metadata dispenser from mscoree.dll
         Util.ComCheck(ppb != null, "Failed to create metadata dispenser");
 
-        ((IMetaDataDispenserSubset)ppb).OpenScope(filename, 0, ref XGuid.importerIID, out pUnk);
+          object pUnk = null;
+          ((IMetaDataDispenserSubset)ppb).OpenScope(filename, 0, ref XGuid.importerIID, out pUnk);
         Util.ComCheck(pUnk != null, "Failed to open scope");
 
         importer = Marshal.GetComInterfaceForObject(pUnk, typeof(IMetadataImport));
-        ((ISymUnmanagedBinder)pBnd).GetReaderForFile(importer, filename, null, out retVal);
+          object retVal = null;
+          ((ISymUnmanagedBinder)pBnd).GetReaderForFile(importer, filename, null, out retVal);
         private_reader = (ISymUnmanagedReader)retVal;
       }
       catch (Exception x) {
@@ -501,10 +501,9 @@ namespace QUT.Symbols {
     //     The current namespace.
     public string Name {
       get {
-        StringBuilder bldr;
-        int nmLen = 0;
+          int nmLen = 0;
         private_namespace.GetName(0, out nmLen, null);
-        bldr = new StringBuilder(nmLen);
+        var bldr = new StringBuilder(nmLen);
         private_namespace.GetName(nmLen, out nmLen, bldr);
         return bldr.ToString();
       }
@@ -761,10 +760,9 @@ namespace QUT.Symbols {
     /// </summary>
     public string Name {
       get {
-        StringBuilder bldr;
         int nmLen = 0;
         private_variable.GetName(0, out nmLen, null);
-        bldr = new StringBuilder(nmLen);
+        var bldr = new StringBuilder(nmLen);
         private_variable.GetName(nmLen, out nmLen, bldr);
         return bldr.ToString();
       }

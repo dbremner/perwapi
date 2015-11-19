@@ -31,7 +31,7 @@ namespace QUT.PERWAPI
 
         /*-------------------- Constructors ---------------------------------*/
 
-        public CodeBlock(CILLabel start, CILLabel end)
+        protected CodeBlock(CILLabel start, CILLabel end)
         {
             this.start = start;
             this.end = end;
@@ -172,7 +172,7 @@ namespace QUT.PERWAPI
 
         /*-------------------- Constructors ---------------------------------*/
 
-        public HandlerBlock(CILLabel start, CILLabel end) : base(start, end) { }
+        protected HandlerBlock(CILLabel start, CILLabel end) : base(start, end) { }
 
         internal virtual ushort GetFlag()
         {
