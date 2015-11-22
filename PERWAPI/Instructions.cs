@@ -1206,7 +1206,7 @@ namespace QUT.PERWAPI {
               block.NextBlocks.Add(codeBlocks[j + 1]);
 
           // Set the code block we are jumping to
-          CodeBlock cb = null;
+          CodeBlock cb;
           cbTable.TryGetValue(branchInst.GetDest(), out cb);
           if (cb == null)
             throw new Exception("Missing Branch Label");
@@ -1225,7 +1225,7 @@ namespace QUT.PERWAPI {
           foreach (CILLabel label in switchInstr.GetDests()) {
 
             // Check all of the code blocks to find the jump destination
-            CodeBlock cb = null;
+            CodeBlock cb;
             cbTable.TryGetValue(label, out cb);
             if (cb == null) throw new Exception("Missing Case Label");
             block.NextBlocks.Add(cb);

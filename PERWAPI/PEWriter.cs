@@ -509,7 +509,7 @@ namespace QUT.PERWAPI
             Write(0);                // Check other sections here!!
             Write(text.RVA() + entryPointOffset);
             Write(text.RVA());
-            uint dataBase = 0;
+            uint dataBase;
             if (sdata != null) dataBase = sdata.RVA();
             else if (rsrc != null) dataBase = rsrc.RVA();
             else dataBase = relocRVA;

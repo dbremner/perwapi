@@ -74,7 +74,7 @@ namespace QUT.PERWAPI
 
         private static byte[] CompressNum(uint num)
         {
-            byte[] rslt = null;            
+            byte[] rslt;            
             if (num <= 0x7f)
             {
                 rslt = new byte[1]; 

@@ -422,13 +422,11 @@ namespace QUT.PERWAPI
         /// <param name="suppressOpt">set true to disable optimizations that affect debugging</param>
         public void MakeDebuggable(bool allowDebug, bool suppressOpt)
         {
-            ClassRef debugRef = null;
-            MethodRef dCtor = null;
             Type[] twoBools = new Type[] { PrimitiveType.Boolean, PrimitiveType.Boolean };
-            debugRef = MSCorLib.mscorlib.GetClass("System.Diagnostics", "DebuggableAttribute");
+            ClassRef debugRef = MSCorLib.mscorlib.GetClass("System.Diagnostics", "DebuggableAttribute");
             if (debugRef == null)
                 debugRef = MSCorLib.mscorlib.AddClass("System.Diagnostics", "DebuggableAttribute");
-            dCtor = debugRef.GetMethod(".ctor", twoBools);
+            MethodRef dCtor = debugRef.GetMethod(".ctor", twoBools);
             if (dCtor == null)
             {
                 dCtor = debugRef.AddMethod(".ctor", PrimitiveType.Void, twoBools);

@@ -90,7 +90,7 @@ namespace QUT.PERWAPI
         /*------------------------- public set and get methods --------------------------*/
 
         public void SetPack(int pack) { packSize = (ushort)pack; }
-        public int GetPack() { return (int)packSize; }
+        public int GetPack() { return packSize; }
         public void SetSize(int size) { classSize = (uint)size; }
         public int GetSize() { return (int)classSize; }
 

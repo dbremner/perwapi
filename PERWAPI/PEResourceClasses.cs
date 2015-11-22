@@ -77,7 +77,7 @@ namespace QUT.PERWAPI
       /// </summary>
       /// <param name="reader"></param>
       internal void PopulateResourceDirectory(PEReader reader, long baseOffset) {
-        PEResourceElement resElement = null;
+        PEResourceElement resElement;
 
           int junk = reader.ReadInt32(); // Must be zero.
         this.Date = reader.ReadUInt32();    // Time stamp.

@@ -77,7 +77,7 @@ namespace QUT.PERWAPI {
       //Console.WriteLine("Position = " + BaseStream.Position);
       byte b = ReadByte();
       //pos++;
-      uint num = 0;
+      uint num;
       if (b <= 0x7F) {
         num = b;
       }

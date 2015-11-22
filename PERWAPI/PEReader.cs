@@ -885,7 +885,7 @@ namespace QUT.PERWAPI
 
         internal uint GetTableSize(MDTable tabIx)
         {
-            return (uint)tableLengths[(int)tabIx];
+            return tableLengths[(int)tabIx];
         }
 
         internal byte[] GetResource(uint offset)
@@ -922,7 +922,7 @@ namespace QUT.PERWAPI
 
         internal MetaDataElement GetCodedElement(CIx code, uint ix)
         {
-            uint mask = (uint)MetaData.CIxBitMasks[MetaData.CIxShiftMap[(uint)code]];
+            uint mask = MetaData.CIxBitMasks[MetaData.CIxShiftMap[(uint)code]];
             int tabIx = MetaData.CIxTables[(int)code][(ix & mask)];
             ix >>= MetaData.CIxShiftMap[(uint)code];
             if (ix == 0) return null;
@@ -1380,8 +1380,8 @@ namespace QUT.PERWAPI
         }
 
         internal DataConstant GetDataConstant(uint rva, Type constType) {
-          ManagedPointer pointer = null;
-          ClassDef image = null;
+          ManagedPointer pointer;
+          ClassDef image;
           BaseStream.Seek(GetOffset(rva), SeekOrigin.Begin);
           if (constType is PrimitiveType) {
             switch (constType.GetTypeIndex()) {
@@ -1669,7 +1669,7 @@ namespace QUT.PERWAPI
                         EHClauseType eFlag;
                         if (fatSect) eFlag = (EHClauseType)ReadUInt32();
                         else eFlag = (EHClauseType)ReadUInt16();
-                        uint tryOff = 0, tryLen = 0, hOff = 0, hLen = 0;
+                        uint tryOff, tryLen, hOff, hLen;
                         if (fatSect)
                         {
                             tryOff = ReadUInt32();

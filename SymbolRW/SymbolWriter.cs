@@ -40,17 +40,17 @@ namespace QUT.Symbols {
     private readonly ISymUnmanagedWriter2 writer;
 
     public SymbolWriter(string binaryFile, string pdbFile) {
-      object dispenser = null;
-      object pUnknown = null;
-      IntPtr importer = IntPtr.Zero;
-      object writer2 = null;
+        IntPtr importer = IntPtr.Zero;
 
-      try {
-        OLE32.CoCreateInstance(ref XGuid.dispenserClassID, null, 1, ref XGuid.dispenserIID, out dispenser);
-        ((IMetaDataDispenserSubset)dispenser).OpenScope(binaryFile, 0, ref XGuid.importerIID, out pUnknown);
+        try {
+          object dispenser;
+          OLE32.CoCreateInstance(ref XGuid.dispenserClassID, null, 1, ref XGuid.dispenserIID, out dispenser);
+          object pUnknown = null;
+          ((IMetaDataDispenserSubset)dispenser).OpenScope(binaryFile, 0, ref XGuid.importerIID, out pUnknown);
         importer = Marshal.GetComInterfaceForObject(pUnknown, typeof(IMetadataImport));
 
-        OLE32.CoCreateInstance(ref XGuid.symWriterClassID, null, 1, ref XGuid.symWriterIID, out writer2);
+          object writer2;
+          OLE32.CoCreateInstance(ref XGuid.symWriterClassID, null, 1, ref XGuid.symWriterIID, out writer2);
         writer = (ISymUnmanagedWriter2)writer2;
         writer.Initialize(importer, pdbFile, null, true);
       }
@@ -106,11 +106,10 @@ namespace QUT.Symbols {
 
     public byte[] GetDebugInfo() {
       int length;
-      byte[] info = null;
-      ImageDebugDirectory idd;
+        ImageDebugDirectory idd;
 
       writer.GetDebugInfo(out idd, 0, out length, null);
-      info = new byte[length];
+      byte[] info = new byte[length];
       writer.GetDebugInfo(out idd, length, out length, info);
       return info;
     }

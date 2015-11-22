@@ -50,20 +50,20 @@ namespace QUT.Symbols {
         IntPtr importer = IntPtr.Zero;
 
         try {
-            object ppb = null;
+            object ppb;
             OLE32.CoCreateInstance(ref XGuid.dispenserClassID, null, 1, ref XGuid.dispenserIID, out ppb);
-          object pBnd = null;
+          object pBnd;
           OLE32.CoCreateInstance(ref XGuid.binderCLSID, null, 1, ref XGuid.binderIID, out pBnd);
 
         // Get the metadata dispenser from mscoree.dll
         Util.ComCheck(ppb != null, "Failed to create metadata dispenser");
 
-          object pUnk = null;
+          object pUnk;
           ((IMetaDataDispenserSubset)ppb).OpenScope(filename, 0, ref XGuid.importerIID, out pUnk);
         Util.ComCheck(pUnk != null, "Failed to open scope");
 
         importer = Marshal.GetComInterfaceForObject(pUnk, typeof(IMetadataImport));
-          object retVal = null;
+          object retVal;
           ((ISymUnmanagedBinder)pBnd).GetReaderForFile(importer, filename, null, out retVal);
         private_reader = (ISymUnmanagedReader)retVal;
       }
@@ -92,7 +92,7 @@ namespace QUT.Symbols {
       //int GetMethod(
       //    SymbolToken methodToken,
       //    [MarshalAs(UnmanagedType.Interface)] out ISymUnmanagedMethod retVal);
-      ISymUnmanagedMethod unMeth = null;
+      ISymUnmanagedMethod unMeth;
       int hr = private_reader.GetMethod(tok, out unMeth);
       if (hr == OLE32.hr_E_FAIL)  // could be empty method
         return null;
@@ -104,7 +104,7 @@ namespace QUT.Symbols {
 
     // This one not used by PERWAPI yet.
     public ISymbolMethod GetMethod(SymbolToken tok, int ver) {
-      ISymUnmanagedMethod unMeth = null;
+      ISymUnmanagedMethod unMeth;
       int hr = private_reader.GetMethodByVersion(tok, ver, out unMeth);
       if (hr == OLE32.hr_E_FAIL)  // could be empty method
         return null;
@@ -217,14 +217,14 @@ namespace QUT.Symbols {
     /// <param name="column">Source column number</param>
     /// <returns>The chosen method</returns>
     public ISymbolMethod GetMethodFromDocumentPosition(ISymbolDocument doc, int line, int column) {
-      ISymUnmanagedMethod unMeth = null;
+      ISymUnmanagedMethod unMeth;
       private_reader.GetMethodFromDocumentPosition(
           ((SymbolDocument)doc).WrappedDoc, line, column, out unMeth);
       return new SymbolMethod(unMeth);
     }
 
     public ISymbolVariable[] GetVariables(SymbolToken parent) {
-      int varNm = 0;
+      int varNm;
       private_reader.GetVariables(parent, 0, out varNm, null);
       ISymUnmanagedVariable[] unVars = new ISymUnmanagedVariable[varNm];
       SymbolVariable[] retVal = new SymbolVariable[varNm];
@@ -254,7 +254,7 @@ namespace QUT.Symbols {
     /// </summary>
     public ISymbolScope RootScope { // Needed by PERWAPI
       get {
-        ISymUnmanagedScope retVal = null;
+        ISymUnmanagedScope retVal;
         private_method.GetRootScope(out retVal);
         return new SymbolScope(retVal);
       }
@@ -265,7 +265,7 @@ namespace QUT.Symbols {
     /// </summary>
     public int SequencePointCount { // Needed by PERWAPI
       get {
-        int retVal = 0;
+        int retVal;
         private_method.GetSequencePointCount(out retVal);
         return retVal;
       }
@@ -287,7 +287,7 @@ namespace QUT.Symbols {
     /// </summary>
     /// <returns>The namespace object</returns>
     public ISymbolNamespace GetNamespace() {
-      ISymUnmanagedNamespace retVal = null;
+      ISymUnmanagedNamespace retVal;
       private_method.GetNamespace(out retVal);
       return new SymbolNamespace(retVal);
     }
@@ -297,7 +297,7 @@ namespace QUT.Symbols {
     /// </summary>
     /// <returns>The method parameters</returns>
     public ISymbolVariable[] GetParameters() {
-      int pNum = 0;
+      int pNum;
 
       // Call GetParameters just to get pNum
       private_method.GetParameters(0, out pNum, null);
@@ -405,7 +405,7 @@ namespace QUT.Symbols {
     /// </summary>
     public ISymbolMethod Method {
       get {
-        ISymUnmanagedMethod unMeth = null;
+        ISymUnmanagedMethod unMeth;
         private_scope.GetMethod(out unMeth);
         return new SymbolMethod(unMeth);
       }
@@ -416,7 +416,7 @@ namespace QUT.Symbols {
     /// </summary>
     public ISymbolScope Parent {
       get {
-        ISymUnmanagedScope unScope = null;
+        ISymUnmanagedScope unScope;
         private_scope.GetParent(out unScope);
         return new SymbolScope(unScope);
       }
@@ -438,7 +438,7 @@ namespace QUT.Symbols {
     /// </summary>
     /// <returns></returns>
     public ISymbolScope[] GetChildren() {
-      int chNum = 0;
+      int chNum;
       private_scope.GetChildren(0, out chNum, null);
       ISymUnmanagedScope[] unScps = new ISymUnmanagedScope[chNum];
       ISymbolScope[] manScps = new ISymbolScope[chNum];
@@ -454,7 +454,7 @@ namespace QUT.Symbols {
     /// </summary>
     /// <returns>The local variables of the current scope</returns>
     public ISymbolVariable[] GetLocals() {
-      int lcNum = 0;
+      int lcNum;
       private_scope.GetLocals(0, out lcNum, null);
       ISymUnmanagedVariable[] unVars = new ISymUnmanagedVariable[lcNum];
       ISymbolVariable[] manVars = new ISymbolVariable[lcNum];
@@ -470,7 +470,7 @@ namespace QUT.Symbols {
     /// </summary>
     /// <returns>The namespaces that are used within the current scope</returns>
     public ISymbolNamespace[] GetNamespaces() {
-      int nmNum = 0;
+      int nmNum;
       private_scope.GetNamespaces(0, out nmNum, null);
       ISymUnmanagedNamespace[] unNams = new ISymUnmanagedNamespace[nmNum];
       ISymbolNamespace[] manNams = new ISymbolNamespace[nmNum];
@@ -501,7 +501,7 @@ namespace QUT.Symbols {
     //     The current namespace.
     public string Name {
       get {
-          int nmLen = 0;
+          int nmLen;
         private_namespace.GetName(0, out nmLen, null);
         var bldr = new StringBuilder(nmLen);
         private_namespace.GetName(nmLen, out nmLen, bldr);
@@ -574,7 +574,7 @@ namespace QUT.Symbols {
     /// </summary>
     public bool HasEmbeddedSource {
       get {
-        bool retVal = false;
+        bool retVal;
         WrappedDoc.HasEmbeddedSource(out retVal);
         return retVal;
       }
@@ -607,7 +607,7 @@ namespace QUT.Symbols {
     /// </summary>
     public int SourceLength {
       get {
-        int retVal = 0;
+        int retVal;
         WrappedDoc.GetSourceLength(out retVal);
         return retVal;
       }
@@ -756,7 +756,7 @@ namespace QUT.Symbols {
     /// </summary>
     public string Name {
       get {
-        int nmLen = 0;
+        int nmLen;
         private_variable.GetName(0, out nmLen, null);
         var bldr = new StringBuilder(nmLen);
         private_variable.GetName(nmLen, out nmLen, bldr);

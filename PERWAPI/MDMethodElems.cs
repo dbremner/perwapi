@@ -663,8 +663,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] methDefs)
         {
-            MethodDef prevDef = null;
-            prevDef = new MethodDef(buff);
+            MethodDef prevDef = new MethodDef(buff);
             methDefs[0] = prevDef;
             for (int i = 1; i < methDefs.Length; i++)
             {

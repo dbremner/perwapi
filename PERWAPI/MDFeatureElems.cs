@@ -57,7 +57,8 @@ namespace QUT.PERWAPI
             ClassDef theClass, uint classIx)
         {
             buff.SetElementPosition(mapTabIx, 0);
-            uint start = 0, end = 0, i = 0;
+            uint start = 0;
+            uint i = 0;
             for (; (i < buff.GetTableSize(tabIx)) && (start == 0); i++)
             {
                 if (buff.GetIndex(MDTable.TypeDef) == classIx)
@@ -66,6 +67,7 @@ namespace QUT.PERWAPI
                 }
             }
             if (start == 0) return null;
+            uint end;
             if (i < buff.GetTableSize(mapTabIx))
             {
                 uint junk = buff.GetIndex(MDTable.TypeDef);
