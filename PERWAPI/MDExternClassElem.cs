@@ -35,16 +35,14 @@ namespace QUT.PERWAPI
         uint typeDefId = 0;
         readonly uint implIx = 0;
         uint nameIx = 0, nameSpaceIx = 0;
-        readonly string nameSpace;
-        readonly string name;
 
         /*-------------------- Constructors ---------------------------------*/
 
         internal ExternClass(TypeAttr attr, string ns, string name, MetaDataElement paren)
         {
             flags = (uint)attr;
-            nameSpace = ns;
-            this.name = name;
+            NameSpace = ns;
+            this.Name = name;
             implementation = paren;
             tabIx = MDTable.ExportedType;
         }
@@ -53,8 +51,8 @@ namespace QUT.PERWAPI
         {
             flags = buff.ReadUInt32();
             typeDefId = buff.ReadUInt32();
-            name = buff.GetString();
-            nameSpace = buff.GetString();
+            Name = buff.GetString();
+            NameSpace = buff.GetString();
             implIx = buff.GetCodedIndex(CIx.Implementation);
             tabIx = MDTable.ExportedType;
         }
@@ -87,14 +85,15 @@ namespace QUT.PERWAPI
             ((ModuleFile)implementation).fileModule.AddExternClass(this);
         }
 
-        internal string NameSpace() { return nameSpace; }
-        internal string Name() { return name; }
+        internal string NameSpace { get; }
+
+        internal string Name { get; }
 
         internal sealed override void BuildTables(MetaDataOut md)
         {
             md.AddToTable(MDTable.ExportedType, this);
-            nameSpaceIx = md.AddToStringsHeap(nameSpace);
-            nameIx = md.AddToStringsHeap(name);
+            nameSpaceIx = md.AddToStringsHeap(NameSpace);
+            nameIx = md.AddToStringsHeap(Name);
             if (implementation is ModuleRef)
             {
                 ModuleFile mFile = ((ModuleRef)implementation).modFile;
