@@ -535,16 +535,14 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ConstructedTypeSpec : Class
     {
-        private readonly TypeSpec constrType;
-
         public ConstructedTypeSpec(TypeSpec tySpec)
             : base()
         {
-            constrType = tySpec;
-            this.typeIndex = constrType.GetTypeIndex();
+            Spec = tySpec;
+            this.typeIndex = Spec.GetTypeIndex();
         }
 
-        public TypeSpec Spec { get { return constrType; } }
+        public TypeSpec Spec { get; }
 
         public override MetaDataElement GetParent()
         {
@@ -553,7 +551,7 @@ namespace QUT.PERWAPI
 
         internal override string ClassName()
         {
-            return constrType.NameString();
+            return Spec.NameString();
         }
 
 

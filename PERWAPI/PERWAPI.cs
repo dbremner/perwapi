@@ -223,7 +223,6 @@ namespace QUT.PERWAPI {
     private static readonly uint StreamHeaderSize = 8;
     private static readonly uint maxSmlIxSize = 0xFFFF;
 
-    private uint start = 0;
       private uint size = 0;
       private uint tide = 1;
       private bool largeIx = false;
@@ -245,16 +244,9 @@ namespace QUT.PERWAPI {
       sizeOfHeader = StreamHeaderSize + (uint)name.Length;
     }
 
-    public uint Start {
-      get {
-        return start;
-      }
-      set {
-        start = value;
-      }
-    }
+    public uint Start { get; set; } = 0;
 
-    internal uint headerSize() {
+      internal uint headerSize() {
       // Console.WriteLine(name + " stream has headersize of " + sizeOfHeader);
       return sizeOfHeader;
     }
@@ -398,7 +390,7 @@ namespace QUT.PERWAPI {
     }
 
     internal void WriteHeader(BinaryWriter output) {
-      output.Write(start);
+      output.Write(Start);
       output.Write(size);
       output.Write(name);
     }

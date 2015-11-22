@@ -604,45 +604,42 @@ namespace QUT.PERWAPI
         private static readonly uint PublicResource = 0x1;
         private static readonly uint PrivateResource = 0x2;
 
-        private string mrName;
         private MetaDataElement impl;  // can be AssemblyRef, ResourceFile or ModuleFile
-        private uint fileOffset = 0;
         private uint nameIx = 0;
         private readonly uint implIx = 0;
         private uint flags = 0;
         private PEFile pefile;
-        private byte[] resourceBytes;
 
         /*-------------------- Constructors ---------------------------------*/
 
         internal ManifestResource(PEFile pefile, string name, byte[] resBytes, bool isPub)
         {
             InitResource(pefile, name, isPub);
-            this.resourceBytes = resBytes;
+            this.ResourceBytes = resBytes;
         }
 
         internal ManifestResource(PEFile pefile, string name, MetaDataElement fileRef, uint offset, bool isPub)
         {
             InitResource(pefile, name, isPub);
             impl = fileRef;
-            fileOffset = offset;
+            FileOffset = offset;
         }
 
         internal ManifestResource(PEFile pefile, ManifestResource mres, bool isPub)
         {
             this.pefile = pefile;
-            mrName = mres.mrName;
+            Name = mres.Name;
             flags = mres.flags;
             this.impl = mres.impl;
-            this.fileOffset = mres.fileOffset;
-            this.resourceBytes = mres.resourceBytes;
+            this.FileOffset = mres.FileOffset;
+            this.ResourceBytes = mres.ResourceBytes;
         }
 
         internal ManifestResource(PEReader buff)
         {
-            fileOffset = buff.ReadUInt32();
+            FileOffset = buff.ReadUInt32();
             flags = buff.ReadUInt32();
-            mrName = buff.GetString();
+            Name = buff.GetString();
             implIx = buff.GetCodedIndex(CIx.Implementation);
             tabIx = MDTable.ManifestResource;
         }
@@ -650,7 +647,7 @@ namespace QUT.PERWAPI
         private void InitResource(PEFile pefile, string name, bool isPub)
         {
             this.pefile = pefile;
-            mrName = name;
+            Name = name;
             if (isPub) flags = PublicResource;
             else flags = PrivateResource;
             tabIx = MDTable.ManifestResource;
@@ -668,23 +665,15 @@ namespace QUT.PERWAPI
             if (impl == null)
             {
                 if (!buff.skipBody)
-                    resourceBytes = buff.GetResource(fileOffset);
+                    ResourceBytes = buff.GetResource(FileOffset);
             }
         }
 
         /*------------------------- public set and get methods --------------------------*/
 
-        public string Name
-        {
-            get { return mrName; }
-            set { mrName = value; }
-        }
+        public string Name { get; set; }
 
-        public byte[] ResourceBytes
-        {
-            get { return resourceBytes; }
-            set { resourceBytes = value; }
-        }
+        public byte[] ResourceBytes { get; set; }
 
         public AssemblyRef ResourceAssembly
         {
@@ -704,11 +693,7 @@ namespace QUT.PERWAPI
             set { impl = value.modFile; }
         }
 
-        public uint FileOffset
-        {
-            get { return fileOffset; }
-            set { fileOffset = value; }
-        }
+        public uint FileOffset { get; set; } = 0;
 
         public bool IsPublic
         {
@@ -730,12 +715,12 @@ namespace QUT.PERWAPI
         internal sealed override void BuildTables(MetaDataOut md)
         {
             md.AddToTable(MDTable.ManifestResource, this);
-            nameIx = md.AddToStringsHeap(mrName);
-            if (resourceBytes != null)
+            nameIx = md.AddToStringsHeap(Name);
+            if (ResourceBytes != null)
             {
                 if (impl != null)
                     throw new Exception("ERROR:  Manifest Resource has byte value and file reference");
-                fileOffset = md.AddResource(resourceBytes);
+                FileOffset = md.AddResource(ResourceBytes);
             }
             else
             {
@@ -753,7 +738,7 @@ namespace QUT.PERWAPI
 
         internal sealed override void Write(PEWriter output)
         {
-            output.Write(fileOffset);
+            output.Write(FileOffset);
             output.Write(flags);
             output.StringsIndex(nameIx);
             output.WriteCodedIndex(CIx.Implementation, impl);

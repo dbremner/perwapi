@@ -46,7 +46,6 @@ namespace QUT.PERWAPI
         private uint flags;
         private Class superType;
         private ArrayList security;
-        private ClassLayout layout;
         private uint extendsIx;
         internal ClassRef refOf;
         internal uint eventIx = 0, propIx = 0;
@@ -691,7 +690,7 @@ namespace QUT.PERWAPI
         /// <param name="classSize">class size (.size)</param>
         public void AddLayoutInfo(int packSize, int classSize)
         {
-            layout = new ClassLayout(packSize, classSize, this);
+            Layout = new ClassLayout(packSize, classSize, this);
         }
 
         /// <summary>
@@ -700,13 +699,13 @@ namespace QUT.PERWAPI
         /// <returns>Class pack size</returns>
         public int GetPackSize()
         {
-            if ((layout == null) && (((flags & (uint)TypeAttr.ExplicitLayout) != 0) ||
+            if ((Layout == null) && (((flags & (uint)TypeAttr.ExplicitLayout) != 0) ||
                 ((flags & (uint)TypeAttr.SequentialLayout) != 0)) && (buffer != null))
             {
                 buffer.SetElementPosition(MDTable.ClassLayout, 0);
                 //layout = buffer.FindParent(MDTable.ClassLayout,this);
             }
-            if (layout != null) return layout.GetPack();
+            if (Layout != null) return Layout.GetPack();
             return 0;
         }
 
@@ -716,8 +715,8 @@ namespace QUT.PERWAPI
         /// <returns>The size of this class</returns>
         public int GetClassSize()
         {
-            if (layout == null) return 0;
-            return layout.GetSize();
+            if (Layout == null) return 0;
+            return Layout.GetSize();
         }
 
         /// <summary>
@@ -879,11 +878,7 @@ namespace QUT.PERWAPI
             return -1;
         }
 
-        internal ClassLayout Layout
-        {
-            set { layout = value; }
-            get { return layout; }
-        }
+        internal ClassLayout Layout { set; get; }
 
         internal void SetScope(PEFile mod) { scope = mod; }
 
@@ -996,7 +991,7 @@ namespace QUT.PERWAPI
             }
           }
 
-          if (layout != null) layout.BuildMDTables(md);
+          if (Layout != null) Layout.BuildMDTables(md);
 
           // Console.WriteLine("adding methods " + methods.Count);
           for (int i = 0; i < methods.Count; i++) {

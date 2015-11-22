@@ -533,31 +533,27 @@ namespace QUT.Symbols {
   /// Managed wrapper for ISymUnmanagedDocument
   /// </summary>
   public class SymbolDocument : ISymbolDocument {
-    private readonly ISymUnmanagedDocument private_document;
-
-    /// <summary>
+      /// <summary>
     /// Constructor for SymbolDocument
     /// </summary>
     /// <param name="unDoc"></param>
     internal SymbolDocument(ISymUnmanagedDocument unDoc) {
-      private_document = unDoc;
+      WrappedDoc = unDoc;
     }
 
     /// <summary>
     /// Gets the wrapped document
     /// </summary>
-    internal ISymUnmanagedDocument WrappedDoc {
-      get { return private_document; }
-    }
+    internal ISymUnmanagedDocument WrappedDoc { get; }
 
-    /// <summary>
+      /// <summary>
     /// Returns a GUID identifying the checksum algorithm.
     /// Returns Guid.Zero if there is no checksum.
     /// </summary>
     public Guid CheckSumAlgorithmId {
       get {
         Guid retVal = new Guid();
-        private_document.GetCheckSumAlgorithmId(ref retVal);
+        WrappedDoc.GetCheckSumAlgorithmId(ref retVal);
         return retVal;
       }
     }
@@ -568,7 +564,7 @@ namespace QUT.Symbols {
     public Guid DocumentType {
       get {
         Guid retVal = new Guid();
-        private_document.GetDocumentType(ref retVal);
+        WrappedDoc.GetDocumentType(ref retVal);
         return retVal;
       }
     }
@@ -579,7 +575,7 @@ namespace QUT.Symbols {
     public bool HasEmbeddedSource {
       get {
         bool retVal = false;
-        private_document.HasEmbeddedSource(out retVal);
+        WrappedDoc.HasEmbeddedSource(out retVal);
         return retVal;
       }
     }
@@ -590,7 +586,7 @@ namespace QUT.Symbols {
     public Guid Language {
       get {
         Guid retVal = new Guid();
-        private_document.GetLanguage(ref retVal);
+        WrappedDoc.GetLanguage(ref retVal);
         return retVal;
       }
     }
@@ -601,7 +597,7 @@ namespace QUT.Symbols {
     public Guid LanguageVendor {
       get {
         Guid retVal = new Guid();
-        private_document.GetLanguageVendor(ref retVal);
+        WrappedDoc.GetLanguageVendor(ref retVal);
         return retVal;
       }
     }
@@ -612,7 +608,7 @@ namespace QUT.Symbols {
     public int SourceLength {
       get {
         int retVal = 0;
-        private_document.GetSourceLength(out retVal);
+        WrappedDoc.GetSourceLength(out retVal);
         return retVal;
       }
     }
@@ -623,9 +619,9 @@ namespace QUT.Symbols {
     public string URL {
       get {
         int strLen;
-        private_document.GetURL(0, out strLen, null);
+        WrappedDoc.GetURL(0, out strLen, null);
         StringBuilder retVal = new StringBuilder(strLen);
-        private_document.GetURL(strLen, out strLen, retVal);
+        WrappedDoc.GetURL(strLen, out strLen, retVal);
         return retVal.ToString();
       }
     }
@@ -638,7 +634,7 @@ namespace QUT.Symbols {
     /// <returns>The closest line with a sequence point</returns>
     public int FindClosestLine(int line) {
       int retVal;
-      private_document.FindClosestLine(line, out retVal);
+      WrappedDoc.FindClosestLine(line, out retVal);
       return retVal;
     }
 

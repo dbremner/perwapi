@@ -45,24 +45,20 @@ namespace QUT.PERWAPI
         private readonly ArrayList methods = new ArrayList();
         private Method currentMethod = null;
         private Scope currentScope = null;
-        private readonly string filename;
         private byte[] debugInfo;
         private SymbolToken entryPoint;
 
         /// <summary>
         /// The name of the PE file this PDB file belongs to.
         /// </summary>
-        public string PEFilename
-        {
-            get { return filename; }
-        }
+        public string PEFilename { get; }
 
         /// <summary>
         /// The name of the PDB file being written.
         /// </summary>
         public string PDBFilename
         {
-            get { return Path.ChangeExtension(filename, ".pdb"); }
+            get { return Path.ChangeExtension(PEFilename, ".pdb"); }
         }
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace QUT.PERWAPI
         /// <param name="PEFilename">The name of the PE file we are writting the PDB file for.</param>
         public PDBWriter(string PEFilename)
         {
-            filename = PEFilename;
+            this.PEFilename = PEFilename;
         }
 
         /// <summary>

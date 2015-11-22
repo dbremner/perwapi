@@ -258,12 +258,10 @@ namespace QUT.PERWAPI
     public class PEResourceData : PEResourceElement
     {
         public PEResourceData() { }
-        private int codepage = 0;
-        private byte[] data;
 
-        public int CodePage { get { return codepage; } set { codepage = value; } }
+        public int CodePage { get; set; } = 0;
 
-        public byte[] Data { get { return data; } set { data = value; } }
+        public byte[] Data { get; set; }
 
         protected internal override uint Size()
         {
@@ -277,20 +275,20 @@ namespace QUT.PERWAPI
         internal void PopulateResourceData(PEReader reader, long baseOffset) {
           uint dataRVA = reader.ReadUInt32();
           int dataLength = reader.ReadInt32();
-          this.codepage = reader.ReadInt32();
+          this.CodePage = reader.ReadInt32();
           uint junk = reader.ReadUInt32(); // Must be zero.
           reader.BaseStream.Seek(reader.GetOffset(dataRVA), SeekOrigin.Begin);
-          data = new byte[dataLength];
-          int numberRead = reader.BaseStream.Read(data, 0, dataLength);
+          Data = new byte[dataLength];
+          int numberRead = reader.BaseStream.Read(Data, 0, dataLength);
         }
 
         protected internal override void Write(BinaryWriter dest, uint baseOffset, uint currentOffset, uint RVA)
         {
             dest.Write((uint)(currentOffset + HeaderSize) + RVA);
-            dest.Write((uint)data.Length);
-            dest.Write((uint)codepage);
+            dest.Write((uint)Data.Length);
+            dest.Write((uint)CodePage);
             dest.Write((uint)0);
-            dest.Write(data);
+            dest.Write(Data);
         }
     }
 }

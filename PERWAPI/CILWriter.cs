@@ -33,7 +33,6 @@ namespace QUT.PERWAPI
         private FieldDef[] fields;
         private MethodDef[] methods;
         private ClassDef[] classes;
-        private bool debug;
 
         public CILWriter(string filename, bool debug, PEFile pefile)
             : base(new FileStream(filename, FileMode.Create))
@@ -51,10 +50,7 @@ namespace QUT.PERWAPI
             }
         }
 
-        internal bool Debug
-        {
-            get { return debug; }
-        }
+        internal bool Debug { get; private set; }
 
         internal void BuildCILInfo()
         {
@@ -86,7 +82,7 @@ namespace QUT.PERWAPI
 
         public void WriteFile(bool debug)
         {
-            this.debug = debug;
+            this.Debug = debug;
             for (int i = 0; i < externRefs.Count; i++)
             {
                 ((ReferenceScope)externRefs[i]).Write(this);

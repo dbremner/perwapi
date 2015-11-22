@@ -30,9 +30,7 @@ namespace QUT.PERWAPI
     public class Local
     {
         private static readonly byte PINNED = 0x45;
-        private readonly string name;
         public Type type;
-        private bool pinned = false;
         private int index = 0;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -44,7 +42,7 @@ namespace QUT.PERWAPI
         /// <param name="lType">type of the local variable</param>
         public Local(string lName, Type lType)
         {
-            name = lName;
+            Name = lName;
             type = lType;
         }
 
@@ -56,9 +54,9 @@ namespace QUT.PERWAPI
         /// <param name="isPinned">has pinned attribute</param>
         public Local(string lName, Type lType, bool isPinned)
         {
-            name = lName;
+            Name = lName;
             type = lType;
-            pinned = isPinned;
+            Pinned = isPinned;
         }
 
         public int GetIndex() { return index; }
@@ -66,13 +64,9 @@ namespace QUT.PERWAPI
         /// <summary>
         /// The name of the local variable.
         /// </summary>
-        public string Name { get { return name; } }
+        public string Name { get; }
 
-        public bool Pinned
-        {
-            get { return pinned; }
-            set { pinned = value; }
-        }
+        public bool Pinned { get; set; } = false;
 
         /// <summary>
         /// Gets the signature for this local variable.
@@ -92,7 +86,7 @@ namespace QUT.PERWAPI
 
         internal void TypeSig(MemoryStream str)
         {
-            if (pinned) str.WriteByte(PINNED);
+            if (Pinned) str.WriteByte(PINNED);
             type.TypeSig(str);
         }
 
@@ -111,7 +105,7 @@ namespace QUT.PERWAPI
         internal void Write(CILWriter output)
         {
             type.WriteType(output);
-            output.Write("\t" + name);
+            output.Write("\t" + Name);
         }
 
     }

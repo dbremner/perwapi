@@ -40,8 +40,7 @@ namespace QUT.PERWAPI
 
         public string SafeArrayUserDefinedSubType { get; set; }
 
-        private NativeTypeIx arraySubType = (NativeTypeIx)0x50; // default, important
-        public NativeTypeIx ArraySubType { get { return arraySubType; } set { arraySubType = value; } }
+        public NativeTypeIx ArraySubType { get; set; } = (NativeTypeIx)0x50; // default, important
 
         public int SizeConst { get; set; } = -1;
 

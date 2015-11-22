@@ -54,8 +54,7 @@ namespace QUT.PERWAPI {
     internal static readonly uint SectMoreSects = 0x80;
 
     private ArrayList exceptions, sourceLines, defaultLines;
-    private SourceFile defaultSourceFile;
-    private Stack blockStack;
+      private Stack blockStack;
     //private bool codeChecked = false;
     private static readonly int INITSIZE = 5;
     private CILInstruction[] buffer = new CILInstruction[INITSIZE];
@@ -94,12 +93,9 @@ namespace QUT.PERWAPI {
     /// <summary>
     /// The source file containing these IL instructions
     /// </summary>
-    public SourceFile DefaultSourceFile {
-      get { return defaultSourceFile; }
-      set { defaultSourceFile = value; }
-    }
+    public SourceFile DefaultSourceFile { get; set; }
 
-    /// <summary>
+      /// <summary>
     /// The number of instructions currently in the buffer. 
     /// </summary>
     public int NumInstructions() {
@@ -965,9 +961,9 @@ namespace QUT.PERWAPI {
     }
 
     internal void AddToLines(Line line) {
-      if ((line.sourceFile == null) || (line.sourceFile.Match(defaultSourceFile))) {
+      if ((line.sourceFile == null) || (line.sourceFile.Match(DefaultSourceFile))) {
         if (defaultLines == null) {
-          if (defaultSourceFile == null)
+          if (DefaultSourceFile == null)
             throw new Exception("No Default Source File Set");
           defaultLines = new ArrayList();
         }
