@@ -115,20 +115,13 @@ namespace QUT.PERWAPI
 
         /*-------------------- Constructors ---------------------------------*/
 
-        internal FieldDef(string name, Type fType, ClassDef paren)
+        internal FieldDef(string name, Type fType, Class paren)
             : base(name, fType, paren)
         {
             tabIx = MDTable.Field;
         }
 
-        internal FieldDef(FieldAttr attrSet, string name, Type fType, ClassDef paren)
-            : base(name, fType, paren)
-        {
-            flags = (ushort)attrSet;
-            tabIx = MDTable.Field;
-        }
-
-        internal FieldDef(FieldAttr attrSet, string name, Type fType, ClassSpec paren)
+        internal FieldDef(FieldAttr attrSet, string name, Type fType, Class paren)
             : base(name, fType, paren)
         {
             flags = (ushort)attrSet;

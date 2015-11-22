@@ -622,7 +622,7 @@ namespace QUT.PERWAPI
 
         /*-------------------- Constructors ---------------------------------*/
 
-        internal MethodDef(string name, Type retType, Param[] pars, ClassDef paren)
+        internal MethodDef(string name, Type retType, Param[] pars, Class paren)
             : base(name, retType, paren)
         {
             sig.SetParTypes(pars);
@@ -631,21 +631,12 @@ namespace QUT.PERWAPI
             tabIx = MDTable.Method;
         }
 
-        internal MethodDef(ClassDef paren, MethSig mSig, Param[] pars)
+        internal MethodDef(Class paren, MethSig mSig, Param[] pars)
             : base(mSig.name)
         {
             sig = mSig;
             parList = pars;
             parent = paren;
-            tabIx = MDTable.Method;
-        }
-
-        internal MethodDef(ClassSpec paren, MethSig mSig, Param[] pars)
-            : base(mSig.name)
-        {
-            parent = paren;
-            parList = pars;
-            sig = mSig;
             tabIx = MDTable.Method;
         }
 

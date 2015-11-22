@@ -589,7 +589,7 @@ namespace QUT.PERWAPI
         private readonly PrimitiveType elemType;
         internal bool added = false;
 
-        internal SystemClass(AssemblyRef paren, PrimitiveType eType)
+        internal SystemClass(ReferenceScope paren, PrimitiveType eType)
             : base(paren, "System", eType.GetName())
         {
             elemType = eType;
