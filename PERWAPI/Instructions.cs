@@ -1295,13 +1295,13 @@ namespace QUT.PERWAPI {
       //
 
       // Get the max depth at the starting entry point
-      int finalMaxDepth = this.TraverseMaxDepth(codeBlocks[0]);
+      int finalMaxDepth = TraverseMaxDepth(codeBlocks[0]);
 
       // Check the additional entry points
       // If the additional points have a greater depth update the max depth
       foreach (CodeBlock cb in extraStartingBlocks) {
         // int tmpMaxDepth = cb.TraverseMaxDepth();
-        int tmpMaxDepth = this.TraverseMaxDepth(cb);
+        int tmpMaxDepth = TraverseMaxDepth(cb);
         if (tmpMaxDepth > finalMaxDepth) finalMaxDepth = tmpMaxDepth;
       }
 
@@ -1311,7 +1311,7 @@ namespace QUT.PERWAPI {
     }
 
 
-    int TraverseMaxDepth(CodeBlock entryBlock) {
+      private static int TraverseMaxDepth(CodeBlock entryBlock) {
       int max = 0;
       SCG.Queue<CodeBlock> worklist = new SCG.Queue<CodeBlock>();
       entryBlock.Visited = true;
@@ -1341,7 +1341,7 @@ namespace QUT.PERWAPI {
       return max;
     }
 
-    private bool IsTerminatingInstruction(CILInstruction cilInstr) {
+    private static bool IsTerminatingInstruction(CILInstruction cilInstr) {
       // Return or throw instructions are terminating instructions
       if (cilInstr is Instr) {
         if (((Instr)cilInstr).GetOp() == Op.ret) return true;

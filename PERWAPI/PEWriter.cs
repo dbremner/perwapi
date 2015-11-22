@@ -131,7 +131,7 @@ namespace QUT.PERWAPI
 
         }
 
-        private uint GetNextSectStart(uint rva, uint tide)
+        private static uint GetNextSectStart(uint rva, uint tide)
         {
             if (tide < FileImage.SectionAlignment) return rva + FileImage.SectionAlignment;
             return rva + ((tide / FileImage.SectionAlignment) + 1) * FileImage.SectionAlignment;
@@ -590,7 +590,7 @@ namespace QUT.PERWAPI
             return val;
         }
 
-        private uint NumToAlign(uint val, uint alignVal)
+        private static uint NumToAlign(uint val, uint alignVal)
         {
             if ((val % alignVal) == 0) return 0;
             return alignVal - (val % alignVal);

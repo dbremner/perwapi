@@ -93,7 +93,7 @@ namespace QUT.PERWAPI
             resElement = new PEResourceDirectory();
           else
             resElement = new PEResourceData();
-          resElement.Name = this.ReadName(reader, baseOffset + nameOrId & 0x7fffffff);
+          resElement.Name = ReadName(reader, baseOffset + nameOrId & 0x7fffffff);
           resElement.offset = baseOffset + (long)(elemOfst & 0x7fffffff);
           this.AddElement(resElement);
         }
@@ -128,7 +128,7 @@ namespace QUT.PERWAPI
         }
       }
 
-      private string ReadName(BinaryReader rdr, long offset) {
+      private static string ReadName(BinaryReader rdr, long offset) {
         long savedPos = rdr.BaseStream.Position;
         rdr.BaseStream.Seek(offset, SeekOrigin.Begin);
         ushort nLength = rdr.ReadUInt16();

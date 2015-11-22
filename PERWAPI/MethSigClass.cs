@@ -52,7 +52,7 @@ namespace QUT.PERWAPI
             return newSig;
         }
 
-        private Type[] ReplaceGenPars(Type[] typeList, MetaDataElement paren, Type[] genTypes)
+        private static Type[] ReplaceGenPars(Type[] typeList, MetaDataElement paren, Type[] genTypes)
         {
             if (typeList == null) return null;
             Type[] newList = new Type[typeList.Length];
@@ -63,7 +63,7 @@ namespace QUT.PERWAPI
             return newList;
         }
 
-        private Type SubstituteType(Type origType, MetaDataElement paren, Type[] genTypes)
+        private static Type SubstituteType(Type origType, MetaDataElement paren, Type[] genTypes)
         {
             if ((origType is GenericParam) && (((GenericParam)origType).GetParent() == paren))
                 return genTypes[((GenericParam)origType).Index];

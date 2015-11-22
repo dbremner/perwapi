@@ -368,7 +368,7 @@ namespace QUT.PERWAPI
             for (int i = 0; i < tildePadding; i++) output.Write((byte)0);
         }
 
-        private void SortTable(ArrayList mTable)
+        private static void SortTable(ArrayList mTable)
         {
             //Console.WriteLine("Sorting table");
             if (mTable == null) return;
@@ -551,7 +551,7 @@ namespace QUT.PERWAPI
         //    internal bool LargeUSIndex() { return us.LargeIx(); }
         //    internal bool LargeBlobIndex() { return blob.LargeIx(); }
 
-        private uint NumToAlign(uint val, uint alignVal)
+        private static uint NumToAlign(uint val, uint alignVal)
         {
             if ((val % alignVal) == 0) return 0;
             return alignVal - (val % alignVal);

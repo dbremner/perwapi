@@ -327,7 +327,7 @@ namespace QUT.Symbols {
       throw new NotImplementedException("No QUT.SymbolMethod.GetOffset");
     }
 
-    private void GetAndCheckLength(int[] arr, ref int num) {
+    private static void GetAndCheckLength(int[] arr, ref int num) {
       if (arr != null) {
         if (num == INVALID)
           num = arr.Length;

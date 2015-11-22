@@ -398,7 +398,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="symWriter">The symbol writer for this file.</param>
         /// <param name="scope">The scope to write out.</param>
-        private void WriteScopeAndLocals(QSy.SymbolWriter symWriter, Scope scope)
+        private static void WriteScopeAndLocals(QSy.SymbolWriter symWriter, Scope scope)
         {
             // Open the scope
             symWriter.OpenScope(scope.OffsetStart);

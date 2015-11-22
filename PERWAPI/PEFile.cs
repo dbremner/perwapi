@@ -508,7 +508,7 @@ namespace QUT.PERWAPI
                 }
         }
 
-        private Scope ReadPDBScope(PDBScope scope, MergeBuffer mergeBuffer, Scope parent, MethodDef thisMeth)
+        private static Scope ReadPDBScope(PDBScope scope, MergeBuffer mergeBuffer, Scope parent, MethodDef thisMeth)
         {
             Scope thisScope = new Scope(parent, thisMeth);
 

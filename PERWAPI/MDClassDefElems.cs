@@ -856,7 +856,7 @@ namespace QUT.PERWAPI
 
         internal override bool isDef() { return true; }
 
-        private Feature FindFeature(string name, ArrayList featureList)
+        private static Feature FindFeature(string name, ArrayList featureList)
         {
             if (featureList == null) return null;
             for (int i = 0; i < featureList.Count; i++)
