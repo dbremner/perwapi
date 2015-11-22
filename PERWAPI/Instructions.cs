@@ -68,11 +68,14 @@ namespace QUT.PERWAPI {
     private uint paddingNeeded = 0;
     private byte exceptHeader = 0;
     private int currI = -1;
-    uint localSigIx = 0;
-    int numReplace = 0;
-    uint codeSize = 0, exceptSize = 0;
-    bool tinyFormat, fatExceptionFormat = false, inserting = false;
-      readonly MethodDef thisMeth;
+      private uint localSigIx = 0;
+      private int numReplace = 0;
+      private uint codeSize = 0;
+      private uint exceptSize = 0;
+      private bool tinyFormat;
+      private bool fatExceptionFormat = false;
+      private bool inserting = false;
+      private readonly MethodDef thisMeth;
 
     internal Scope currentScope;
 
@@ -1589,7 +1592,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class CILByte : CILInstruction {
-      readonly byte byteVal;
+      private readonly byte byteVal;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1707,8 +1710,8 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class IntInstr : Instr {
-    int val;
-      readonly bool byteNum;
+      private int val;
+      private readonly bool byteNum;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1751,8 +1754,8 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class UIntInstr : Instr {
-    uint val;
-      readonly bool byteNum;
+      private uint val;
+      private readonly bool byteNum;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1806,7 +1809,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class LongInstr : Instr {
-    long val;
+      private long val;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1832,7 +1835,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class FloatInstr : Instr {
-    float fVal;
+      private float fVal;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1858,7 +1861,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class DoubleInstr : Instr {
-    double val;
+      private double val;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1884,8 +1887,8 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class StringInstr : Instr {
-    string val;
-    uint strIndex;
+      private string val;
+      private uint strIndex;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -1979,10 +1982,11 @@ namespace QUT.PERWAPI {
   /// </summary>
   public class Line : DebugInst {
     private static readonly uint MaxCol = 100;
-      readonly uint startLine;
-      readonly uint startCol;
-      uint endLine, endCol;
-      bool hasEnd = false;
+      private readonly uint startLine;
+      private readonly uint startCol;
+      private uint endLine;
+      private uint endCol;
+      private bool hasEnd = false;
     internal SourceFile sourceFile;
 
     /*-------------------- Constructors ---------------------------------*/
@@ -2241,9 +2245,9 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class SwitchInstr : Instr {
-    CILLabel[] cases;
-      readonly uint numCases = 0;
-      readonly int[] targets;
+      private CILLabel[] cases;
+      private readonly uint numCases = 0;
+      private readonly int[] targets;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2541,7 +2545,7 @@ namespace QUT.PERWAPI {
   /**************************************************************************/
 
   public class FieldInstr : Instr {
-    Field field;
+      private Field field;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2585,7 +2589,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class MethInstr : Instr {
-    Method meth;
+      private Method meth;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2696,7 +2700,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class SigInstr : Instr {
-    CalliSig signature;
+      private CalliSig signature;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2764,7 +2768,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class TypeInstr : Instr {
-    Type theType;
+      private Type theType;
 
     /*-------------------- Constructors ---------------------------------*/
 
@@ -2809,7 +2813,7 @@ namespace QUT.PERWAPI {
 
   /**************************************************************************/
   public class BranchInstr : Instr {
-    CILLabel dest;
+      private CILLabel dest;
     private bool shortVer = true;
     private static readonly byte longInstrOffset = 13;
     private int target = 0;

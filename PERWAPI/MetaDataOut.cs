@@ -28,18 +28,26 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     internal class MetaDataOut : MetaData
     {
-        MetaDataStream strings, us, guid, blob;
-        MetaDataStream[] streams;
-        uint numStreams = 5;
-        uint tildeTide = 0, tildePadding = 0, tildeStart = 0;
-        uint numTables = 0, resourcesSize = 0;
-        readonly ArrayList byteCodes = new ArrayList();
-        uint codeSize = 0, byteCodePadding = 0, metaDataSize = 0;
+        private MetaDataStream strings;
+        private MetaDataStream us;
+        private MetaDataStream guid;
+        private MetaDataStream blob;
+        private MetaDataStream[] streams;
+        private uint numStreams = 5;
+        private uint tildeTide = 0;
+        private uint tildePadding = 0;
+        private uint tildeStart = 0;
+        private uint numTables = 0;
+        private uint resourcesSize = 0;
+        private readonly ArrayList byteCodes = new ArrayList();
+        private uint codeSize = 0;
+        private uint byteCodePadding = 0;
+        private uint metaDataSize = 0;
         internal PEWriter output;
         private byte heapSizes = 0;
-        MetaDataElement entryPoint;
-        long mdStart;
-        ArrayList resources;
+        private MetaDataElement entryPoint;
+        private long mdStart;
+        private ArrayList resources;
         private readonly ArrayList[] tables = new ArrayList[NumMetaDataTables];
 
         // Allow the debug mode to be set.
@@ -60,7 +68,7 @@ namespace QUT.PERWAPI
             (method as MethodDef).TraverseCode(this);
         }
 
-        readonly Hashtable debugsigs = new Hashtable();
+        private readonly Hashtable debugsigs = new Hashtable();
 
         /// <summary>
         /// Get the debug signature for a local.

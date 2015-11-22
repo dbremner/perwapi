@@ -8,13 +8,13 @@ namespace QUT.PERWAPI
 
     internal class EHClause
     {
-        readonly EHClauseType clauseType;
-        readonly uint tryOffset;
-        readonly uint tryLength;
-        readonly uint handlerOffset;
-        readonly uint handlerLength;
-        uint filterOffset = 0;
-        MetaDataElement classToken = null;
+        private readonly EHClauseType clauseType;
+        private readonly uint tryOffset;
+        private readonly uint tryLength;
+        private readonly uint handlerOffset;
+        private readonly uint handlerLength;
+        private uint filterOffset = 0;
+        private MetaDataElement classToken = null;
 
         internal EHClause(EHClauseType cType, uint tOff, uint tLen, uint hOff, uint hLen)
         {

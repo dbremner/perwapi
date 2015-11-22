@@ -30,25 +30,45 @@ namespace QUT.PERWAPI
     internal class PEWriter : BinaryWriter
     {
         private Section text, sdata, rsrc = null;
-        ArrayList data;  // Used for accumulating data for the .sdata Section.
-        PEResourceDirectory unmanagedResourceRoot;
-        readonly BinaryWriter reloc = new BinaryWriter(new MemoryStream());
-        readonly uint dateStamp = 0;
-        uint codeStart = 0;
-        uint numSections = 2; // always have .text  and .reloc sections
+        private ArrayList data;  // Used for accumulating data for the .sdata Section.
+        private PEResourceDirectory unmanagedResourceRoot;
+        private readonly BinaryWriter reloc = new BinaryWriter(new MemoryStream());
+        private readonly uint dateStamp = 0;
+        private uint codeStart = 0;
+        private uint numSections = 2; // always have .text  and .reloc sections
         internal PEFileVersionInfo verInfo;
         //internal bool delaySign;
-        uint entryPointOffset, entryPointPadding, imageSize, headerSize, headerPadding, entryPointToken = 0;
-        uint relocOffset, relocRVA, relocSize, relocPadding, relocTide, hintNameTableOffset, resourcesSize = 0;
-        uint metaDataOffset, runtimeEngineOffset, initDataSize = 0, resourcesOffset, importTablePadding;
-        uint importTableOffset, importLookupTableOffset, totalImportTableSize, entryPointReloc = 0; //, delaySignOffset;
-        uint debugOffset = 0, debugSize = 0, debugRVA = 0;
-        long debugBytesStartOffset = 0;
-        MetaDataOut metaData;
-        readonly char[] runtimeEngine = FileImage.runtimeEngineName.ToCharArray();
-        char[] hintNameTable;
-        readonly bool closeStream = true;
-        int debugBytesSize = 25; // NOTE: I don't know that this should be 25 but the debug bytes size seems to be 25 plus the size of the PDB filename. AKB 06-01-2007
+        private uint entryPointOffset;
+        private uint entryPointPadding;
+        private uint imageSize;
+        private uint headerSize;
+        private uint headerPadding;
+        private uint entryPointToken = 0;
+        private uint relocOffset;
+        private uint relocRVA;
+        private uint relocSize;
+        private uint relocPadding;
+        private uint relocTide;
+        private uint hintNameTableOffset;
+        private uint resourcesSize = 0;
+        private uint metaDataOffset;
+        private uint runtimeEngineOffset;
+        private uint initDataSize = 0;
+        private uint resourcesOffset;
+        private uint importTablePadding;
+        private uint importTableOffset; //, delaySignOffset;
+        private uint importLookupTableOffset; //, delaySignOffset;
+        private uint totalImportTableSize; //, delaySignOffset;
+        private uint entryPointReloc = 0; //, delaySignOffset;
+        private uint debugOffset = 0;
+        private uint debugSize = 0;
+        private uint debugRVA = 0;
+        private long debugBytesStartOffset = 0;
+        private MetaDataOut metaData;
+        private readonly char[] runtimeEngine = FileImage.runtimeEngineName.ToCharArray();
+        private char[] hintNameTable;
+        private readonly bool closeStream = true;
+        private int debugBytesSize = 25; // NOTE: I don't know that this should be 25 but the debug bytes size seems to be 25 plus the size of the PDB filename. AKB 06-01-2007
         internal PDBWriter pdbWriter;
 
         /*-------------------- Constructors ---------------------------------*/

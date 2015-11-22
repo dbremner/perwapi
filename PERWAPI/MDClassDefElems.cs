@@ -43,17 +43,17 @@ namespace QUT.PERWAPI
         private static readonly uint StringFormatMask = 0x030000;
 
         protected PEFile scope;
-        uint flags;
-        Class superType;
-        ArrayList security;
-        ClassLayout layout;
-        uint extendsIx;
+        private uint flags;
+        private Class superType;
+        private ArrayList security;
+        private ClassLayout layout;
+        private uint extendsIx;
         internal ClassRef refOf;
         internal uint eventIx = 0, propIx = 0;
-        readonly ArrayList events = new ArrayList();
-        readonly ArrayList properties = new ArrayList();
-        ArrayList interfaces = new ArrayList();
-        readonly ArrayList methodImpls = new ArrayList();
+        private readonly ArrayList events = new ArrayList();
+        private readonly ArrayList properties = new ArrayList();
+        private ArrayList interfaces = new ArrayList();
+        private readonly ArrayList methodImpls = new ArrayList();
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -1308,7 +1308,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class NestedClassDef : ClassDef
     {
-        ClassDef parent;
+        private ClassDef parent;
 
         /*-------------------- Constructors ---------------------------------*/
 

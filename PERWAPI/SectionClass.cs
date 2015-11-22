@@ -36,45 +36,49 @@ namespace QUT.PERWAPI
       /// <summary>
       /// Eight characters exactly, null padded if necessary.
       /// </summary>
-      readonly char[] name;
+      private readonly char[] name;
 
-        readonly string nameString;
+        private readonly string nameString;
 
       /// <summary>
       /// Total size of the section in bytes. If this value is 
       /// greater than SizeOFRawData the section is zero-padded.
       /// </summary>
-        uint loadedSize = 0;
+      private uint loadedSize = 0;
 
       /// <summary>
       /// Position in memory when loaded, relative to image base.
       /// </summary>
-        uint loadedRVA = 0;
+      private uint loadedRVA = 0;
 
       /// <summary>
       /// Size of raw data in the section. Must be multiple of file alignment size.
       /// Can be smaller than loadedSize, or larger (as a result of alignment).
       /// </summary>
-        uint sizeOnDisk = 0;
+      private uint sizeOnDisk = 0;
 
       /// <summary>
       /// Offset to section's page within the PE file.  Must be multiple
       /// of file alignment constant.
       /// </summary>
-        uint fileOffset = 0;
+      private uint fileOffset = 0;
 
       // These are all zero mostly.
-        uint relocRVA, lineRVA, relocOff, numRelocs, numLineNums = 0;
+        private uint relocRVA;
+        private uint lineRVA;
+        private uint relocOff;
+        private uint numRelocs;
+        private uint numLineNums = 0;
 
-      /// <summary>
+        /// <summary>
       /// Flags of section: code = 0x20, init-data = 0x40, un-init-data = 0x80, 
       /// execute = 0x20000000, read = 0x40000000, write = 0x80000000.
       /// </summary>
-      readonly uint flags;
+        private readonly uint flags;
 
-        uint relocTide = 0;
-        uint padding = 0;
-        uint[] relocs;
+        private uint relocTide = 0;
+        private uint padding = 0;
+        private uint[] relocs;
 
 
         internal Section(string sName, uint sFlags)

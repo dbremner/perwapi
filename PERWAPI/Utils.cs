@@ -104,15 +104,18 @@ namespace QUT.PERWAPI
     /// </summary>
     public class Hex
     {
-        readonly static char[] hexDigit = {'0','1','2','3','4','5','6','7',
+        private readonly static char[] hexDigit = {'0','1','2','3','4','5','6','7',
                                               '8','9','A','B','C','D','E','F'};
-        readonly static uint[] iByteMask = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
-        readonly static ulong[] lByteMask = {0x00000000000000FF, 0x000000000000FF00, 
+
+        private readonly static uint[] iByteMask = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
+
+        private readonly static ulong[] lByteMask = {0x00000000000000FF, 0x000000000000FF00, 
                                                 0x0000000000FF0000, 0x00000000FF000000,
                                                 0x000000FF00000000, 0x0000FF0000000000,
                                                 0x00FF000000000000, 0xFF00000000000000 };
-        readonly static uint nibble0Mask = 0x0000000F;
-        readonly static uint nibble1Mask = 0x000000F0;
+
+        private readonly static uint nibble0Mask = 0x0000000F;
+        private readonly static uint nibble1Mask = 0x000000F0;
 
         /// <summary>
         /// Derives a hexadecimal string for a byte value
@@ -260,8 +263,8 @@ namespace QUT.PERWAPI
     [SerializableAttribute]
     public class InstructionException : System.Exception
     {
-        readonly IType iType;
-        readonly uint op;
+        private readonly IType iType;
+        private readonly uint op;
 
         internal InstructionException(IType iType, uint op)
         {

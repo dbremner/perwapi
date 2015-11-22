@@ -29,10 +29,10 @@ namespace QUT.PERWAPI
     /// </summary>
     internal class ClassLayout : MetaDataElement
     {
-        ClassDef parent;
-        ushort packSize = 0;
-        uint classSize = 0;
-        readonly uint parentIx = 0;
+        private ClassDef parent;
+        private ushort packSize = 0;
+        private uint classSize = 0;
+        private readonly uint parentIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

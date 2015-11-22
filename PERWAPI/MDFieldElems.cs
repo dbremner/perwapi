@@ -106,12 +106,12 @@ namespace QUT.PERWAPI
         private static readonly ushort NoDefault = 0x7FFF;
 
         internal FieldRef refOf;
-        DataConstant initVal;
-        Constant constVal;
-        NativeType marshalType;
-        ushort flags;
-        bool hasOffset = false;
-        uint offset;
+        private DataConstant initVal;
+        private Constant constVal;
+        private NativeType marshalType;
+        private ushort flags;
+        private bool hasOffset = false;
+        private uint offset;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -541,9 +541,9 @@ namespace QUT.PERWAPI
     /// </summary>
     public class FieldLayout : MetaDataElement
     {
-        FieldDef field;
-        readonly uint offset;
-        readonly uint fieldIx = 0;
+        private FieldDef field;
+        private readonly uint offset;
+        private readonly uint fieldIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

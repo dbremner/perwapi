@@ -86,10 +86,12 @@ namespace QUT.PERWAPI
     /// </summary>
     public class CalliSig : Signature
     {
-        CallConv callConv;
-        Type retType;
-        Type[] parTypes, optParTypes;
-        uint numPars = 0, numOptPars = 0;
+        private CallConv callConv;
+        private Type retType;
+        private Type[] parTypes;
+        private Type[] optParTypes;
+        private uint numPars = 0;
+        private uint numOptPars = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -234,8 +236,8 @@ namespace QUT.PERWAPI
     public class LocalSig : Signature
     {
         internal static readonly byte LocalSigByte = 0x7;
-        Local[] locals;
-        readonly bool resolved = true;
+        private Local[] locals;
+        private readonly bool resolved = true;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -304,8 +306,8 @@ namespace QUT.PERWAPI
     public class DebugLocalSig : Signature
     {
         internal static readonly byte LocalSigByte = 0x6;
-        readonly bool resolved = true;
-        readonly byte[] loc;
+        private readonly bool resolved = true;
+        private readonly byte[] loc;
 
         /*-------------------- Constructors ---------------------------------*/
 

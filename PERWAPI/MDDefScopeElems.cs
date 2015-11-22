@@ -53,14 +53,18 @@ namespace QUT.PERWAPI
     public class Assembly : DefiningScope
     {
         //internal static Hashtable Assemblies = new Hashtable();
-        ushort majorVer, minorVer, buildNo, revisionNo;
-        uint flags;
-        HashAlgorithmType hashAlgId = HashAlgorithmType.None;
-        uint keyIx = 0, cultIx = 0;
-        byte[] publicKey;
-        string culture;
+        private ushort majorVer;
+        private ushort minorVer;
+        private ushort buildNo;
+        private ushort revisionNo;
+        private uint flags;
+        private HashAlgorithmType hashAlgId = HashAlgorithmType.None;
+        private uint keyIx = 0;
+        private uint cultIx = 0;
+        private byte[] publicKey;
+        private string culture;
         internal AssemblyRef refOf;
-        ArrayList security;
+        private ArrayList security;
         internal PEFile pefile;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -359,8 +363,8 @@ namespace QUT.PERWAPI
     /// </summary>
     public abstract class Module : DefiningScope
     {
-        Guid mvid;
-        uint mvidIx = 0;
+        private Guid mvid;
+        private uint mvidIx = 0;
         internal ModuleRef refOf;
         /// <summary>
         /// The default class "Module" for globals

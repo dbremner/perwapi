@@ -28,11 +28,11 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class CILWriter : StreamWriter
     {
-        readonly PEFile pefile;
-        readonly ArrayList externRefs = new ArrayList();
-        FieldDef[] fields;
-        MethodDef[] methods;
-        ClassDef[] classes;
+        private readonly PEFile pefile;
+        private readonly ArrayList externRefs = new ArrayList();
+        private FieldDef[] fields;
+        private MethodDef[] methods;
+        private ClassDef[] classes;
         private bool debug;
 
         public CILWriter(string filename, bool debug, PEFile pefile)

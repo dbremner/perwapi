@@ -84,8 +84,8 @@ namespace QUT.PERWAPI
     /// </summary>
     public class CustomModifiedType : Type
     {
-        Type type;
-        Class cmodType;
+        private Type type;
+        private Class cmodType;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -158,8 +158,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public abstract class TypeSpec : Type
     {
-
-        uint sigIx = 0;
+        private uint sigIx = 0;
         //internal bool typeSpecAdded = false; // so that MetaDataOut can reset it
 
         /*-------------------- Constructors ---------------------------------*/
@@ -324,12 +323,13 @@ namespace QUT.PERWAPI
     {
         private static readonly byte VAR = 0x13;
         private static readonly byte MVAR = 0x1E;
-        ushort flags, index;
-        readonly ushort kind = 0;
-        readonly uint parentIx;
-        uint nameIx;
-        readonly string name;
-        MetaDataElement parent;
+        private ushort flags;
+        private ushort index;
+        private readonly ushort kind = 0;
+        private readonly uint parentIx;
+        private uint nameIx;
+        private readonly string name;
+        private MetaDataElement parent;
 
       // Users add and remove constraintTypes to this list.
       // The constraints list is used during metadata output
@@ -341,7 +341,7 @@ namespace QUT.PERWAPI
 
         // There should only be one GenericParTypeSpec entry 
         // int the metadata for each GenericParam.
-        GenericParTypeSpec myTypeSpec;
+        private GenericParTypeSpec myTypeSpec;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -622,7 +622,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     internal class UnresolvedTypeSpec : TypeSpec
     {
-        readonly uint blobIx;
+        private readonly uint blobIx;
 
         internal UnresolvedTypeSpec(PEReader buff, int i)
             : base(0)
@@ -647,9 +647,9 @@ namespace QUT.PERWAPI
     /// </summary> 
     public class GenericParTypeSpec : TypeSpec
     {
-        GenericParam gPar;
-        readonly bool isClassPar;
-        readonly uint index;
+        private GenericParam gPar;
+        private readonly bool isClassPar;
+        private readonly uint index;
 
         internal GenericParTypeSpec(GenericParam gPar)
             : base(gPar.GetTypeIndex())
@@ -732,9 +732,9 @@ namespace QUT.PERWAPI
     /// </summary>
     public class BoundArray : Array
     {
-        readonly int[] lowerBounds;
-        readonly int[] sizes;
-        readonly uint numDims;
+        private readonly int[] lowerBounds;
+        private readonly int[] sizes;
+        private readonly uint numDims;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -905,8 +905,8 @@ namespace QUT.PERWAPI
     public class MethPtrType : TypeSpec
     {
         // MethPtrType == FNPTR
-        readonly Method meth;
-        readonly MethSig mSig;
+        private readonly Method meth;
+        private readonly MethSig mSig;
 
         /*-------------------- Constructors ---------------------------------*/
 

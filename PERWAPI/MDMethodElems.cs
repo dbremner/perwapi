@@ -264,9 +264,9 @@ namespace QUT.PERWAPI
     /// </summary>
     public class MethodSpec : Method
     {
-        Method methParent;
-        uint instIx;
-        Type[] instTypes;
+        private Method methParent;
+        private uint instIx;
+        private Type[] instTypes;
         internal static byte GENERICINST = 0x0A;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -370,7 +370,7 @@ namespace QUT.PERWAPI
     public class MethodRef : Method
     {
         internal MethodDef defOf;
-        MethodDef varArgParent = null;
+        private MethodDef varArgParent = null;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -596,25 +596,28 @@ namespace QUT.PERWAPI
         private static readonly ushort HasSecurity = 0x4000;
         private static readonly ushort NoSecurity = 0xBFFF;
         //private static readonly uint UnmanagedExport = 0x0008;
-        uint parIx = 0, textOffset = 0;
+        private uint parIx = 0;
+        private uint textOffset = 0;
         internal MethodRef refOf;
 
         // The default max stack depth to be assigned when the depth can not be calculated.
         private static readonly int DefaultMaxStackDepth = 8;
 
-        CILInstructions code;
-        readonly uint rva;
-        Param[] parList;
-        Local[] locals;
-        bool initLocals;
-        ushort methFlags = 0, implFlags = 0;
-        int maxStack = 0, numLocals = 0;
-        uint numPars = 0;
-        bool entryPoint = false;
+        private CILInstructions code;
+        private readonly uint rva;
+        private Param[] parList;
+        private Local[] locals;
+        private bool initLocals;
+        private ushort methFlags = 0;
+        private ushort implFlags = 0;
+        private int maxStack = 0;
+        private int numLocals = 0;
+        private uint numPars = 0;
+        private bool entryPoint = false;
         internal LocalSig localSig;
-        MethodRef varArgSig;
-        ImplMap pinvokeImpl;
-        ArrayList security = null;
+        private MethodRef varArgSig;
+        private ImplMap pinvokeImpl;
+        private ArrayList security = null;
         internal uint locToken = 0;
 
         /*-------------------- Constructors ---------------------------------*/

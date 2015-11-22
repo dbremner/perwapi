@@ -31,17 +31,18 @@ namespace QUT.PERWAPI
     {
         internal static readonly ushort prolog = 0x0001;
         private static readonly int initSize = 5;
-        MetaDataElement parent;
-        Method type;
-        uint valIx;
-        readonly uint parentIx;
-        readonly uint typeIx;
-        Constant[] argVals, vals;
-        byte[] byteVal;
-        ushort numNamed = 0;
-        string[] names;
-        bool[] isField;
-        bool changed = false;
+        private MetaDataElement parent;
+        private Method type;
+        private uint valIx;
+        private readonly uint parentIx;
+        private readonly uint typeIx;
+        private Constant[] argVals;
+        private Constant[] vals;
+        private byte[] byteVal;
+        private ushort numNamed = 0;
+        private string[] names;
+        private bool[] isField;
+        private bool changed = false;
 
         /*-------------------- Constructors ---------------------------------*/
 

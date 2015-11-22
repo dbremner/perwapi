@@ -258,8 +258,8 @@ namespace QUT.PERWAPI
     public class PEResourceData : PEResourceElement
     {
         public PEResourceData() { }
-        int codepage = 0;
-        byte[] data;
+        private int codepage = 0;
+        private byte[] data;
 
         public int CodePage { get { return codepage; } set { codepage = value; } }
 

@@ -224,11 +224,12 @@ namespace QUT.PERWAPI {
     private static readonly uint maxSmlIxSize = 0xFFFF;
 
     private uint start = 0;
-    uint size = 0, tide = 1;
-    bool largeIx = false;
-      readonly uint sizeOfHeader;
+      private uint size = 0;
+      private uint tide = 1;
+      private bool largeIx = false;
+      private readonly uint sizeOfHeader;
     internal char[] name;
-      readonly Hashtable htable = new Hashtable();
+      private readonly Hashtable htable = new Hashtable();
 
     internal MetaDataStream(char[] name, bool addInitByte)
       : base(new MemoryStream()) {

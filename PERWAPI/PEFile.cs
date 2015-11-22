@@ -37,10 +37,10 @@ namespace QUT.PERWAPI
         private string outputDir, fileName;
         private Stream outStream;
         private Assembly thisAssembly;
-        PEWriter output;
-        readonly MetaDataOut metaData;
+        private PEWriter output;
+        private readonly MetaDataOut metaData;
 
-        System.IO.FileStream unmanagedResources;   // Unmanaged resources read from a file.
+        private System.IO.FileStream unmanagedResources;   // Unmanaged resources read from a file.
 
         internal PEResourceDirectory unmanagedResourceRoot; // Unmanaged resources added programmatically.
         internal MetaDataTables metaDataTables;

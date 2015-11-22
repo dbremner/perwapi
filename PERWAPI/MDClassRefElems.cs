@@ -483,7 +483,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class NestedClassRef : ClassRef
     {
-        ClassRef parent;
+        private ClassRef parent;
         internal uint parentIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -586,7 +586,7 @@ namespace QUT.PERWAPI
     /// </summary>
     internal class SystemClass : ClassRef
     {
-        readonly PrimitiveType elemType;
+        private readonly PrimitiveType elemType;
         internal bool added = false;
 
         internal SystemClass(AssemblyRef paren, PrimitiveType eType)

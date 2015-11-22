@@ -29,10 +29,10 @@ namespace QUT.PERWAPI
     /// </summary>
     public class FieldMarshal : MetaDataElement
     {
-        MetaDataElement field;
-        NativeType nt;
-        uint ntIx;
-        readonly uint parentIx;
+        private MetaDataElement field;
+        private NativeType nt;
+        private uint ntIx;
+        private readonly uint parentIx;
 
         /*-------------------- Added by Carlo Kok ---------------------------------*/
 

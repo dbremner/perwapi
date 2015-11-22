@@ -181,8 +181,8 @@ namespace QUT.PERWAPI
     /// </summary>
     public class Event : Feature
     {
-        Type eventType;
-        readonly uint typeIx = 0;
+        private Type eventType;
+        private readonly uint typeIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -279,11 +279,11 @@ namespace QUT.PERWAPI
     public class Property : Feature
     {
         internal static readonly byte PropertyTag = 0x8;
-        Constant constVal;
-        uint typeBlobIx = 0;
-        Type[] parList;
-        Type returnType;
-        uint numPars = 0;
+        private Constant constVal;
+        private uint typeBlobIx = 0;
+        private Type[] parList;
+        private Type returnType;
+        private uint numPars = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

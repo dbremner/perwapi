@@ -62,7 +62,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class BoolConst : BlobConstant
     {
-        readonly bool val;
+        private readonly bool val;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -103,7 +103,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class CharConst : BlobConstant
     {
-        readonly char val;
+        private readonly char val;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -185,7 +185,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ArrayConst : BlobConstant
     {
-        readonly Constant[] elements;
+        private readonly Constant[] elements;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -233,8 +233,8 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class ClassTypeConst : BlobConstant
     {
-        string name;
-        readonly Class desc;
+        private string name;
+        private readonly Class desc;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -276,7 +276,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class BoxedSimpleConst : BlobConstant
     {
-        readonly SimpleConstant sConst;
+        private readonly SimpleConstant sConst;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -316,7 +316,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class AddressConstant : DataConstant
     {
-        readonly DataConstant data;
+        private readonly DataConstant data;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -346,7 +346,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class ByteArrConst : DataConstant
     {
-        readonly byte[] val;
+        private readonly byte[] val;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -381,8 +381,8 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class RepeatedConstant : DataConstant
     {
-        readonly DataConstant data;
-        readonly uint repCount;
+        private readonly DataConstant data;
+        private readonly uint repCount;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -417,8 +417,8 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class StringConst : DataConstant
     {
-        readonly string val;
-        readonly byte[] strBytes;
+        private readonly string val;
+        private readonly byte[] strBytes;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -477,7 +477,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class IntConst : SimpleConstant
     {
-        readonly long val;
+        private readonly long val;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -586,7 +586,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class UIntConst : SimpleConstant
     {
-        readonly ulong val;
+        private readonly ulong val;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -679,7 +679,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class FloatConst : SimpleConstant
     {
-        readonly float val;
+        private readonly float val;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -727,7 +727,7 @@ namespace QUT.PERWAPI
     /**************************************************************************/
     public class DoubleConst : SimpleConstant
     {
-        readonly double val;
+        private readonly double val;
 
         /*-------------------- Constructors ---------------------------------*/
 

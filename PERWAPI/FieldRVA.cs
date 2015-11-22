@@ -29,10 +29,10 @@ namespace QUT.PERWAPI
     /// </summary>
     public class FieldRVA : MetaDataElement
     {
-        FieldDef field;
-        readonly DataConstant data;
-        readonly uint rva = 0;
-        readonly uint fieldIx = 0;
+        private FieldDef field;
+        private readonly DataConstant data;
+        private readonly uint rva = 0;
+        private readonly uint fieldIx = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

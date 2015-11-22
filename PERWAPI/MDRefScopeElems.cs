@@ -469,10 +469,15 @@ namespace QUT.PERWAPI
     public class AssemblyRef : ReferenceScope
     {
         private ushort major, minor, build, revision;
-        uint flags, keyIx, hashIx, cultIx;
-        bool hasVersion = false, isKeyToken = false;
-        byte[] keyBytes, hashBytes;
-        string culture;
+        private uint flags;
+        private uint keyIx;
+        private uint hashIx;
+        private uint cultIx;
+        private bool hasVersion = false;
+        private bool isKeyToken = false;
+        private byte[] keyBytes;
+        private byte[] hashBytes;
+        private string culture;
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -776,7 +781,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ModuleRef : ReferenceScope
     {
-        readonly ArrayList exportedClasses = new ArrayList();
+        private readonly ArrayList exportedClasses = new ArrayList();
         internal ModuleFile modFile;
         internal Module defOf;
         internal bool ismscorlib = false;

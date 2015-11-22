@@ -30,10 +30,10 @@ namespace QUT.PERWAPI
     public class Local
     {
         private static readonly byte PINNED = 0x45;
-        readonly string name;
+        private readonly string name;
         public Type type;
-        bool pinned = false;
-        int index = 0;
+        private bool pinned = false;
+        private int index = 0;
 
         /*-------------------- Constructors ---------------------------------*/
 

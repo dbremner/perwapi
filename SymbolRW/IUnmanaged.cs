@@ -32,7 +32,7 @@ namespace QUT.Symbols {
       InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
       Guid("B62B923C-B500-3158-A543-24F307A8B7E1")
   ]
-  interface ISymUnmanagedMethod {
+  internal interface ISymUnmanagedMethod {
     void GetToken(out SymbolToken pToken);
 
     void GetSequencePointCount(out int retVal); // used by PERWAPI
