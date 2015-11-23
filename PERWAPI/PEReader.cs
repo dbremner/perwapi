@@ -1487,7 +1487,7 @@ namespace QUT.PERWAPI
         private CILInstruction[] DoByteCodes(uint len, MethodDef thisMeth)
         {
             uint pos = 0;
-            ArrayList instrList = new ArrayList();
+            List<CILInstruction> instrList = new List<CILInstruction>();
             //int instrIx = 0;
             while (pos < len)
             {
@@ -1610,12 +1610,7 @@ namespace QUT.PERWAPI
                 if (nextInstr != null) nextInstr.Resolve();
                 instrList.Add(nextInstr);
             }
-            CILInstruction[] instrs = new CILInstruction[instrList.Count];
-            for (int i = 0; i < instrs.Length; i++)
-            {
-                instrs[i] = (CILInstruction)instrList[i];
-            }
-            return instrs;
+            return instrList.ToArray();
         }
 
         public void ReadByteCodes(MethodDef meth, uint rva)

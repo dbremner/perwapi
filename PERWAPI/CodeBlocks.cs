@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace QUT.PERWAPI
@@ -74,7 +75,7 @@ namespace QUT.PERWAPI
     {
         protected bool fatFormat = false;
         protected ushort flags = 0;
-        private readonly ArrayList handlers = new ArrayList();
+        private readonly List<HandlerBlock> handlers = new List<HandlerBlock>();
 
         /*-------------------- Constructors ---------------------------------*/
 
@@ -101,7 +102,7 @@ namespace QUT.PERWAPI
         /// <returns>The list of handlers.</returns>
         public HandlerBlock[] GetHandlers()
         {
-            return (HandlerBlock[])handlers.ToArray(typeof(HandlerBlock));
+            return handlers.ToArray();
         }
 
         internal void SetSize()
@@ -110,7 +111,7 @@ namespace QUT.PERWAPI
             if (fatFormat) return;
             for (int i = 0; i < handlers.Count; i++)
             {
-                HandlerBlock handler = (HandlerBlock)handlers[i];
+                HandlerBlock handler = handlers[i];
                 if (handler.isFat())
                 {
                     fatFormat = true;
@@ -133,7 +134,7 @@ namespace QUT.PERWAPI
         {
             for (int i = 0; i < handlers.Count; i++)
             {
-                ((HandlerBlock)handlers[i]).BuildTables(md);
+                handlers[i].BuildTables(md);
             }
         }
 
@@ -141,7 +142,7 @@ namespace QUT.PERWAPI
         {
             for (int i = 0; i < handlers.Count; i++)
             {
-                ((HandlerBlock)handlers[i]).BuildCILInfo(output);
+                handlers[i].BuildCILInfo(output);
             }
         }
 
@@ -151,7 +152,7 @@ namespace QUT.PERWAPI
             for (int i = 0; i < handlers.Count; i++)
             {
                 if (Diag.DiagOn) Console.WriteLine("Except block " + i);
-                HandlerBlock handler = (HandlerBlock)handlers[i];
+                HandlerBlock handler = handlers[i];
                 flags = handler.GetFlag();
                 if (Diag.DiagOn) Console.WriteLine("flags = " + flags);
                 if (fatFormat) output.Write((uint)flags);
