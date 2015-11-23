@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 
 
 namespace QUT.PERWAPI
@@ -1146,7 +1147,7 @@ namespace QUT.PERWAPI
             if (meth.retType == null)
                 System.Diagnostics.Debug.Assert(meth.retType != null);
             int optParStart = -1;
-            ArrayList pTypes = new ArrayList();
+            List<Type> pTypes = new List<Type>();
             for (int i = 0; i < parCount; i++)
             {
                 Type pType = GetBlobType();//currClass,currMeth);
@@ -1165,7 +1166,7 @@ namespace QUT.PERWAPI
                 meth.optParTypes = new Type[meth.numOptPars];
                 for (int i = 0; i < meth.numOptPars; i++)
                 {
-                    meth.optParTypes[i] = (Type)pTypes[i + optParStart];
+                    meth.optParTypes[i] = pTypes[i + optParStart];
                 }
             }
             else
@@ -1173,7 +1174,7 @@ namespace QUT.PERWAPI
             meth.parTypes = new Type[meth.numPars];
             for (int i = 0; i < meth.numPars; i++)
             {
-                meth.parTypes[i] = (Type)pTypes[i];
+                meth.parTypes[i] = pTypes[i];
             }
             return meth;
         }

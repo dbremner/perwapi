@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections;
-
+using System.Collections.Generic;
 
 namespace QUT.PERWAPI
 {
@@ -39,7 +39,7 @@ namespace QUT.PERWAPI
         private uint tildeStart = 0;
         private uint numTables = 0;
         private uint resourcesSize = 0;
-        private readonly ArrayList byteCodes = new ArrayList();
+        private readonly List<CILInstructions> byteCodes = new List<CILInstructions>();
         private uint codeSize = 0;
         private uint byteCodePadding = 0;
         private uint metaDataSize = 0;
@@ -68,7 +68,7 @@ namespace QUT.PERWAPI
             (method as MethodDef).TraverseCode(this);
         }
 
-        private readonly Hashtable debugsigs = new Hashtable();
+        private readonly Dictionary<string, DebugLocalSig> debugsigs = new Dictionary<string, DebugLocalSig>();
 
         /// <summary>
         /// Get the debug signature for a local.
@@ -79,7 +79,7 @@ namespace QUT.PERWAPI
         {
             byte[] b = loc.GetSig();
             string s = BitConverter.ToString(b);
-            DebugLocalSig sig = (DebugLocalSig)debugsigs[s];
+            DebugLocalSig sig = debugsigs[s];
             if (sig != null) return sig;
             sig = new DebugLocalSig(b);
             debugsigs.Add(s, sig);
@@ -486,7 +486,7 @@ namespace QUT.PERWAPI
         {
             for (int i = 0; i < byteCodes.Count; i++)
             {
-                ((CILInstructions)byteCodes[i]).Write(output);
+                byteCodes[i].Write(output);
             }
             for (int i = 0; i < byteCodePadding; i++)
             {

@@ -24,6 +24,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.SymbolStore;
 using QSy = QUT.Symbols;
@@ -365,18 +366,18 @@ namespace QUT.PERWAPI
                     SequencePointList spList = (SequencePointList)meth.SequencePointList[sourceDoc];
 #if SIMPLEWRITER
                     symWriter.DefineSequencePoints(sourceDoc._docWriter,
-                        (uint[])spList.offsets.ToArray(typeof(int)),
-                        (uint[])spList.lines.ToArray(typeof(int)),
-                        (uint[])spList.cols.ToArray(typeof(int)),
-                        (uint[])spList.endLines.ToArray(typeof(int)),
-                        (uint[])spList.endCols.ToArray(typeof(int)));
+                        (uint[])spList.offsets.ToArray(),
+                        (uint[])spList.lines.ToArray(),
+                        (uint[])spList.cols.ToArray(),
+                        (uint[])spList.endLines.ToArray(),
+                        (uint[])spList.endCols.ToArray());
 #else
                     symWriter.DefineSequencePoints(sourceDoc.docWriter,
-                        (int[])spList.offsets.ToArray(typeof(int)),
-                        (int[])spList.lines.ToArray(typeof(int)),
-                        (int[])spList.cols.ToArray(typeof(int)),
-                        (int[])spList.endLines.ToArray(typeof(int)),
-                        (int[])spList.endCols.ToArray(typeof(int)));
+                        spList.offsets.ToArray(),
+                        spList.lines.ToArray(),
+                        spList.cols.ToArray(),
+                        spList.endLines.ToArray(),
+                        spList.endCols.ToArray());
 #endif // SIMPLEWRITER
                 }
                 symWriter.CloseMethod();
@@ -444,11 +445,11 @@ namespace QUT.PERWAPI
         /// </summary>
         private class SequencePointList
         {
-            internal readonly ArrayList offsets = new ArrayList();
-            internal readonly ArrayList lines = new ArrayList();
-            internal readonly ArrayList cols = new ArrayList();
-            internal readonly ArrayList endLines = new ArrayList();
-            internal readonly ArrayList endCols = new ArrayList();
+            internal readonly List<int> offsets = new List<int>();
+            internal readonly List<int> lines = new List<int>();
+            internal readonly List<int> cols = new List<int>();
+            internal readonly List<int> endLines = new List<int>();
+            internal readonly List<int> endCols = new List<int>();
         }
 
         /// <summary>
@@ -483,9 +484,9 @@ namespace QUT.PERWAPI
             internal int OffsetStart;
             internal int OffsetEnd;
             internal Scope ParentScope = null;
-            internal readonly ArrayList Locals = new ArrayList();
+            internal readonly List<LocalBinding> Locals = new List<LocalBinding>();
             internal ArrayList Constants = new ArrayList();
-            internal readonly ArrayList ChildScopes = new ArrayList();
+            internal readonly List<Scope> ChildScopes = new List<Scope>();
         }
 
         /// <summary>
