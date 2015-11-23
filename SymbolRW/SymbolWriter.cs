@@ -45,7 +45,7 @@ namespace QUT.Symbols {
         try {
           object dispenser;
           OLE32.CoCreateInstance(ref XGuid.dispenserClassID, null, 1, ref XGuid.dispenserIID, out dispenser);
-          object pUnknown = null;
+          object pUnknown;
           ((IMetaDataDispenserSubset)dispenser).OpenScope(binaryFile, 0, ref XGuid.importerIID, out pUnknown);
         importer = Marshal.GetComInterfaceForObject(pUnknown, typeof(IMetadataImport));
 

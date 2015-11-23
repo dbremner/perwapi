@@ -82,8 +82,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] typeDefs, bool isMSCorLib)
         {
-            ClassDef prevDef = null;
-            prevDef = new ClassDef(buff, 1, isMSCorLib);
+            ClassDef prevDef = new ClassDef(buff, 1, isMSCorLib);
             typeDefs[0] = prevDef;
             for (int i = 1; i < typeDefs.Length; i++)
             {

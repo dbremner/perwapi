@@ -104,7 +104,7 @@ namespace QUT.PERWAPI
             byte[] pKey = buff.GetBlob();
             string name = buff.GetString();
             string cult = buff.GetString();
-            AssemblyRef assemRef = null;
+            AssemblyRef assemRef;
             if (name.ToLower() == "mscorlib")
             {
                 assemRef = MSCorLib.mscorlib;
