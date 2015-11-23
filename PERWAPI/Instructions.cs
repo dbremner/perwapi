@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Diagnostics;
+using JetBrains.Annotations;
 using SCG = System.Collections.Generic;
 
 
@@ -111,6 +112,7 @@ namespace QUT.PERWAPI {
     /// using ResetInstCounter().  This method cannot be called when in "insert" mode.
     /// </summary>
     /// <returns></returns>
+    [CanBeNull]
     public CILInstruction GetNextInstruction() {
       if (inserting) throw new Exception("Cannot access next instruction during insert");
       if (currI + 1 < tide)
@@ -124,6 +126,7 @@ namespace QUT.PERWAPI {
     /// retrieved by this method. This method cannot be called when in "insert" mode.
     /// </summary>
     /// <returns></returns>
+    [CanBeNull]
     public CILInstruction GetPrevInstruction() {
       if (inserting) throw new Exception("Cannot access previous instruction during insert");
       if (currI > 0)
@@ -372,6 +375,7 @@ namespace QUT.PERWAPI {
     /// stream use CodeLabel.
     /// </summary>
     /// <returns>a new CIL label</returns>
+    [NotNull]
     public CILLabel NewLabel() {
       return new CILLabel();
     }
@@ -2329,6 +2333,7 @@ namespace QUT.PERWAPI {
     /// </summary>
     /// <param name="name">The name of the constant.</param>
     /// <returns>The ConstantBinding object of this constant.</returns>
+    [CanBeNull]
     internal ConstantBinding FindConstantBinding(string name) {
       foreach (ConstantBinding binding in _constantBindings)
         if (binding.Name == name)
@@ -2353,14 +2358,16 @@ namespace QUT.PERWAPI {
       return binding;
     }
 
-    internal LocalBinding FindLocalBinding(string name) {
+      [CanBeNull]
+      internal LocalBinding FindLocalBinding(string name) {
       foreach (LocalBinding binding in _localBindings)
         if (binding._name == name)
           return binding;
       return null;
     }
 
-    internal LocalBinding FindLocalBinding(int index) {
+      [CanBeNull]
+      internal LocalBinding FindLocalBinding(int index) {
       foreach (LocalBinding binding in _localBindings)
         if (binding._index == index)
           return binding;

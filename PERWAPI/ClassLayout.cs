@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -60,6 +61,7 @@ namespace QUT.PERWAPI
             tabIx = MDTable.ClassLayout;
         }
 
+        [CanBeNull]
         internal static ClassLayout FindLayout(PEReader buff, ClassDef paren, uint classIx)
         {
             buff.SetElementPosition(MDTable.ClassLayout, 0);

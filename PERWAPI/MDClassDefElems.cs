@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -290,6 +291,7 @@ namespace QUT.PERWAPI
             return genericParams.Count;
         }
 
+        [CanBeNull]
         public GenericParam GetGenericParam(string name)
         {
             int pos = FindGenericParam(name);
@@ -310,6 +312,7 @@ namespace QUT.PERWAPI
             DeleteGenericParam(ix);
         }
 
+        [CanBeNull]
         public override ClassSpec Instantiate(Type[] genTypes)
         {
             if (genTypes == null) return null;
@@ -816,6 +819,7 @@ namespace QUT.PERWAPI
         /// Get the security descriptor associated with this class
         /// </summary>
         /// <returns></returns>
+        [CanBeNull]
         public DeclSecurity[] GetSecurity()
         {
             if (security == null) return null;
@@ -855,6 +859,7 @@ namespace QUT.PERWAPI
 
         internal override bool isDef() { return true; }
 
+        [CanBeNull]
         private static Feature FindFeature(string name, ArrayList featureList)
         {
             if (featureList == null) return null;
