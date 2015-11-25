@@ -59,23 +59,23 @@ namespace QUT.PERWAPI
             classes = pefile.GetClasses();
             if (fields != null)
             {
-                for (int i = 0; i < fields.Length; i++)
+                foreach (FieldDef field in fields)
                 {
-                    fields[i].BuildCILInfo(this);
+                    field.BuildCILInfo(this);
                 }
             }
             if (methods != null)
             {
-                for (int i = 0; i < methods.Length; i++)
+                foreach (MethodDef method in methods)
                 {
-                    methods[i].BuildCILInfo(this);
+                    method.BuildCILInfo(this);
                 }
             }
             if (classes != null)
             {
-                for (int i = 0; i < classes.Length; i++)
+                foreach (ClassDef cls in classes)
                 {
-                    classes[i].BuildCILInfo(this);
+                    cls.BuildCILInfo(this);
                 }
             }
         }
@@ -95,23 +95,23 @@ namespace QUT.PERWAPI
             WriteLine(".module " + pefile.GetFileName());
             if (fields != null)
             {
-                for (int i = 0; i < fields.Length; i++)
+                foreach (FieldDef field in fields)
                 {
-                    fields[i].Write(this);
+                    field.Write(this);
                 }
             }
             if (methods != null)
             {
-                for (int i = 0; i < methods.Length; i++)
+                foreach (MethodDef method in methods)
                 {
-                    methods[i].Write(this);
+                    method.Write(this);
                 }
             }
             if (classes != null)
             {
-                for (int i = 0; i < classes.Length; i++)
+                foreach (ClassDef cls in classes)
                 {
-                    classes[i].Write(this);
+                    cls.Write(this);
                 }
             }
             this.Flush();

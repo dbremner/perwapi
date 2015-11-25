@@ -195,9 +195,9 @@ namespace QUT.PERWAPI
             type = ElementType.SZArray;
             size = 5;  // one byte for SZARRAY, 4 bytes for length
             elements = elems;
-            for (int i = 0; i < elements.Length; i++)
+            foreach (Constant elem in elements)
             {
-                size += elements[i].GetSize();
+                size += elem.GetSize();
             }
         }
 
@@ -223,9 +223,9 @@ namespace QUT.PERWAPI
         {
             bw.Write((byte)type);
             bw.Write(elements.Length);
-            for (int i = 0; i < elements.Length; i++)
+            foreach (Constant elem in elements)
             {
-                elements[i].Write(bw);
+                elem.Write(bw);
             }
         }
 

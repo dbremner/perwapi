@@ -259,9 +259,9 @@ namespace QUT.PERWAPI
                 bw.Write((ushort)1);
                 if (argVals != null)
                 {
-                    for (int i = 0; i < argVals.Length; i++)
+                    foreach (Constant argVal in argVals)
                     {
-                        argVals[i].Write(bw);
+                        argVal.Write(bw);
                     }
                 }
                 bw.Write(numNamed);

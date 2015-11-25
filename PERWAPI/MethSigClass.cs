@@ -84,17 +84,17 @@ namespace QUT.PERWAPI
         internal void ChangeParTypes(ClassDef newType, ClassDef[] oldTypes)
         {
             System.Diagnostics.Debug.Assert(newType != null);
-            for (int i = 0; i < oldTypes.Length; i++)
+            foreach (ClassDef oldType in oldTypes)
             {
-                if (retType == oldTypes[i]) retType = newType;
+                if (retType == oldType) retType = newType;
                 for (int j = 0; j < numPars; j++)
                 {
-                    if (parTypes[j] == oldTypes[i])
+                    if (parTypes[j] == oldType)
                         parTypes[j] = newType;
                 }
                 for (int j = 0; j < numOptPars; j++)
                 {
-                    if (optParTypes[j] == oldTypes[i])
+                    if (optParTypes[j] == oldType)
                         optParTypes[j] = newType;
                 }
             }

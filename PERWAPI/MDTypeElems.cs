@@ -590,9 +590,9 @@ namespace QUT.PERWAPI
 
         internal override void BuildCILInfo(CILWriter output)
         {
-            for (int i = 0; i < constraintTypes.Count; i++)
+            foreach (Type conType in constraintTypes)
             {
-                Class cClass = (Class)constraintTypes[i];
+                Class cClass = (Class)conType;
                 if (!cClass.isDef())
                 {
                     cClass.BuildCILInfo(output);
@@ -602,9 +602,9 @@ namespace QUT.PERWAPI
 
         internal void AddConstraints(MetaDataOut md)
         {
-            for (int i = 0; i < constraints.Count; i++)
+            foreach (GenericParamConstraint constraint in constraints)
             {
-                md.AddToTable(MDTable.GenericParamConstraint, constraints[i]);
+                md.AddToTable(MDTable.GenericParamConstraint, constraint);
             }
         }
 
@@ -839,18 +839,18 @@ namespace QUT.PERWAPI
             if ((sizes != null) && (sizes.Length > 0))
             {
                 MetaDataOut.CompressNum(BlobUtil.CompressUInt((uint)sizes.Length), str);
-                for (int i = 0; i < sizes.Length; i++)
+                foreach (int size in sizes)
                 {
-                    MetaDataOut.CompressNum(BlobUtil.CompressUInt((uint)sizes[i]), str);
+                    MetaDataOut.CompressNum(BlobUtil.CompressUInt((uint)size), str);
                 }
             }
             else str.WriteByte(0);
             if ((lowerBounds != null) && (lowerBounds.Length > 0))
             {
                 MetaDataOut.CompressNum(BlobUtil.CompressUInt((uint)lowerBounds.Length), str);
-                for (int i = 0; i < lowerBounds.Length; i++)
+                foreach (int lowerBound in lowerBounds)
                 {
-                    MetaDataOut.CompressNum(BlobUtil.CompressInt(lowerBounds[i]), str);
+                    MetaDataOut.CompressNum(BlobUtil.CompressInt(lowerBound), str);
                 }
             }
             else str.WriteByte(0);
@@ -950,24 +950,24 @@ namespace QUT.PERWAPI
         {
             Type[] types = meth.GetParTypes();
             if (types != null)
-                for (int i = 0; i < types.Length; i++)
-                    types[i].BuildMDTables(md);
+                foreach (Type typ in types)
+                    typ.BuildMDTables(md);
             types = meth.GetOptParTypes();
             if (types != null)
-                for (int i = 0; i < types.Length; i++)
-                    types[i].BuildMDTables(md);
+                foreach (Type typ in types)
+                    typ.BuildMDTables(md);
         }
 
         internal sealed override void BuildCILInfo(CILWriter output)
         {
             Type[] types = meth.GetParTypes();
             if (types != null)
-                for (int i = 0; i < types.Length; i++)
-                    types[i].BuildCILInfo(output);
+                foreach (Type typ in types)
+                    typ.BuildCILInfo(output);
             types = meth.GetOptParTypes();
             if (types != null)
-                for (int i = 0; i < types.Length; i++)
-                    types[i].BuildCILInfo(output);
+                foreach (Type typ in types)
+                    typ.BuildCILInfo(output);
         }
 
         /*    internal sealed override void BuildSignatures(MetaDataOut md) {

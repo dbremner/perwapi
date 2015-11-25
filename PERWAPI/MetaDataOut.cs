@@ -262,7 +262,8 @@ namespace QUT.PERWAPI
 
         internal static void CompressNum(byte[] arr, MemoryStream sig)
         {
-            for (int ix = 0; ix < arr.Length; ix++) sig.WriteByte(arr[ix]);
+            foreach (byte byt in arr)
+                sig.WriteByte(byt);
         }
 
         internal uint CodeSize()
@@ -349,9 +350,9 @@ namespace QUT.PERWAPI
                 {
                     //Console.WriteLine("Starting metaData table " + i + " at " + (output.Seek(0,SeekOrigin.Current) - startTilde));
                     ArrayList table = tables[i];
-                    for (int j = 0; j < table.Count; j++)
+                    foreach (object tbl in table)
                     {
-                        ((MetaDataElement)table[j]).Write(output);
+                        ((MetaDataElement)tbl).Write(output);
                     }
                 }
             }
@@ -359,9 +360,9 @@ namespace QUT.PERWAPI
             if (tables[(int)MDTable.TypeSpec] != null)
             {
                 ArrayList typeSpecTable = tables[(int)MDTable.TypeSpec];
-                for (int i = 0; i < typeSpecTable.Count; i++)
+                foreach (object tbl in typeSpecTable)
                 {
-                  ((Type)typeSpecTable[i]).typeSpecAdded = false;
+                    ((Type)tbl).typeSpecAdded = false;
                 }
             }
             //Console.WriteLine("Writing padding at " + output.Seek(0,SeekOrigin.Current));
@@ -423,13 +424,13 @@ namespace QUT.PERWAPI
             }
             // end of bug fix
             */
-            for (int i = 0; i < tables.Length; i++)
+            foreach (ArrayList tbl in tables)
             {
-                if (tables[i] != null)
+                if (tbl != null)
                 {
-                    for (int j = 0; j < tables[i].Count; j++)
+                    for (int j = 0; j < tbl.Count; j++)
                     {
-                        ((MetaDataElement)tables[i][j]).BuildSignatures(this);
+                        ((MetaDataElement)tbl[j]).BuildSignatures(this);
                     }
                 }
             }
@@ -484,9 +485,9 @@ namespace QUT.PERWAPI
 
         internal void WriteByteCodes(PEWriter output)
         {
-            for (int i = 0; i < byteCodes.Count; i++)
+            foreach (CILInstructions byteCode in byteCodes)
             {
-                byteCodes[i].Write(output);
+                byteCode.Write(output);
             }
             for (int i = 0; i < byteCodePadding; i++)
             {
@@ -497,9 +498,9 @@ namespace QUT.PERWAPI
         internal void WriteResources(PEWriter output)
         {
             if (resources == null) return;
-            for (int i = 0; i < resources.Count; i++)
+            foreach (object res in resources)
             {
-                byte[] resBytes = (byte[])resources[i];
+                byte[] resBytes = (byte[])res;
                 output.Write((uint)resBytes.Length);
                 output.Write(resBytes);
             }

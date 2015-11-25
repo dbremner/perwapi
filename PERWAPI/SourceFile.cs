@@ -61,9 +61,8 @@ namespace QUT.PERWAPI
 
         public static SourceFile GetSourceFile(string name, Guid lang, Guid vend, Guid docu)
         {
-            for (int i = 0; i < sourceFiles.Count; i++)
+            foreach (SourceFile sFile in sourceFiles)
             {
-                SourceFile sFile = (SourceFile)sourceFiles[i];
                 if ((sFile.name == name) && sFile.GuidsMatch(lang, vend, docu))
                     return sFile;
             }

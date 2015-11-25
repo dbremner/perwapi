@@ -888,15 +888,16 @@ namespace QUT.PERWAPI {
     internal void SetAndResolveInstructions(CILInstruction[] insts) {
       offset = 0;
       ArrayList labels = new ArrayList();
-      for (int i = 0; i < insts.Length; i++) {
-        insts[i].offset = offset;
-        offset += insts[i].size;
-        if (insts[i] is BranchInstr) {
-          ((BranchInstr)insts[i]).MakeTargetLabel(labels);
-        }
-        else if (insts[i] is SwitchInstr) {
-          ((SwitchInstr)insts[i]).MakeTargetLabels(labels);
-        }
+      foreach (CILInstruction inst in insts)
+      {
+          inst.offset = offset;
+          offset += inst.size;
+          if (inst is BranchInstr) {
+              ((BranchInstr)inst).MakeTargetLabel(labels);
+          }
+          else if (inst is SwitchInstr) {
+              ((SwitchInstr)inst).MakeTargetLabels(labels);
+          }
       }
       if (exceptions != null) {
         for (int i = 0; i < exceptions.Count; i++) {
@@ -907,11 +908,12 @@ namespace QUT.PERWAPI {
       buffer = new CILInstruction[insts.Length + labels.Count];
       int currentPos = 0;
       tide = 0;
-      for (int i = 0; i < labels.Count; i++) {
-        CILLabel lab = (CILLabel)labels[i];
-        while ((currentPos < insts.Length) && (insts[currentPos].offset < lab.offset))
-          buffer[tide++] = insts[currentPos++];
-        buffer[tide++] = lab;
+      foreach (object lbl in labels)
+      {
+          CILLabel lab = (CILLabel)lbl;
+          while ((currentPos < insts.Length) && (insts[currentPos].offset < lab.offset))
+              buffer[tide++] = insts[currentPos++];
+          buffer[tide++] = lab;
       }
       while (currentPos < insts.Length) {
         buffer[tide++] = insts[currentPos++];
@@ -927,8 +929,9 @@ namespace QUT.PERWAPI {
         buffer[i].BuildTables(md);
       }
       if (exceptions != null) {
-        for (int i = 0; i < exceptions.Count; i++) {
-          ((TryBlock)exceptions[i]).BuildTables(md);
+        foreach (object exception in exceptions)
+        {
+            ((TryBlock)exception).BuildTables(md);
         }
       }
     }
@@ -938,8 +941,9 @@ namespace QUT.PERWAPI {
         buffer[i].BuildCILInfo(output);
       }
       if (exceptions != null) {
-        for (int i = 0; i < exceptions.Count; i++) {
-          ((TryBlock)exceptions[i]).BuildCILInfo(output);
+        foreach (object t in exceptions)
+        {
+            ((TryBlock)t).BuildCILInfo(output);
         }
       }
     }
@@ -1042,11 +1046,12 @@ namespace QUT.PERWAPI {
           // Console.WriteLine("Got exceptions");
           headerFlags |= MoreSects;
           uint numExceptClauses = 0;
-          for (int i = 0; i < exceptions.Count; i++) {
-            TryBlock tryBlock = (TryBlock)exceptions[i];
-            tryBlock.SetSize();
-            numExceptClauses += (uint)tryBlock.NumHandlers();
-            if (tryBlock.isFat()) fatExceptionFormat = true;
+          foreach (object t in exceptions)
+          {
+              TryBlock tryBlock = (TryBlock)t;
+              tryBlock.SetSize();
+              numExceptClauses += (uint)tryBlock.NumHandlers();
+              if (tryBlock.isFat()) fatExceptionFormat = true;
           }
           if (numExceptClauses > MaxClauses) fatExceptionFormat = true;
           if (Diag.DiagOn) Console.WriteLine("numexceptclauses = " + numExceptClauses);
@@ -1399,9 +1404,10 @@ namespace QUT.PERWAPI {
         // Console.WriteLine("header = " + Hex.Short(exceptHeader) + " exceptSize = " + Hex.Int(exceptSize));
         output.Write(exceptHeader);
         output.Write3Bytes((uint)exceptSize);
-        for (int i = 0; i < exceptions.Count; i++) {
-          TryBlock tryBlock = (TryBlock)exceptions[i];
-          tryBlock.Write(output, fatExceptionFormat);
+        foreach (object exception in exceptions)
+        {
+            TryBlock tryBlock = (TryBlock)exception;
+            tryBlock.Write(output, fatExceptionFormat);
         }
       }
     }

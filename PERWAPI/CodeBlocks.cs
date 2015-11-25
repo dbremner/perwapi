@@ -132,17 +132,17 @@ namespace QUT.PERWAPI
 
         internal void BuildTables(MetaDataOut md)
         {
-            for (int i = 0; i < handlers.Count; i++)
+            foreach (HandlerBlock handler in handlers)
             {
-                handlers[i].BuildTables(md);
+                handler.BuildTables(md);
             }
         }
 
         internal void BuildCILInfo(CILWriter output)
         {
-            for (int i = 0; i < handlers.Count; i++)
+            foreach (HandlerBlock handler in handlers)
             {
-                handlers[i].BuildCILInfo(output);
+                handler.BuildCILInfo(output);
             }
         }
 

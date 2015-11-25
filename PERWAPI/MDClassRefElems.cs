@@ -86,9 +86,9 @@ namespace QUT.PERWAPI
             }
             if (resolve)
             {
-                for (int i = 0; i < typeRefs.Length; i++)
+                foreach (TableRow typeRef in typeRefs)
                 {
-                    ((ClassRef)typeRefs[i]).ResolveParent(buff, false);
+                    ((ClassRef)typeRef).ResolveParent(buff, false);
                 }
             }
         }

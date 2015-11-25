@@ -246,9 +246,8 @@ namespace QUT.PERWAPI
             {
                 sdata.SetOffset(offset);
                 sdata.SetRVA(rva);
-                for (int i = 0; i < data.Count; i++)
+                foreach (DataConstant cVal in data)
                 {
-                    DataConstant cVal = (DataConstant)data[i];
                     cVal.DataOffset = sdata.Tide();
                     sdata.IncTide(cVal.GetSize());
                 }
@@ -437,9 +436,9 @@ namespace QUT.PERWAPI
         private void WriteSDataSection()
         {
             long pos = BaseStream.Position;
-            for (int i = 0; i < data.Count; i++)
+            foreach (DataConstant datum in data)
             {
-                ((DataConstant)data[i]).Write(this);
+                datum.Write(this);
             }
             pos = BaseStream.Position - pos;
             WriteZeros(NumToAlign((uint)pos, verInfo.fileAlign));

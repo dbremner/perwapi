@@ -173,17 +173,17 @@ namespace QUT.PERWAPI
 
         internal void ChangeRefsToDefs(ClassDef newType, ClassDef[] oldTypes)
         {
-            for (int i = 0; i < oldTypes.Length; i++)
+            foreach (ClassDef oldType in oldTypes)
             {
-                if (retType == oldTypes[i]) retType = newType;
+                if (retType == oldType) retType = newType;
                 for (int j = 0; j < numPars; j++)
                 {
-                    if (parTypes[j] == oldTypes[i])
+                    if (parTypes[j] == oldType)
                         parTypes[j] = newType;
                 }
                 for (int j = 0; j < numOptPars; j++)
                 {
-                    if (optParTypes[j] == oldTypes[i])
+                    if (optParTypes[j] == oldType)
                         optParTypes[j] = newType;
                 }
             }
@@ -274,9 +274,9 @@ namespace QUT.PERWAPI
         internal sealed override void BuildTables(MetaDataOut md)
         {
             md.AddToTable(tabIx, this);
-            for (int i = 0; i < locals.Length; i++)
+            foreach (Local local in locals)
             {
-                locals[i].BuildTables(md);
+                local.BuildTables(md);
             }
         }
 
@@ -285,9 +285,9 @@ namespace QUT.PERWAPI
             MemoryStream sig = new MemoryStream();
             sig.WriteByte(LocalSigByte);
             MetaDataOut.CompressNum(BlobUtil.CompressUInt((uint)locals.Length), sig);
-            for (int i = 0; i < locals.Length; i++)
+            foreach (Local lcl in locals)
             {
-                ((Local)locals[i]).TypeSig(sig);
+                ((Local)lcl).TypeSig(sig);
             }
             return sig.ToArray();
         }

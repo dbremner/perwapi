@@ -314,9 +314,9 @@ namespace QUT.PERWAPI
         {
             str.WriteByte(GENERICINST);
             MetaDataOut.CompressNum(BlobUtil.CompressUInt((uint)instTypes.Length), str);
-            for (int i = 0; i < instTypes.Length; i++)
+            foreach (Type instType in instTypes)
             {
-                instTypes[i].TypeSig(str);
+                instType.TypeSig(str);
             }
         }
 
@@ -330,9 +330,9 @@ namespace QUT.PERWAPI
             md.AddToTable(MDTable.MethodSpec, this);
             if (!(methParent is MethodDef)) // Never build a method def
                 methParent.BuildMDTables(md);
-            for (int i = 0; i < instTypes.Length; i++)
+            foreach (Type instType in instTypes)
             {
-                instTypes[i].BuildMDTables(md);
+                instType.BuildMDTables(md);
             }
         }
 
@@ -1015,9 +1015,9 @@ namespace QUT.PERWAPI
         {
             if (genericParams != null)
             {
-                for (int i = 0; i < genericParams.Count; i++)
+                foreach (object genericParam in genericParams)
                 {
-                    md.AddToTable(MDTable.GenericParam, (GenericParam)genericParams[i]);
+                    md.AddToTable(MDTable.GenericParam, (GenericParam)genericParam);
                 }
             }
         }
@@ -1029,16 +1029,16 @@ namespace QUT.PERWAPI
 
             if (genericParams != null)
             {
-                for (int i = 0; i < genericParams.Count; i++)
+                foreach (object genericParam in genericParams)
                 {
-                    ((GenericParam)genericParams[i]).BuildMDTables(md);
+                    ((GenericParam)genericParam).BuildMDTables(md);
                 }
             }
             if (security != null)
             {
-                for (int i = 0; i < security.Count; i++)
+                foreach (object sec in security)
                 {
-                    ((DeclSecurity)security[i]).BuildMDTables(md);
+                    ((DeclSecurity)sec).BuildMDTables(md);
                 }
             }
             if (pinvokeImpl != null) pinvokeImpl.BuildMDTables(md);
@@ -1097,24 +1097,24 @@ namespace QUT.PERWAPI
         {
             if (genericParams != null)
             {
-                for (int i = 0; i < genericParams.Count; i++)
+                foreach (object gp in genericParams)
                 {
-                    ((GenericParam)genericParams[i]).BuildCILInfo(output);
+                    ((GenericParam)gp).BuildCILInfo(output);
                 }
             }
             if (security != null)
             {
-                for (int i = 0; i < security.Count; i++)
+                foreach (object sec in security)
                 {
-                    ((DeclSecurity)security[i]).BuildCILInfo(output);
+                    ((DeclSecurity)sec).BuildCILInfo(output);
                 }
             }
             if (pinvokeImpl != null) pinvokeImpl.BuildCILInfo(output);
             if (locals != null)
             {
-                for (int i = 0; i < locals.Length; i++)
+                foreach (Local lcl in locals)
                 {
-                    locals[i].BuildCILInfo(output);
+                    lcl.BuildCILInfo(output);
                 }
             }
             try

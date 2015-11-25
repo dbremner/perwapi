@@ -317,9 +317,9 @@ namespace QUT.PERWAPI
             keyIx = md.AddToBlobHeap(publicKey);
             if (security != null)
             {
-                for (int i = 0; i < security.Count; i++)
+                foreach (object dclSecurity in security)
                 {
-                    ((DeclSecurity)security[i]).BuildMDTables(md);
+                    ((DeclSecurity)dclSecurity).BuildMDTables(md);
                 }
             }
         }
@@ -777,13 +777,13 @@ namespace QUT.PERWAPI
             nameIx = md.AddToStringsHeap(name);
             mvidIx = md.AddToGUIDHeap(mvid);
             defaultClass.BuildTables(md);
-            for (int i = 0; i < classes.Count; i++)
+            foreach (object cls in classes)
             {
-                ((Class)classes[i]).BuildMDTables(md);
+                ((Class)cls).BuildMDTables(md);
             }
-            for (int i = 0; i < resources.Count; i++)
+            foreach (ManifestResource rsrc in resources)
             {
-                ((ManifestResource)resources[i]).BuildMDTables(md);
+                rsrc.BuildMDTables(md);
             }
         }
 

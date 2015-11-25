@@ -48,9 +48,9 @@ namespace QUT.PERWAPI
 
         internal Class GetExistingClass(string nameSpace, string name)
         {
-            for (int i = 0; i < classes.Count; i++)
+            foreach (object cls in classes)
             {
-                Class aClass = (Class)classes[i];
+                Class aClass = (Class)cls;
                 if ((aClass.Name() == name) && (aClass.NameSpace() == nameSpace))
                     return aClass;
             }
@@ -59,9 +59,8 @@ namespace QUT.PERWAPI
 
         protected Class GetClass(string nameSpace, string name, bool both)
         {
-            for (int i = 0; i < classes.Count; i++)
+            foreach (object aClass in classes)
             {
-                Object aClass = classes[i];
                 if ((((Class)aClass).Name() == name) &&
                     (!both || (both && (((Class)aClass).NameSpace() == nameSpace))))
                     return (Class)aClass;
@@ -417,9 +416,9 @@ namespace QUT.PERWAPI
         /// <param name="flds">The fields to be added.</param>
         internal void AddFields(ArrayList flds)
         {
-            for (int i = 0; i < flds.Count; i++)
+            foreach (object obj in flds)
             {
-                FieldRef fld = (FieldRef)flds[i];
+                FieldRef fld = (FieldRef)obj;
                 defaultClass.AddField(fld);
             }
         }
@@ -906,8 +905,8 @@ namespace QUT.PERWAPI
             md.AddToTable(MDTable.ModuleRef, this);
             nameIx = md.AddToStringsHeap(name);
             if (modFile != null) modFile.BuildMDTables(md);
-            for (int i = 0; i < exportedClasses.Count; i++)
-                ((ExternClass)exportedClasses[i]).BuildMDTables(md);
+            foreach (object obj in exportedClasses)
+                ((ExternClass)obj).BuildMDTables(md);
         }
 
         internal sealed override void Write(PEWriter output)

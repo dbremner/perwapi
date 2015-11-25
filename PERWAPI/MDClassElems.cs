@@ -81,10 +81,10 @@ namespace QUT.PERWAPI
         /// <returns>The method descriptor for "name"</returns>
         public Method GetMethodDesc(string name)
         {
-            for (int i = 0; i < methods.Count; i++)
+            foreach (object method in methods)
             {
-                if (((Method)methods[i]).HasName(name))
-                    return (Method)methods[i];
+                if (((Method)method).HasName(name))
+                    return (Method)method;
             }
             return null;
         }
@@ -97,10 +97,10 @@ namespace QUT.PERWAPI
         /// <returns>The method descriptor for name(parTypes)</returns>
         public Method GetMethodDesc(string name, Type[] parTypes)
         {
-            for (int i = 0; i < methods.Count; i++)
+            foreach (object method in methods)
             {
-                if (((Method)methods[i]).HasNameAndSig(name, parTypes))
-                    return (Method)methods[i];
+                if (((Method)method).HasNameAndSig(name, parTypes))
+                    return (Method)method;
             }
             return null;
         }
@@ -114,10 +114,10 @@ namespace QUT.PERWAPI
         /// <returns>Descriptor for "name(parTypes,optTypes)"</returns>
         public Method GetMethodDesc(string name, Type[] parTypes, Type[] optParTypes)
         {
-            for (int i = 0; i < methods.Count; i++)
+            foreach (object method in methods)
             {
-                if (((Method)methods[i]).HasNameAndSig(name, parTypes, optParTypes))
-                    return (Method)methods[i];
+                if (((Method)method).HasNameAndSig(name, parTypes, optParTypes))
+                    return (Method)method;
             }
             return null;
         }
@@ -271,10 +271,10 @@ namespace QUT.PERWAPI
         protected ArrayList GetMeths(string name)
         {
             ArrayList meths = new ArrayList();
-            for (int i = 0; i < methods.Count; i++)
+            foreach (object method in methods)
             {
-                if (((Method)methods[i]).HasName(name))
-                    meths.Add(methods[i]);
+                if (((Method)method).HasName(name))
+                    meths.Add(method);
             }
             return meths;
         }

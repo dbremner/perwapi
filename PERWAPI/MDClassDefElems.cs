@@ -194,37 +194,37 @@ namespace QUT.PERWAPI
 
         internal void ChangeRefsToDefs(ClassDef newType, ClassDef[] oldTypes)
         {
-            for (int i = 0; i < oldTypes.Length; i++)
+            foreach (ClassDef oldType in oldTypes)
             {
-                for (int j = 0; j < oldTypes[i].fields.Count; j++)
-                    ((FieldDef)oldTypes[i].fields[j]).ChangeRefsToDefs(this, oldTypes);
-                for (int j = 0; j < oldTypes[i].methods.Count; j++)
-                    ((MethodDef)oldTypes[i].methods[j]).ChangeRefsToDefs(this, oldTypes);
-                for (int j = 0; j < oldTypes[i].events.Count; j++)
-                    ((Event)oldTypes[i].events[j]).ChangeRefsToDefs(this, oldTypes);
-                for (int j = 0; j < oldTypes[i].properties.Count; j++)
-                    ((Property)oldTypes[i].properties[j]).ChangeRefsToDefs(this, oldTypes);
-                for (int j = 0; j < oldTypes[i].interfaces.Count; j++)
-                    ((ClassDef)oldTypes[i].interfaces[j]).ChangeRefsToDefs(this, oldTypes);
-                for (int j = 0; j < oldTypes[i].methodImpls.Count; j++)
-                    ((MethodImpl)oldTypes[i].methodImpls[j]).ChangeRefsToDefs(this, oldTypes);
-                for (int j = 0; j < oldTypes[i].nestedClasses.Count; j++)
-                    ((ClassDef)oldTypes[i].nestedClasses[j]).ChangeRefsToDefs(this, oldTypes);
+                foreach (object field in oldType.fields)
+                    ((FieldDef)field).ChangeRefsToDefs(this, oldTypes);
+                foreach (object method in oldType.methods)
+                    ((MethodDef)method).ChangeRefsToDefs(this, oldTypes);
+                foreach (object evnt in oldType.events)
+                    ((Event)evnt).ChangeRefsToDefs(this, oldTypes);
+                foreach (object property in oldType.properties)
+                    ((Property)property).ChangeRefsToDefs(this, oldTypes);
+                foreach (object interfc in oldType.interfaces)
+                    ((ClassDef)interfc).ChangeRefsToDefs(this, oldTypes);
+                foreach (object methodImpl in oldType.methodImpls)
+                    ((MethodImpl)methodImpl).ChangeRefsToDefs(this, oldTypes);
+                foreach (object nestedClass in oldType.nestedClasses)
+                    ((ClassDef)nestedClass).ChangeRefsToDefs(this, oldTypes);
             }
         }
 
         public void MergeClasses(ClassDef[] classes)
         {
             ChangeRefsToDefs(this, classes);
-            for (int i = 0; i < classes.Length; i++)
+            foreach (ClassDef cls in classes)
             {
-                fields.AddRange(classes[i].fields);
-                methods.AddRange(classes[i].methods);
-                events.AddRange(classes[i].events);
-                properties.AddRange(classes[i].properties);
-                interfaces.AddRange(classes[i].interfaces);
-                methodImpls.AddRange(classes[i].methodImpls);
-                nestedClasses.AddRange(classes[i].nestedClasses);
+                fields.AddRange(cls.fields);
+                methods.AddRange(cls.methods);
+                events.AddRange(cls.events);
+                properties.AddRange(cls.properties);
+                interfaces.AddRange(cls.interfaces);
+                methodImpls.AddRange(cls.methodImpls);
+                nestedClasses.AddRange(cls.nestedClasses);
             }
         }
 
@@ -351,8 +351,8 @@ namespace QUT.PERWAPI
         public void SetInterfaces(Class[] iFaces)
         {
             interfaces = new ArrayList(iFaces.Length);
-            for (int i = 0; i < iFaces.Length; i++)
-                interfaces.Add(iFaces[i]);
+            foreach (Class iFace in iFaces)
+                interfaces.Add(iFace);
         }
 
         /// <summary>
@@ -984,27 +984,31 @@ namespace QUT.PERWAPI
           //  Hex.Short((short)startM),
           //  Hex.Short((short)md.TableIndex(MDTable.Method)));
 
-          for (int i = 0; i < genericParams.Count; i++) {
-            ((GenericParam)genericParams[i]).BuildMDTables(md);
+          foreach (GenericParam genericParam in genericParams)
+          {
+              genericParam.BuildMDTables(md);
           }
           nameIx = md.AddToStringsHeap(name);
           nameSpaceIx = md.AddToStringsHeap(nameSpace);
           if (security != null) {
-            for (int i = 0; i < security.Count; i++) {
-              ((DeclSecurity)security[i]).BuildMDTables(md);
+            foreach (object sec in security)
+            {
+                ((DeclSecurity)sec).BuildMDTables(md);
             }
           }
 
           if (Layout != null) Layout.BuildMDTables(md);
 
           // Console.WriteLine("adding methods " + methods.Count);
-          for (int i = 0; i < methods.Count; i++) {
-            ((MethodDef)methods[i]).BuildMDTables(md);
+          foreach (object method in methods)
+          {
+              ((MethodDef)method).BuildMDTables(md);
           }
 
-          // Console.WriteLine("adding fields");
-          for (int i = 0; i < fields.Count; i++) {
-            ((FieldDef)fields[i]).BuildMDTables(md);
+            // Console.WriteLine("adding fields");
+          foreach (object field in fields)
+          {
+              ((FieldDef)field).BuildMDTables(md);
           }
           // Console.WriteLine("adding interfaceimpls and methodimpls");
           if (interfaces.Count > 0) {
@@ -1013,8 +1017,9 @@ namespace QUT.PERWAPI
             }
           }
           if (methodImpls.Count > 0) {
-            for (int i = 0; i < methodImpls.Count; i++) {
-              ((MethodImpl)methodImpls[i]).BuildMDTables(md);
+            foreach (object methodImpl in methodImpls)
+            {
+                ((MethodImpl)methodImpl).BuildMDTables(md);
             }
           }
           // Console.WriteLine("adding events and properties");
@@ -1032,10 +1037,11 @@ namespace QUT.PERWAPI
           }
           // Console.WriteLine("Adding nested classes");
           if (nestedClasses.Count > 0) {
-            for (int i = 0; i < nestedClasses.Count; i++) {
-              ClassDef nClass = (ClassDef)nestedClasses[i];
-              nClass.BuildMDTables(md);
-              new MapElem(nClass, this, MDTable.NestedClass).BuildTables(md);
+            foreach (object nestedClass in nestedClasses)
+            {
+                ClassDef nClass = (ClassDef)nestedClass;
+                nClass.BuildMDTables(md);
+                new MapElem(nClass, this, MDTable.NestedClass).BuildTables(md);
             }
           }
           // Console.WriteLine("End of building tables");
@@ -1065,37 +1071,37 @@ namespace QUT.PERWAPI
                 ((MethodDef)methods[i]).BuildCILInfo(output);
             }
             // Console.WriteLine("adding fields");
-            for (int i = 0; i < fields.Count; i++)
+            foreach (object field in fields)
             {
-                ((FieldDef)fields[i]).BuildCILInfo(output);
+                ((FieldDef)field).BuildCILInfo(output);
             }
             // Console.WriteLine("adding interfaceimpls and methodimpls");
             if (interfaces.Count > 0)
             {
-                for (int i = 0; i < interfaces.Count; i++)
+                foreach (object iface in interfaces)
                 {
-                    ((InterfaceImpl)interfaces[i]).BuildCILInfo(output);
+                    ((InterfaceImpl)iface).BuildCILInfo(output);
                 }
             }
             if (methodImpls.Count > 0)
             {
-                for (int i = 0; i < methodImpls.Count; i++)
+                foreach (object methodImpl in methodImpls)
                 {
-                    ((MethodImpl)methodImpls[i]).BuildCILInfo(output);
+                    ((MethodImpl)methodImpl).BuildCILInfo(output);
                 }
             }
-            for (int i = 0; i < events.Count; i++)
+            foreach (object evnt in events)
             {
-                ((Event)events[i]).BuildCILInfo(output);
+                ((Event)evnt).BuildCILInfo(output);
             }
             for (int i = 0; i < properties.Count; i++)
             {
                 ((Property)properties[i]).BuildCILInfo(output);
             }
             // Console.WriteLine("Adding nested classes");
-            for (int i = 0; i < nestedClasses.Count; i++)
+            foreach (object nestedClass in nestedClasses)
             {
-                ((ClassDef)nestedClasses[i]).BuildCILInfo(output);
+                ((ClassDef)nestedClass).BuildCILInfo(output);
             }
             // Console.WriteLine("End of building tables");      
         }

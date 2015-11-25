@@ -108,9 +108,9 @@ namespace QUT.PERWAPI
         {
             PEFile pefile = PEReader.ReadPEFile(filename, true);
             ArrayList newClasses = new ArrayList();
-            for (int i = 0; i < pefile.classes.Count; i++)
+            foreach (object cls in pefile.classes)
             {
-                ClassDef aClass = (ClassDef)pefile.classes[i];
+                ClassDef aClass = (ClassDef)cls;
                 if (aClass.isPublic()) newClasses.Add(aClass);
             }
             pefile.classes = newClasses;
