@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Diagnostics.Contracts;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -53,7 +54,7 @@ namespace QUT.PERWAPI
             return true;
         }
 
-        internal bool Match(SourceFile file)
+        internal bool Match([CanBeNull] SourceFile file)
         {
             if (file == null) return false;
             if (this == file) return true;

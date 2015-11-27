@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Diagnostics.Contracts;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -56,7 +57,7 @@ namespace QUT.PERWAPI
             return newSig;
         }
 
-        private static Type[] ReplaceGenPars(Type[] typeList, MetaDataElement paren, Type[] genTypes)
+        private static Type[] ReplaceGenPars([CanBeNull] Type[] typeList, MetaDataElement paren, Type[] genTypes)
         {
             if (typeList == null) return null;
             Type[] newList = new Type[typeList.Length];
@@ -121,6 +122,7 @@ namespace QUT.PERWAPI
             }
         }
 
+        [NotNull]
         internal Type[] MakeRefParTypes()
         {
             Type[] pTypes = new Type[numPars];

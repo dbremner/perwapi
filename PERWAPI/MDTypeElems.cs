@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -57,6 +58,7 @@ namespace QUT.PERWAPI
                 " doesn't have a type signature!!");
         }
 
+        [NotNull]
         public virtual string TypeName()
         {
             return "NoTypeName";

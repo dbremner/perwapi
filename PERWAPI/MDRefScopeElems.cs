@@ -20,6 +20,7 @@ using System.IO;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -48,6 +49,7 @@ namespace QUT.PERWAPI
             classes.Add(aClass);
         }
 
+        [CanBeNull]
         internal Class GetExistingClass(string nameSpace, string name)
         {
             foreach (object cls in classes)
@@ -59,6 +61,7 @@ namespace QUT.PERWAPI
             return null;
         }
 
+        [CanBeNull]
         protected Class GetClass(string nameSpace, string name, bool both)
         {
             Contract.Requires(classes != null);

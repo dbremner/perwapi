@@ -20,6 +20,7 @@ using System.IO;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -231,6 +232,7 @@ namespace QUT.PERWAPI
             throw new Exception("CIL backend not yet fully implemented - " + GetType().ToString());
         }
 
+        [NotNull]
         internal virtual string NameString() { return "NoName"; }
 
         internal void DescriptorError(MetaDataElement elem)
@@ -464,8 +466,10 @@ namespace QUT.PERWAPI
             }
         }
 
+        [CanBeNull]
         internal virtual Member ResolveParent(PEReader buff) { return null; }
 
+        [CanBeNull]
         public MetaDataElement GetParent()
         {
             if (parent == null) return null;
@@ -480,6 +484,7 @@ namespace QUT.PERWAPI
             parent = paren;
         }
 
+        [NotNull]
         public string Name() { return name; }
 
         public string QualifiedName() { return parent.TypeName() + "." + name; }
@@ -763,18 +768,21 @@ namespace QUT.PERWAPI
 
         public AssemblyRef ResourceAssembly
         {
+            [CanBeNull]
             get { if (impl is AssemblyRef) return (AssemblyRef)impl; return null; }
             set { impl = value; }
         }
 
         public ResourceFile ResFile
         {
+            [CanBeNull]
             get { if (impl is ResourceFile) return (ResourceFile)impl; return null; }
             set { impl = value; }
         }
 
         public ModuleRef ResourceModule
         {
+            [CanBeNull]
             get { if (impl is ModuleFile) return ((ModuleFile)impl).fileModule; return null; }
             set
             {

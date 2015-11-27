@@ -20,6 +20,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -68,13 +69,13 @@ namespace QUT.PERWAPI
         private readonly bool refsOnly = false;
         private long[] tableStarts;
         private ResolutionScope thisScope;
-        private readonly PEFileVersionInfo verInfo = new PEFileVersionInfo();
+        [NotNull] private readonly PEFileVersionInfo verInfo = new PEFileVersionInfo();
         internal Method currentMethodScope;
         internal Class currentClassScope;
         private int genInstNestLevel = 0;
         internal bool skipBody = true;
 
-        private PEReader(PEFile pefile, System.IO.FileStream file, bool refs, bool skipBody)
+        private PEReader([NotNull] PEFile pefile, [NotNull] System.IO.FileStream file, bool refs, bool skipBody)
             :
             base(new MemoryStream(new BinaryReader(file).ReadBytes(System.Convert.ToInt32(file.Length))))
         {
@@ -121,7 +122,7 @@ namespace QUT.PERWAPI
             guid = null;
         }
 
-        private static System.IO.FileStream GetFile(string filename)
+        private static System.IO.FileStream GetFile([NotNull] string filename)
         {
             Contract.Requires(filename != null);
             if (Diag.DiagOn)
@@ -137,7 +138,8 @@ namespace QUT.PERWAPI
                 throw (new System.IO.FileNotFoundException("File Not Found", filename));
         }
 
-        public static PEFile ReadPEFile(string filename, bool skipBody)
+        [NotNull]
+        public static PEFile ReadPEFile([NotNull] string filename, bool skipBody)
         {
             Contract.Requires(filename != null);
             System.IO.FileStream file = GetFile(filename);
@@ -148,7 +150,7 @@ namespace QUT.PERWAPI
 
 
 
-        internal static ReferenceScope GetExportedInterface(string filename)
+        internal static ReferenceScope GetExportedInterface([NotNull] string filename)
         {
             Contract.Requires(filename != null);
             System.IO.FileStream file = GetFile(filename);
@@ -158,6 +160,7 @@ namespace QUT.PERWAPI
 
         //internal ResolutionScope GetThisScope() { return thisScope; }
 
+        [NotNull]
         internal string[] GetAssemblyRefNames()
         {
             string[] assemNames = new string[tableLengths[(int)MDTable.AssemblyRef]];
@@ -168,6 +171,7 @@ namespace QUT.PERWAPI
             return assemNames;
         }
 
+        [NotNull]
         internal AssemblyRef[] GetAssemblyRefs()
         {
             Contract.Requires((int)MDTable.AssemblyRef > 0);
@@ -185,7 +189,7 @@ namespace QUT.PERWAPI
             throw new PEFileException("Error in input");
         }
 
-        internal void MetaDataError(string msg)
+        internal void MetaDataError([NotNull] string msg)
         {
             Contract.Requires(msg != null);
             msg = "ERROR IN METADATA: " + msg;
@@ -361,6 +365,7 @@ namespace QUT.PERWAPI
             ReadZeros(16); // ExportAddressTableJumps/ManagedNativeHeader
         }
 
+        [NotNull]
         private String ReadStreamName()
         {
             char[] strName = new char[9];
@@ -923,6 +928,7 @@ namespace QUT.PERWAPI
             return elem;
         }
 
+        [CanBeNull]
         internal MetaDataElement GetElement(MDTable tabIx, uint ix)
         {
             if (ix == 0) return null;
@@ -935,6 +941,7 @@ namespace QUT.PERWAPI
             return elem;
         }
 
+        [CanBeNull]
         internal MetaDataElement GetCodedElement(CIx code, uint ix)
         {
             uint mask = MetaData.CIxBitMasks[MetaData.CIxShiftMap[(uint)code]];

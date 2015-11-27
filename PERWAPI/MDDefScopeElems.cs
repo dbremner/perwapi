@@ -20,6 +20,7 @@ using System.IO;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -504,6 +505,7 @@ namespace QUT.PERWAPI
         /// <param name="nsName">The namespace of the class</param>
         /// <param name="name">The name of the class to get</param>
         /// <returns>ClassDef for nsName.name or null</returns>
+        [CanBeNull]
         public ClassDef GetClass(string nsName, string name)
         {
             return (ClassDef)GetClass(nsName, name, true);

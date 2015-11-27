@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using JetBrains.Annotations;
 
 namespace QUT.PERWAPI
 {
@@ -123,6 +124,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="b">the byte value</param>
         /// <returns>hex string for the byte value</returns>
+        [NotNull]
         public static String Byte(int b)
         {
             char[] str = new char[2];
@@ -139,6 +141,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="b">the short value</param>
         /// <returns>hex string for the short value</returns>
+        [NotNull]
         public static String Short(int b)
         {
             char[] str = new char[4];
@@ -160,6 +163,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="val">the int value</param>
         /// <returns>hex string for the int value</returns>
+        [NotNull]
         public static String Int(int val)
         {
             char[] str = new char[8];
@@ -182,6 +186,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="num">the unsigned int value</param>
         /// <returns>hex string for the unsigned int value</returns>
+        [NotNull]
         public static String Int(uint num)
         {
             char[] str = new char[8];
@@ -203,6 +208,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="lnum">the long value</param>
         /// <returns>hex string for the long value</returns>
+        [NotNull]
         public static String Long(long lnum)
         {
             ulong num = (ulong)lnum;
@@ -255,7 +261,7 @@ namespace QUT.PERWAPI
         /// constructor
         /// </summary>
         /// <param name="msg"></param>
-        public TypeSignatureException(string msg) : base(msg) { }
+        public TypeSignatureException([NotNull] string msg) : base(msg) { }
     }
 
     /// <summary>
@@ -301,7 +307,7 @@ namespace QUT.PERWAPI
         /// exception
         /// </summary>
         /// <param name="msg"></param>
-        public DescriptorException(string msg)
+        public DescriptorException([NotNull] string msg)
             :
             base("Descriptor for " + msg + " already exists")
         {

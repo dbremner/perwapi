@@ -20,6 +20,7 @@ using System.IO;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -130,6 +131,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="name">the name of the generic type</param>
         /// <returns>descriptor for generic type "name"</returns>
+        [CanBeNull]
         public GenericParam GetGenericParam(string name)
         {
             int pos = FindGenericParam(name);
@@ -137,6 +139,7 @@ namespace QUT.PERWAPI
             return (GenericParam)genericParams[pos];
         }
 
+        [CanBeNull]
         public GenericParam GetGenericParam(int ix)
         {
             if ((genericParams == null) || (ix >= genericParams.Count)) return null;
@@ -157,6 +160,7 @@ namespace QUT.PERWAPI
             DeleteGenericParam(ix);
         }
 
+        [CanBeNull]
         public MethodSpec Instantiate(Type[] genTypes)
         {
             if (genTypes == null) return null;
