@@ -861,7 +861,7 @@ namespace QUT.PERWAPI {
       return tide == 0;
     }
 
-    internal static CILLabel GetLabel(ArrayList labs, uint targetOffset) {
+    internal static CILLabel GetLabel(SCG.List<CILLabel> labs, uint targetOffset) {
       CILLabel lab;
       int i = 0;
       while ((i < labs.Count) && (((CILLabel)labs[i]).offset < targetOffset)) i++;
@@ -888,7 +888,7 @@ namespace QUT.PERWAPI {
 
     internal void SetAndResolveInstructions(CILInstruction[] insts) {
       offset = 0;
-      ArrayList labels = new ArrayList();
+      SCG.List<CILLabel> labels = new SCG.List<CILLabel>();
       foreach (CILInstruction inst in insts)
       {
           inst.offset = offset;
@@ -909,9 +909,9 @@ namespace QUT.PERWAPI {
       buffer = new CILInstruction[insts.Length + labels.Count];
       int currentPos = 0;
       tide = 0;
-      foreach (object lbl in labels)
+      foreach (CILLabel lbl in labels)
       {
-          CILLabel lab = (CILLabel)lbl;
+          CILLabel lab = lbl;
           while ((currentPos < insts.Length) && (insts[currentPos].offset < lab.offset))
               buffer[tide++] = insts[currentPos++];
           buffer[tide++] = lab;
@@ -2292,7 +2292,7 @@ namespace QUT.PERWAPI {
       return "switch";
     }
 
-    internal void MakeTargetLabels(ArrayList labs) {
+    internal void MakeTargetLabels(SCG.List<CILLabel> labs) {
       cases = new CILLabel[numCases];
       for (int i = 0; i < numCases; i++) {
         cases[i] = CILInstructions.GetLabel(labs, (uint)(offset + size + targets[i]));
@@ -2879,7 +2879,7 @@ namespace QUT.PERWAPI {
       return "" + (BranchOp)instr;
     }
 
-    internal void MakeTargetLabel(ArrayList labs) {
+    internal void MakeTargetLabel(SCG.List<CILLabel> labs) {
       uint targetOffset = (uint)(offset + size + target);
       dest = CILInstructions.GetLabel(labs, targetOffset);
     }

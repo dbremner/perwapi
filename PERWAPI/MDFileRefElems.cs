@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 
 
@@ -132,7 +133,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ResourceFile : FileRef
     {
-        private static readonly ArrayList files = new ArrayList();
+        private static readonly List<ResourceFile> files = new List<ResourceFile>();
 
         /*-------------------- Constructors ---------------------------------*/
 

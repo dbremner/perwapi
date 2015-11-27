@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using JetBrains.Annotations;
@@ -383,7 +384,7 @@ namespace QUT.PERWAPI
         /// <summary>
         /// Managed resources for this module
         /// </summary>
-        protected ArrayList resources = new ArrayList();
+        protected List<ManifestResource> resources = new List<ManifestResource>();
 
         /*-------------------- Constructors ---------------------------------*/
 

@@ -658,11 +658,11 @@ namespace QUT.PERWAPI
         {
             get
             {
-                ArrayList vars = new ArrayList();
+                List<PDBVariable> vars = new List<PDBVariable>();
                 foreach (ISymbolVariable var in _scope.GetLocals())
                     vars.Add(new PDBVariable(var));
 
-                return (PDBVariable[])vars.ToArray(typeof(PDBVariable));
+                return vars.ToArray();
             }
         }
 
@@ -673,11 +673,11 @@ namespace QUT.PERWAPI
         {
             get
             {
-                ArrayList children = new ArrayList();
+                List<PDBScope> children = new List<PDBScope>();
                 foreach (ISymbolScope child in _scope.GetChildren())
                     children.Add(new PDBScope(child));
 
-                return (PDBScope[])children.ToArray(typeof(PDBScope));
+                return children.ToArray();
             }
         }
 
@@ -911,12 +911,12 @@ namespace QUT.PERWAPI
     internal class MergeBuffer
     {
         private readonly CILInstruction[] _buffer;
-        private readonly ArrayList _debugBuffer;
+        private readonly List<CILInstruction> _debugBuffer;
         private int _current;
 
         public MergeBuffer(CILInstruction[] buffer)
         {
-            _debugBuffer = new ArrayList();
+            _debugBuffer = new List<CILInstruction>();
             _buffer = buffer;
         }
 
@@ -939,7 +939,7 @@ namespace QUT.PERWAPI
             {
                 int i;
                 for (i = 0; i < _debugBuffer.Count; i++)
-                    if (((CILInstruction)_debugBuffer[i]).offset > offset)
+                    if (_debugBuffer[i].offset > offset)
                         break;
                 inst.offset = offset;
                 _debugBuffer.Insert((i > 0 ? i - 1 : i), inst);
@@ -961,7 +961,7 @@ namespace QUT.PERWAPI
             {
                 while (_current < _buffer.Length)
                     _debugBuffer.Add(_buffer[_current++]);
-                return (CILInstruction[])_debugBuffer.ToArray(typeof(CILInstruction));
+                return _debugBuffer.ToArray();
             }
         }
     }

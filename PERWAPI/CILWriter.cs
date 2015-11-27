@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 
@@ -30,7 +31,7 @@ namespace QUT.PERWAPI
     public class CILWriter : StreamWriter
     {
         private readonly PEFile pefile;
-        private readonly ArrayList externRefs = new ArrayList();
+        private readonly List<ReferenceScope> externRefs = new List<ReferenceScope>();
         private FieldDef[] fields;
         private MethodDef[] methods;
         private ClassDef[] classes;
@@ -87,9 +88,9 @@ namespace QUT.PERWAPI
         public void WriteFile(bool debug)
         {
             this.Debug = debug;
-            for (int i = 0; i < externRefs.Count; i++)
+            foreach (ReferenceScope externRef in externRefs)
             {
-                ((ReferenceScope)externRefs[i]).Write(this);
+                externRef.Write(this);
             }
             Assembly assem = pefile.GetThisAssembly();
             if (assem != null)

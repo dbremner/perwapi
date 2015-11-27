@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace QUT.PERWAPI
 {
@@ -35,7 +36,7 @@ namespace QUT.PERWAPI
             filterOffset = fOff;
         }
 
-        internal TryBlock MakeTryBlock(ArrayList labels)
+        internal TryBlock MakeTryBlock(List<CILLabel> labels)
         {
             TryBlock tBlock = new TryBlock(CILInstructions.GetLabel(labels, tryOffset),
                 CILInstructions.GetLabel(labels, tryOffset + tryLength));

@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using JetBrains.Annotations;
 
@@ -30,7 +31,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class SourceFile
     {
-        private static readonly ArrayList sourceFiles = new ArrayList();
+        private static readonly List<SourceFile> sourceFiles = new List<SourceFile>();
         internal string name;
         internal Guid language, vendor, document;
 

@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 
@@ -31,7 +32,7 @@ namespace QUT.PERWAPI
     internal class PEWriter : BinaryWriter
     {
         private Section text, sdata, rsrc = null;
-        private ArrayList data;  // Used for accumulating data for the .sdata Section.
+        private List<DataConstant> data;  // Used for accumulating data for the .sdata Section.
         private PEResourceDirectory unmanagedResourceRoot;
         private readonly BinaryWriter reloc = new BinaryWriter(new MemoryStream());
         private readonly uint dateStamp = 0;
@@ -482,7 +483,7 @@ namespace QUT.PERWAPI
             if (sdata == null)
             {
                 sdata = new Section(FileImage.sdataName, 0xC0000040);   // IMAGE_SCN_CNT  INITIALIZED_DATA, READ, WRITE
-                data = new ArrayList();
+                data = new List<DataConstant>();
             }
             data.Add(cVal);
         }
