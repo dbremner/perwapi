@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Text;
 
 namespace QUT.PERWAPI
@@ -112,14 +113,10 @@ namespace QUT.PERWAPI
         {
             fatFormat = base.isFat();
             if (fatFormat) return;
-            for (int i = 0; i < handlers.Count; i++)
+            if (handlers.Any(handler => handler.isFat()))
             {
-                HandlerBlock handler = handlers[i];
-                if (handler.isFat())
-                {
-                    fatFormat = true;
-                    return;
-                }
+                fatFormat = true;
+                return;
             }
         }
 

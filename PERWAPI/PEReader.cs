@@ -17,6 +17,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -200,11 +201,7 @@ namespace QUT.PERWAPI
 
         internal Section GetSection(uint rva)
         {
-            for (int i = 0; i < inputSections.Length; i++)
-            {
-                if (inputSections[i].ContainsRVA(rva)) return inputSections[i];
-            }
-            return null;
+            return inputSections.FirstOrDefault(inputSection => inputSection.ContainsRVA(rva));
         }
 
         internal uint GetOffset(uint rva)

@@ -17,6 +17,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;

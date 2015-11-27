@@ -20,6 +20,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace QUT.PERWAPI
 {
@@ -354,13 +355,8 @@ namespace QUT.PERWAPI
         /// <returns>The resource with the name "name" or null </returns>
         public ManifestResource GetResource(string name)
         {
-            for (int i = 0; i < resources.Count; i++)
-            {
-                if (((ManifestResource)resources[i]).Name == name)
-                    return (ManifestResource)resources[i];
-            }
-            return null;
             Contract.Requires(name != null);
+            return resources.FirstOrDefault(t => t.Name == name);
         }
 
         public ManifestResource[] GetResources()

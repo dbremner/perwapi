@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 
 
@@ -146,12 +147,7 @@ namespace QUT.PERWAPI
 
         public static ResourceFile GetFile(string name)
         {
-            for (int i = 0; i < files.Count; i++)
-            {
-                if (((ResourceFile)files[i]).name.Equals(name))
-                    return (ResourceFile)files[i];
-            }
-            return null;
+            return files.FirstOrDefault(f => f.name.Equals(name));
         }
 
     }
