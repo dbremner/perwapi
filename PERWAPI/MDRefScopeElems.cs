@@ -55,7 +55,7 @@ namespace QUT.PERWAPI
             foreach (object cls in classes)
             {
                 Class aClass = (Class)cls;
-                if ((aClass.Name() == name) && (aClass.NameSpace() == nameSpace))
+                if ((aClass.Name == name) && (aClass.NameSpace == nameSpace))
                     return aClass;
             }
             return null;
@@ -67,8 +67,8 @@ namespace QUT.PERWAPI
             Contract.Requires(classes != null);
             foreach (object aClass in classes)
             {
-                if ((((Class)aClass).Name() == name) &&
-                    (!both || (both && (((Class)aClass).NameSpace() == nameSpace))))
+                if ((((Class)aClass).Name == name) &&
+                    (!both || (both && (((Class)aClass).NameSpace == nameSpace))))
                     return (Class)aClass;
             }
             return null;
@@ -142,7 +142,7 @@ namespace QUT.PERWAPI
             bool found = false;
             for (int i = 0; (i < classes.Count) && !found; i++)
             {
-                if (((Class)classes[i]).Name() == aClass.Name())
+                if (((Class)classes[i]).Name == aClass.Name)
                 {
                     found = true;
                 }
@@ -160,10 +160,10 @@ namespace QUT.PERWAPI
         /// <param name="newClass">The class to be added</param>
         public void AddClass(ClassRef newClass)
         {
-            ClassRef aClass = (ClassRef)GetClass(newClass.NameSpace(), newClass.Name(), true);
+            ClassRef aClass = (ClassRef)GetClass(newClass.NameSpace, newClass.Name, true);
             if (aClass != null)
                 throw new DescriptorException("Class " + newClass.NameString());
-            if (Diag.DiagOn) Console.WriteLine("Adding class " + newClass.Name() + " to ResolutionScope " + name);
+            if (Diag.DiagOn) Console.WriteLine("Adding class " + newClass.Name + " to ResolutionScope " + name);
             classes.Add(newClass);
             // Change Refs to Defs here
             newClass.SetScope(this);

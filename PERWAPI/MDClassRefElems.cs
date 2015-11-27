@@ -112,14 +112,14 @@ namespace QUT.PERWAPI
             MetaDataElement parentScope = buff.GetCodedElement(cIx, resScopeIx);
             if (parentScope is Module)
             {  // special code for glitch in Everett ilasm
-                ClassDef newDef = new ClassDef((PEFile)parentScope, 0, nameSpace, name);
+                ClassDef newDef = new ClassDef((PEFile)parentScope, 0, NameSpace, Name);
                 ((Module)parentScope).AddToClassList(newDef);
                 buff.InsertInTable(MDTable.TypeRef, Row, newDef);
             }
             else
             {
                 scope = (ReferenceScope)buff.GetCodedElement(cIx, resScopeIx);
-                ClassRef existing = (ClassRef)scope.GetExistingClass(nameSpace, name);
+                ClassRef existing = (ClassRef)scope.GetExistingClass(NameSpace, Name);
                 if (existing == null)
                 {
                     scope.AddToClassList(this);
@@ -393,7 +393,7 @@ namespace QUT.PERWAPI
 
         internal override string ClassName()
         {
-            string nameString = nameSpace + "." + name;
+            string nameString = NameSpace + "." + Name;
             if ((scope != null) && (scope is AssemblyRef))
                 nameString += (", " + ((AssemblyRef)scope).AssemblyString());
             return nameString;
@@ -409,8 +409,8 @@ namespace QUT.PERWAPI
             if (!special)
             {
                 md.AddToTable(MDTable.TypeRef, this);
-                nameIx = md.AddToStringsHeap(name);
-                nameSpaceIx = md.AddToStringsHeap(nameSpace);
+                nameIx = md.AddToStringsHeap(Name);
+                nameSpaceIx = md.AddToStringsHeap(NameSpace);
             }
             scope.BuildMDTables(md);
         }
@@ -437,13 +437,13 @@ namespace QUT.PERWAPI
 
         internal override void WriteType(CILWriter output)
         {
-            if ((nameSpace == null) || (nameSpace == ""))
+            if(String.IsNullOrEmpty(NameSpace))
             {
-                output.Write("[" + scope.Name() + "]" + name);
+                output.Write("[" + scope.Name() + "]" + Name);
             }
             else
             {
-                output.Write("[" + scope.Name() + "]" + nameSpace + "." + name);
+                output.Write("[" + scope.Name() + "]" + NameSpace + "." + Name);
             }
         }
 
@@ -470,8 +470,8 @@ namespace QUT.PERWAPI
         {
             string nameString = "";
             if (scope != null) nameString = "[" + scope.NameString() + "]";
-            if (!string.IsNullOrEmpty(nameSpace)) nameString += nameSpace + ".";
-            nameString += name;
+            if (!string.IsNullOrEmpty(NameSpace)) nameString += NameSpace + ".";
+            nameString += Name;
             return nameString;
         }
 
@@ -513,7 +513,7 @@ namespace QUT.PERWAPI
             parent.ResolveParent(buff, isExtern);
             parent = (ClassRef)buff.GetCodedElement(cIx, resScopeIx);
             if (parent == null) return;
-            NestedClassRef existing = parent.GetNestedClass(name);
+            NestedClassRef existing = parent.GetNestedClass(Name);
             if (existing == null)
             {
                 scope = parent.GetScope();
@@ -546,8 +546,8 @@ namespace QUT.PERWAPI
 
         internal override string ClassName()
         {
-            string nameString = name;
-            if (parent != null) nameString = parent.TypeName() + "+" + name;
+            string nameString = Name;
+            if (parent != null) nameString = parent.TypeName() + "+" + Name;
             if ((scope != null) && (scope is AssemblyRef))
                 nameString += (", " + ((AssemblyRef)scope).AssemblyString());
             return nameString;
@@ -555,8 +555,8 @@ namespace QUT.PERWAPI
 
         internal override string NameString()
         {
-            if (parent == null) return name;
-            return parent.NameString() + "+" + name;
+            if (parent == null) return Name;
+            return parent.NameString() + "+" + Name;
         }
 
         internal sealed override void BuildTables(MetaDataOut md)
@@ -564,8 +564,8 @@ namespace QUT.PERWAPI
             if (!special)
             {
                 md.AddToTable(MDTable.TypeRef, this);
-                nameIx = md.AddToStringsHeap(name);
-                nameSpaceIx = md.AddToStringsHeap(nameSpace);
+                nameIx = md.AddToStringsHeap(Name);
+                nameSpaceIx = md.AddToStringsHeap(NameSpace);
             }
             parent.BuildMDTables(md);
         }

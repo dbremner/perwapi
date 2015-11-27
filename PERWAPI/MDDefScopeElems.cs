@@ -484,7 +484,7 @@ namespace QUT.PERWAPI
         public void AddClass(ClassDef aClass)
         {
             Contract.Requires(aClass != null);
-            ClassDef eClass = GetClass(aClass.NameSpace(), aClass.Name());
+            ClassDef eClass = GetClass(aClass.NameSpace, aClass.Name);
             if (eClass != null)
                 throw new DescriptorException("Class " + aClass.NameString());
             classes.Add(aClass);

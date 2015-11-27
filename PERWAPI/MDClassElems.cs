@@ -32,7 +32,6 @@ namespace QUT.PERWAPI
     public abstract class Class : Type
     {
         //protected int row = 0;
-        protected string name, nameSpace;
         protected uint nameIx, nameSpaceIx;
         protected ArrayList nestedClasses = new ArrayList();
         protected bool special = false;
@@ -56,14 +55,14 @@ namespace QUT.PERWAPI
         /// <summary>
         /// Get the name of this class
         /// </summary>
-        /// <returns>class name</returns>
-        public string Name() { return name; }
+        /// <value>class name</value>
+        public string Name { get; protected set; }
 
         /// <summary>
         /// Get the namespace that includes this class
         /// </summary>
-        /// <returns>namespace name</returns>
-        public string NameSpace() { return nameSpace; }
+        /// <value>namespace name</value>
+        public string NameSpace { get; protected set; }
 
         /// <summary>
         /// Get the string representation of the qualified name
@@ -72,8 +71,8 @@ namespace QUT.PERWAPI
         /// <returns>class qualified name</returns>
         public override string TypeName()
         {
-            if ((nameSpace == null) || (nameSpace == "")) return name;
-            return nameSpace + "." + name;
+            if (String.IsNullOrEmpty(NameSpace)) return Name;
+            return NameSpace + "." + Name;
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace QUT.PERWAPI
         {
             for (int i = 0; i < nestedClasses.Count; i++)
             {
-                if (((Class)nestedClasses[i]).Name() == name)
+                if (((Class)nestedClasses[i]).Name == name)
                     return (Class)nestedClasses[i];
             }
             return null;
@@ -569,8 +568,8 @@ namespace QUT.PERWAPI
 
         internal ClassDesc(string nameSpaceName, string className)
         {
-            nameSpace = nameSpaceName;
-            name = className;
+            NameSpace = nameSpaceName;
+            Name = className;
         }
 
         internal ClassDesc()

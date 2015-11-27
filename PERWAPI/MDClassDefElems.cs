@@ -70,14 +70,14 @@ namespace QUT.PERWAPI
         internal ClassDef(PEReader buff, uint row, bool isMSCorLib)
         {
             flags = buff.ReadUInt32();
-            name = buff.GetString();
-            nameSpace = buff.GetString();
+            Name = buff.GetString();
+            NameSpace = buff.GetString();
             extendsIx = buff.GetCodedIndex(CIx.TypeDefOrRef);
             fieldIx = buff.GetIndex(MDTable.Field);
             methodIx = buff.GetIndex(MDTable.Method);
             this.Row = row;
             tabIx = MDTable.TypeDef;
-            if (isMSCorLib && (name == "ValueType"))
+            if (isMSCorLib && (Name == "ValueType"))
                 typeIndex = (byte)ElementType.ValueType;
         }
 
@@ -186,7 +186,7 @@ namespace QUT.PERWAPI
             for (int i = 0; methodIx < methodEndIx; i++, methodIx++)
             {
                 MethodDef meth = (MethodDef)buff.GetElement(MDTable.Method, methodIx);
-                if (Diag.DiagOn) Console.WriteLine("Adding method " + meth.Name() + " to class " + name);
+                if (Diag.DiagOn) Console.WriteLine("Adding method " + meth.Name() + " to class " + Name);
                 meth.SetParent(this);
                 methods.Add(meth);
             }
@@ -764,10 +764,10 @@ namespace QUT.PERWAPI
                 else
                     scopeRef = scope.MakeRefOf();
 
-                refOf = scopeRef.GetClass(name);
+                refOf = scopeRef.GetClass(Name);
                 if (refOf == null)
                 {
-                    refOf = new ClassRef(scopeRef, nameSpace, name);
+                    refOf = new ClassRef(scopeRef, NameSpace, Name);
                     scopeRef.AddToClassList(refOf);
                 }
                 refOf.defOf = this;
@@ -904,7 +904,7 @@ namespace QUT.PERWAPI
 
         internal NestedClassDef MakeNestedClass(ClassDef parent)
         {
-            NestedClassDef nClass = new NestedClassDef(parent, (TypeAttr)flags, name);
+            NestedClassDef nClass = new NestedClassDef(parent, (TypeAttr)flags, Name);
             ClassDef tmp = nClass;
             tmp.fieldIx = fieldIx;
             tmp.fieldEndIx = fieldEndIx;
@@ -1000,8 +1000,8 @@ namespace QUT.PERWAPI
           {
               genericParam.BuildMDTables(md);
           }
-          nameIx = md.AddToStringsHeap(name);
-          nameSpaceIx = md.AddToStringsHeap(nameSpace);
+            nameIx = md.AddToStringsHeap(Name);
+          nameSpaceIx = md.AddToStringsHeap(NameSpace);
           if (security != null) {
             foreach (object sec in security)
             {
@@ -1146,13 +1146,13 @@ namespace QUT.PERWAPI
 
         internal override void WriteName(CILWriter output)
         {
-            if ((nameSpace == null) || (nameSpace == ""))
+            if ((NameSpace == null) || (NameSpace == ""))
             {
-                output.Write(name);
+                output.Write(Name);
             }
             else
             {
-                output.Write(nameSpace + "." + name);
+                output.Write(NameSpace + "." + Name);
             }
         }
 
@@ -1231,11 +1231,11 @@ namespace QUT.PERWAPI
         {
             output.Write(".class ");
             WriteFlags(output);
-            if (!string.IsNullOrEmpty(nameSpace))
+            if (!string.IsNullOrEmpty(NameSpace))
             {
-                output.Write(nameSpace + ".");
+                output.Write(NameSpace + ".");
             }
-            output.WriteLine(name);
+            output.WriteLine(Name);
             if (superType != null)
             {
                 output.Write("    extends ");
@@ -1305,15 +1305,15 @@ namespace QUT.PERWAPI
 
         internal override string ClassName()
         {
-            return (nameSpace + "." + name);
+            return (NameSpace + "." + Name);
         }
 
         internal override string NameString()
         {
             string nameString = "";
             if (scope != null) nameString = "[" + scope.NameString() + "]";
-            if (!string.IsNullOrEmpty(nameSpace)) nameString += nameSpace + ".";
-            nameString += name;
+            if (!string.IsNullOrEmpty(NameSpace)) nameString += NameSpace + ".";
+            nameString += Name;
             return nameString;
         }
 
@@ -1356,8 +1356,8 @@ namespace QUT.PERWAPI
 
         internal override string ClassName()
         {
-            string nameString = name;
-            if (parent != null) nameString = parent.TypeName() + "+" + name;
+            string nameString = Name;
+            if (parent != null) nameString = parent.TypeName() + "+" + Name;
             return nameString;
         }
 
@@ -1367,10 +1367,10 @@ namespace QUT.PERWAPI
             if (refOf == null)
             {
                 ClassRef parentRef = parent.MakeRefOf();
-                refOf = parentRef.GetNestedClass(name);
+                refOf = parentRef.GetNestedClass(Name);
                 if (refOf == null)
                 {
-                    refOf = parentRef.AddNestedClass(name);
+                    refOf = parentRef.AddNestedClass(Name);
                 }
                 refOf.defOf = this;
             }
