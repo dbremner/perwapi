@@ -94,6 +94,7 @@ namespace QUT.Symbols {
       //int GetMethod(
       //    SymbolToken methodToken,
       //    [MarshalAs(UnmanagedType.Interface)] out ISymUnmanagedMethod retVal);
+      // FIXME Contract.Requires(private_reader != null);
       ISymUnmanagedMethod unMeth;
       int hr = private_reader.GetMethod(tok, out unMeth);
       if (hr == OLE32.hr_E_FAIL)  // could be empty method
@@ -106,6 +107,7 @@ namespace QUT.Symbols {
 
     // This one not used by PERWAPI yet.
     public ISymbolMethod GetMethod(SymbolToken tok, int ver) {
+      // FIXME Contract.Requires(private_reader != null);
       ISymUnmanagedMethod unMeth;
       int hr = private_reader.GetMethodByVersion(tok, ver, out unMeth);
       if (hr == OLE32.hr_E_FAIL)  // could be empty method
@@ -124,6 +126,7 @@ namespace QUT.Symbols {
     public SymbolToken UserEntryPoint {
       get {
         SymbolToken retVal;
+        // FIXME Contract.Requires(private_reader != null);
         int hr = private_reader.GetUserEntryPoint(out retVal);
         if (hr == OLE32.hr_E_FAIL)
           return new SymbolToken(0);

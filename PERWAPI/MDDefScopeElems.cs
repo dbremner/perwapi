@@ -398,6 +398,7 @@ namespace QUT.PERWAPI
             tabIx = MDTable.Module;
             ismscorlib = name.ToLower() == "mscorlib.dll";
             if (Diag.DiagOn) Console.WriteLine("Module name = " + name);
+            // FIXME Contract.Ensures(defaultClass != null);
         }
 
         internal void Read(PEReader buff)
@@ -435,6 +436,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new class</returns>
         public ClassDef AddClass(TypeAttr attrSet, string nsName, string name)
         {
+            //FIXME Contract.Requires(classes != null);
             ClassDef aClass = GetClass(nsName, name);
             if (aClass != null)
                 throw new DescriptorException("Class " + aClass.NameString());
@@ -497,6 +499,7 @@ namespace QUT.PERWAPI
         /// <returns>ClassDef for name or null</returns>
         public ClassDef GetClass(string name)
         {
+            //FIXME Contract.Requires(classes != null);
             return (ClassDef)GetClass(null, name, false);
         }
 
@@ -509,6 +512,7 @@ namespace QUT.PERWAPI
         [CanBeNull]
         public ClassDef GetClass(string nsName, string name)
         {
+            //FIXME Contract.Requires(classes != null);
             return (ClassDef)GetClass(nsName, name, true);
         }
 
@@ -518,6 +522,7 @@ namespace QUT.PERWAPI
         /// <returns>An array containing a ClassDef for each class of this module</returns>
         public ClassDef[] GetClasses()
         {
+            //FIXME Contract.Requires(classes != null);
             return (ClassDef[])classes.ToArray(typeof(ClassDef));
         }
 
@@ -559,6 +564,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new "global" method</returns>
         public MethodDef AddMethod(MethAttr mAtts, ImplAttr iAtts, string name, Type retType, Param[] pars)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             MethodDef newMeth = defaultClass.AddMethod(mAtts, iAtts, name, retType, pars);
             return newMeth;
         }
@@ -575,6 +581,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new "global" method</returns>
         public MethodDef AddMethod(MethAttr mAtts, ImplAttr iAtts, string name, GenericParam[] genPars, Type retType, Param[] pars)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             MethodDef newMeth = defaultClass.AddMethod(mAtts, iAtts, name, genPars, retType, pars);
             return newMeth;
         }
@@ -585,6 +592,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">The method to be added</param>
         public void AddMethod(MethodDef meth)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             defaultClass.AddMethod(meth);
         }
 
@@ -595,6 +603,7 @@ namespace QUT.PERWAPI
         /// <returns>MethodDef for name, or null if one does not exist</returns>
         public MethodDef GetMethod(string name)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             return defaultClass.GetMethod(name);
         }
 
@@ -605,6 +614,7 @@ namespace QUT.PERWAPI
         /// <returns>An array of all the methods of this module called "name" </returns>
         public MethodDef[] GetMethods(string name)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             return defaultClass.GetMethods(name);
         }
 
@@ -616,6 +626,7 @@ namespace QUT.PERWAPI
         /// <returns>MethodDef for name(parTypes), or null if one does not exist</returns>
         public MethodDef GetMethod(string name, Type[] parTypes)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             return defaultClass.GetMethod(name, parTypes);
         }
 
@@ -625,6 +636,7 @@ namespace QUT.PERWAPI
         /// <returns>An array of all the methods of this module</returns>
         public MethodDef[] GetMethods()
         {
+            //FIXME Contract.Requires(defaultClass != null);
             return defaultClass.GetMethods();
         }
 
@@ -634,6 +646,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">The method to be deleted</param>
         public void RemoveMethod(MethodDef meth)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             defaultClass.RemoveMethod(meth);
         }
 
@@ -643,6 +656,7 @@ namespace QUT.PERWAPI
         /// <param name="name">The name of the method to be deleted</param>
         public void RemoveMethod(string name)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             defaultClass.RemoveMethod(name);
         }
 
@@ -653,6 +667,7 @@ namespace QUT.PERWAPI
         /// <param name="parTypes">The signature of the method to be deleted</param>
         public void RemoveMethod(string name, Type[] parTypes)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             defaultClass.RemoveMethod(name, parTypes);
         }
 
@@ -663,6 +678,7 @@ namespace QUT.PERWAPI
         /// returned by GetMethods()) to be deleted</param>
         public void RemoveMethod(int ix)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             Contract.Requires(ix >= 0);
             defaultClass.RemoveMethod(ix);
         }
@@ -675,6 +691,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new "global" field</returns>
         public FieldDef AddField(string name, Type fType)
         {
+            //FIXME Contract.Requires(defaultClass != null);
             FieldDef newField = defaultClass.AddField(name, fType);
             return newField;
         }

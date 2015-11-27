@@ -133,6 +133,7 @@ namespace QUT.PERWAPI
         internal void BuildTables(MetaDataOut md)
         {
             Contract.Requires(md != null);
+            // FIXME Contract.Requires(handlers != null);
             foreach (HandlerBlock handler in handlers)
             {
                 handler.BuildTables(md);
@@ -142,6 +143,7 @@ namespace QUT.PERWAPI
         internal void BuildCILInfo(CILWriter output)
         {
             Contract.Requires(output != null);
+            // FIXME Contract.Requires(handlers != null);
             foreach (HandlerBlock handler in handlers)
             {
                 handler.BuildCILInfo(output);

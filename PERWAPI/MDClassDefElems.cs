@@ -216,6 +216,7 @@ namespace QUT.PERWAPI
 
         public void MergeClasses(ClassDef[] classes)
         {
+            // FIXME Contract.Requires(methods != null);
             ChangeRefsToDefs(this, classes);
             foreach (ClassDef cls in classes)
             {
@@ -294,6 +295,7 @@ namespace QUT.PERWAPI
         [CanBeNull]
         public GenericParam GetGenericParam(string name)
         {
+            // FIXME Contract.Requires(genericParams != null);
             int pos = FindGenericParam(name);
             if (pos == -1) return null;
             return (GenericParam)genericParams[pos];
@@ -301,6 +303,7 @@ namespace QUT.PERWAPI
 
         public void RemoveGenericParam(string name)
         {
+            // FIXME Contract.Requires(genericParams != null);
             int pos = FindGenericParam(name);
             if (pos == -1) return;
             DeleteGenericParam(pos);
@@ -308,6 +311,7 @@ namespace QUT.PERWAPI
 
         public void RemoveGenericParam(int ix)
         {
+            // FIXME Contract.Requires(genericParams != null);
             if (ix >= genericParams.Count) return;
             DeleteGenericParam(ix);
         }
@@ -368,6 +372,7 @@ namespace QUT.PERWAPI
             Contract.Requires(name != null);
             Contract.Requires(fType != null);
             Contract.Ensures(Contract.Result<FieldDef>() != null);
+            // FIXME Contract.Requires(fields != null);
             FieldDef field = (FieldDef)FindField(name);
             if (field != null)
                 throw new DescriptorException("Field " + field.NameString());
@@ -396,6 +401,7 @@ namespace QUT.PERWAPI
         /// <param name="f">Descriptor for the field to be added</param>
         public void AddField(FieldDef f)
         {
+            // FIXME Contract.Requires(fields != null);
             FieldDef field = (FieldDef)FindField(f.Name());
             if (field != null)
                 throw new DescriptorException("Field " + field.NameString());

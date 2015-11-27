@@ -201,6 +201,7 @@ namespace QUT.PERWAPI
 
         internal Section GetSection(uint rva)
         {
+            // FIXME visibility Contract.Requires(inputSections != null);
             return inputSections.FirstOrDefault(inputSection => inputSection.ContainsRVA(rva));
         }
 
@@ -212,6 +213,7 @@ namespace QUT.PERWAPI
                     return inputSections[i].GetOffset(rva);
             }
             return 0;
+            // FIXME visibility Contract.Requires(inputSections != null);
         }
 
         internal void ReadZeros(int num)
@@ -975,6 +977,7 @@ namespace QUT.PERWAPI
 
         internal byte[] GetBlob()
         {
+            // FIXME Contract.Requires(blob != null);
             /* pre:  buffer is at correct position to read blob index */
             uint ix;
             if (md.largeBlob) ix = ReadUInt32();
@@ -1004,6 +1007,7 @@ namespace QUT.PERWAPI
 
         internal Constant GetBlobConst(int constType)
         {
+            // FIXME Contract.Requires(blob != null);
             uint ix;
             if (md.largeBlob) ix = ReadUInt32();
             else ix = ReadUInt16();

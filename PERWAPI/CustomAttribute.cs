@@ -263,6 +263,7 @@ namespace QUT.PERWAPI
                 bw.Write((ushort)1);
                 if (argVals != null)
                 {
+                    // FIXME Contract.Requires(argVals != null);
                     foreach (Constant argVal in argVals)
                     {
                         argVal.Write(bw);

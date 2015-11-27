@@ -191,6 +191,7 @@ namespace QUT.PERWAPI
                 aClass = new ClassRef(this, nsName, name);
                 classes.Add(aClass);
             }
+            // FIXME Contract.Ensures(aClass != null);
             return aClass;
         }
 
