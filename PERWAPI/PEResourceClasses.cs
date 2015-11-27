@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -71,13 +72,19 @@ namespace QUT.PERWAPI
       /// </summary>
       public PEResourceDirectory() { }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(elements != null);
+        }
 
       /// <summary>
       /// Read unmanged resource directory structure from PE-file.
       /// </summary>
       /// <param name="reader"></param>
       internal void PopulateResourceDirectory(PEReader reader, long baseOffset) {
-        PEResourceElement resElement;
+          Contract.Requires(reader != null);
+          PEResourceElement resElement;
 
           int junk = reader.ReadInt32(); // Must be zero.
         this.Date = reader.ReadUInt32();    // Time stamp.
@@ -129,7 +136,8 @@ namespace QUT.PERWAPI
       }
 
       private static string ReadName(BinaryReader rdr, long offset) {
-        long savedPos = rdr.BaseStream.Position;
+          Contract.Requires(rdr != null);
+          long savedPos = rdr.BaseStream.Position;
         rdr.BaseStream.Seek(offset, SeekOrigin.Begin);
         ushort nLength = rdr.ReadUInt16();
         char[] name = new char[nLength];
@@ -143,8 +151,10 @@ namespace QUT.PERWAPI
         return elements.Count > 0;
       }
 
-      public void AddElement(PEResourceElement el) {
-        //subItems.Add(el);
+      public void AddElement(PEResourceElement el)
+      {
+          Contract.Requires(el != null);
+          //subItems.Add(el);
         elements.Add(el);
       }
 
@@ -192,7 +202,8 @@ namespace QUT.PERWAPI
       /// <param name="dest">The Binary Writer</param>
       /// <param name="RVA">RVA of this .rsrc section</param>
       internal void Write(BinaryWriter dest, uint RVA) {
-        Size();
+          Contract.Requires(dest != null);
+          Size();
         dest.Flush();
         uint baseOffset = (uint)dest.BaseStream.Position;
         this.Write(dest, baseOffset, 0, RVA);

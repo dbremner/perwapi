@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -40,6 +41,8 @@ namespace QUT.Symbols {
     private readonly ISymUnmanagedWriter2 writer;
 
     public SymbolWriter(string binaryFile, string pdbFile) {
+        Contract.Requires(binaryFile != null);
+        Contract.Requires(pdbFile != null);
         IntPtr importer = IntPtr.Zero;
 
         try {

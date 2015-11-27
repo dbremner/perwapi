@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -51,6 +52,7 @@ namespace QUT.PERWAPI
 
         internal virtual void TypeSig(MemoryStream str)
         {
+            Contract.Requires(str != null);
             throw new TypeSignatureException(this.GetType().AssemblyQualifiedName +
                 " doesn't have a type signature!!");
         }
@@ -62,16 +64,19 @@ namespace QUT.PERWAPI
 
         internal virtual void WriteType(CILWriter output)
         {
+            Contract.Requires(output != null);
             throw new NotYetImplementedException("Writing types for CIL");
         }
 
         internal virtual void WriteName(CILWriter output)
         {
+            Contract.Requires(output != null);
             WriteType(output);
         }
 
         internal virtual Type AddTypeSpec(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             if (!isDef()) BuildMDTables(md);
             return this;
         }
@@ -171,6 +176,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] specs)
         {
+            Contract.Requires(buff != null);
             for (int i = 0; i < specs.Length; i++)
             {
                 specs[i] = new UnresolvedTypeSpec(buff, i);

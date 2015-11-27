@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -39,9 +40,15 @@ namespace QUT.PERWAPI
         {
             sig = new MethSig(methName);
             sig.retType = rType;
+            Contract.Requires(methName != null);
+            Contract.Requires(rType != null);
+            Contract.Requires(paren != null);
         }
 
-        internal Method(string name) : base(name) { }
+        internal Method(string name) : base(name)
+        {
+            Contract.Requires(name != null);
+        }
 
         /// <summary>
         /// Add calling conventions to this method descriptor
@@ -625,6 +632,10 @@ namespace QUT.PERWAPI
         internal MethodDef(string name, Type retType, Param[] pars, Class paren)
             : base(name, retType, paren)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
+            Contract.Requires(paren != null);
             sig.SetParTypes(pars);
             parList = pars;
             parent = paren;
@@ -758,6 +769,7 @@ namespace QUT.PERWAPI
         /// <param name="pars">Descriptors of the parameters for this method</param>
         public void SetParams(Param[] pars)
         {
+            Contract.Requires(pars != null);
             parList = pars;
             sig.SetParTypes(pars);
         }

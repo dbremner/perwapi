@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -76,6 +77,9 @@ namespace QUT.PERWAPI
         internal PEWriter(PEFileVersionInfo verInfo, string fileName, MetaDataOut md, bool writePDB)
             : base(new FileStream(fileName, FileMode.Create))
         {
+            Contract.Requires(verInfo != null);
+            Contract.Requires(fileName != null);
+            Contract.Requires(md != null);
             InitPEWriter(verInfo, md, writePDB, fileName);
             TimeSpan tmp = System.IO.File.GetCreationTime(fileName).Subtract(FileImage.origin);
             dateStamp = Convert.ToUInt32(tmp.TotalSeconds);
@@ -84,6 +88,9 @@ namespace QUT.PERWAPI
         internal PEWriter(PEFileVersionInfo verInfo, Stream str, MetaDataOut md)
             : base(str)
         {
+            Contract.Requires(verInfo != null);
+            Contract.Requires(str != null);
+            Contract.Requires(md != null);
             // NOTE: Can not write a PDB file if using a stream.
             InitPEWriter(verInfo, md, false, null);
             TimeSpan tmp = DateTime.Now.Subtract(FileImage.origin);
@@ -97,6 +104,9 @@ namespace QUT.PERWAPI
 
         private void InitPEWriter(PEFileVersionInfo verInfo, MetaDataOut md, bool writePDB, string fileName)
         {
+            Contract.Requires(verInfo != null);
+            Contract.Requires(md != null);
+            Contract.Requires(fileName != null);
             this.verInfo = verInfo;
             if (!verInfo.fromExisting)
                 verInfo.lMajor = MetaData.LMajors[(int)verInfo.netVersion];
@@ -272,6 +282,7 @@ namespace QUT.PERWAPI
 
         internal void MakeFile(PEFileVersionInfo verInfo)
         {
+            Contract.Requires(verInfo != null);
             this.verInfo = verInfo;
             if (this.verInfo.isDLL) hintNameTable = FileImage.dllHintNameTable.ToCharArray();
             else hintNameTable = FileImage.exeHintNameTable.ToCharArray();
@@ -627,6 +638,7 @@ namespace QUT.PERWAPI
 
         internal void WriteCodedIndex(CIx code, MetaDataElement elem)
         {
+            Contract.Requires(elem != null);
             metaData.WriteCodedIndex(code, elem, this);
         }
 

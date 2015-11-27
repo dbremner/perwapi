@@ -17,6 +17,7 @@
 
 
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using JetBrains.Annotations;
 
@@ -40,16 +41,30 @@ namespace QUT.PERWAPI
 
         internal Constant() { }
 
-        internal virtual uint GetBlobIndex(MetaDataOut md) { return 0; }
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(addedToBlobHeap != null);
+        }
+
+        internal virtual uint GetBlobIndex(MetaDataOut md)
+        {
+            Contract.Requires(md != null);
+            return 0;
+        }
 
         internal uint GetSize() { return size; }
 
         internal byte GetTypeIndex() { return (byte)type; }
 
-        internal virtual void Write(BinaryWriter bw) { }
+        internal virtual void Write(BinaryWriter bw)
+        {
+            Contract.Requires(bw != null);
+        }
 
         internal virtual void Write(CILWriter output)
         {
+            Contract.Requires(output != null);
             throw new NotYetImplementedException("Constant values for CIL");
         }
 
@@ -117,6 +132,7 @@ namespace QUT.PERWAPI
 
         internal CharConst(PEReader buff)
         {
+            Contract.Requires(buff != null);
             val = buff.ReadChar();
             size = 2;
             type = ElementType.Char;
@@ -158,6 +174,7 @@ namespace QUT.PERWAPI
 
         internal NullRefConst(PEReader buff)
         {
+            Contract.Requires(buff != null);
             uint junk = buff.ReadUInt32();
             size = 4;
             type = ElementType.Class;
@@ -192,6 +209,7 @@ namespace QUT.PERWAPI
 
         public ArrayConst(Constant[] elems)
         {
+            Contract.Requires(elems != null);
             type = ElementType.SZArray;
             size = 5;  // one byte for SZARRAY, 4 bytes for length
             elements = elems;
@@ -283,6 +301,7 @@ namespace QUT.PERWAPI
 
         public BoxedSimpleConst(SimpleConstant con)
         {
+            Contract.Requires(con != null);
             sConst = con;
             type = (ElementType)sConst.GetTypeIndex();
         }
@@ -330,6 +349,13 @@ namespace QUT.PERWAPI
 
         internal AddressConstant(PEReader buff)
         {
+            Contract.Requires(buff != null);
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(data != null);
         }
 
         public DataConstant GetConst()
@@ -353,6 +379,7 @@ namespace QUT.PERWAPI
 
         public ByteArrConst(byte[] val)
         {
+            Contract.Requires(val != null);
             this.val = val;
             size = (uint)val.Length;
         }
@@ -389,6 +416,7 @@ namespace QUT.PERWAPI
 
         public RepeatedConstant(DataConstant dConst, int repeatCount)
         {
+            Contract.Requires(dConst != null);
             data = dConst;
             repCount = (uint)repeatCount;
             type = ElementType.SZArray;
@@ -432,6 +460,7 @@ namespace QUT.PERWAPI
 
         internal StringConst(byte[] sBytes)
         {
+            Contract.Requires(sBytes != null);
             strBytes = sBytes;
             size = (uint)strBytes.Length;
             type = ElementType.String;
@@ -512,6 +541,7 @@ namespace QUT.PERWAPI
 
         internal IntConst(PEReader buff, int numBytes)
         {
+            Contract.Requires(buff != null);
             switch (numBytes)
             {
                 case (1): val = buff.ReadSByte();

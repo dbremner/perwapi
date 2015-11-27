@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -77,6 +78,8 @@ namespace QUT.PERWAPI
             :
             base(new MemoryStream(new BinaryReader(file).ReadBytes(System.Convert.ToInt32(file.Length))))
         {
+            Contract.Requires(pefile != null);
+            Contract.Requires(file != null);
             this.skipBody = skipBody;
             thisScope = pefile;
             refsOnly = refs;
@@ -120,6 +123,7 @@ namespace QUT.PERWAPI
 
         private static System.IO.FileStream GetFile(string filename)
         {
+            Contract.Requires(filename != null);
             if (Diag.DiagOn)
             {
                 Console.WriteLine("Current directory is " + System.Environment.CurrentDirectory);
@@ -135,6 +139,7 @@ namespace QUT.PERWAPI
 
         public static PEFile ReadPEFile(string filename, bool skipBody)
         {
+            Contract.Requires(filename != null);
             System.IO.FileStream file = GetFile(filename);
             PEFile pefile = new PEFile(filename);
             PEReader reader = new PEReader(pefile, file, false, skipBody);
@@ -145,6 +150,7 @@ namespace QUT.PERWAPI
 
         internal static ReferenceScope GetExportedInterface(string filename)
         {
+            Contract.Requires(filename != null);
             System.IO.FileStream file = GetFile(filename);
             PEReader reader = new PEReader(null, file, true, true);
             return (ReferenceScope)reader.thisScope;
@@ -164,6 +170,7 @@ namespace QUT.PERWAPI
 
         internal AssemblyRef[] GetAssemblyRefs()
         {
+            Contract.Requires((int)MDTable.AssemblyRef > 0);
             AssemblyRef[] assemRefs = new AssemblyRef[tableLengths[(int)MDTable.AssemblyRef]];
             for (int i = 0; i < assemRefs.Length; i++)
             {
@@ -180,6 +187,7 @@ namespace QUT.PERWAPI
 
         internal void MetaDataError(string msg)
         {
+            Contract.Requires(msg != null);
             msg = "ERROR IN METADATA: " + msg;
             if (thisScope != null)
                 msg = "MODULE " + thisScope.Name() + ": " + msg;
@@ -460,6 +468,7 @@ namespace QUT.PERWAPI
 
         private void SetUpTableInfo()
         {
+            Contract.Requires(md != null);
             md.CalcElemSize();
             tableStarts = new long[MetaData.NumMetaDataTables];
             long currentPos = BaseStream.Position;
@@ -652,6 +661,7 @@ namespace QUT.PERWAPI
 
         internal void ReadMethodImpls(ClassDef theClass, uint classIx)
         {
+            Contract.Requires(theClass != null);
             SetElementPosition(MDTable.InterfaceImpl, 0);
             for (int i = 0; (i < tableLengths[(int)MDTable.MethodImpl]); i++)
             {
@@ -669,6 +679,7 @@ namespace QUT.PERWAPI
 
         internal void InsertInTable(MDTable tabIx, uint ix, MetaDataElement elem)
         {
+            Contract.Requires(elem != null);
             tables[(int)tabIx][ix - 1] = elem;
         }
 
@@ -693,11 +704,14 @@ namespace QUT.PERWAPI
 
         internal void ReplaceSig(Signature sig, Type sigType)
         {
+            Contract.Requires(sig != null);
+            Contract.Requires(sigType != null);
             tables[(int)MDTable.StandAloneSig][sig.Row - 1] = sigType;
         }
 
         internal void GetGenericParams(MethodDef meth)
         {
+            Contract.Requires(meth != null);
             if (tables[(int)MDTable.GenericParam] != null)
             {
                 for (int j = 0; j < tables[(int)MDTable.GenericParam].Length; j++)
@@ -1008,6 +1022,7 @@ namespace QUT.PERWAPI
 
         internal static Constant ReadConst(int constType, BinaryReader blob)
         {
+            Contract.Requires(blob != null);
             switch (constType)
             {
                 case ((int)ElementType.Boolean):
@@ -1109,6 +1124,7 @@ namespace QUT.PERWAPI
 
         internal MethSig ReadMethSig(Method thisMeth, uint blobIx)
         {
+            Contract.Requires(thisMeth != null);
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             return ReadMethSig(thisMeth, false);
@@ -1116,6 +1132,7 @@ namespace QUT.PERWAPI
 
         internal MethSig ReadMethSig(Method thisMeth, string name, uint blobIx)
         {
+            Contract.Requires(thisMeth != null);
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             MethSig mSig = ReadMethSig(thisMeth, false);
@@ -1125,6 +1142,7 @@ namespace QUT.PERWAPI
 
         private MethSig ReadMethSig(Method currMeth, bool firstByteRead)
         {
+            Contract.Requires(currMeth != null);
             MethSig meth = new MethSig(null);
             if (!firstByteRead)
             {

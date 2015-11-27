@@ -19,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 
 namespace QUT.PERWAPI
@@ -57,6 +58,7 @@ namespace QUT.PERWAPI
 
         internal virtual void Write(PEWriter output, bool fatFormat)
         {
+            Contract.Requires(output != null);
             if (fatFormat) output.Write(start.GetLabelOffset());
             else output.Write((short)start.GetLabelOffset());
             uint len = end.GetLabelOffset() - start.GetLabelOffset();
@@ -92,6 +94,7 @@ namespace QUT.PERWAPI
         /// <param name="handler">a handler to be added to the try block</param>
         public void AddHandler(HandlerBlock handler)
         {
+            Contract.Requires(handler != null);
             //flags = handler.GetFlag();
             handlers.Add(handler);
         }
@@ -132,6 +135,7 @@ namespace QUT.PERWAPI
 
         internal void BuildTables(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             foreach (HandlerBlock handler in handlers)
             {
                 handler.BuildTables(md);
@@ -140,6 +144,7 @@ namespace QUT.PERWAPI
 
         internal void BuildCILInfo(CILWriter output)
         {
+            Contract.Requires(output != null);
             foreach (HandlerBlock handler in handlers)
             {
                 handler.BuildCILInfo(output);
@@ -181,13 +186,14 @@ namespace QUT.PERWAPI
             return ExceptionFlag;
         }
 
-        internal virtual void BuildTables(MetaDataOut md) { }
-
-        internal virtual void BuildCILInfo(CILWriter output) { }
-
-        internal override void Write(PEWriter output, bool fatFormat)
+        internal virtual void BuildTables(MetaDataOut md)
         {
-            base.Write(output, fatFormat);
+            Contract.Requires(md != null);
+        }
+
+        internal virtual void BuildCILInfo(CILWriter output)
+        {
+            Contract.Requires(output != null);
         }
 
     }

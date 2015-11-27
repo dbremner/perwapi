@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -70,6 +71,7 @@ namespace QUT.PERWAPI
 
         internal CustomAttribute(PEReader buff)
         {
+            Contract.Requires(buff != null);
             parentIx = buff.GetCodedIndex(CIx.HasCustomAttr);
             typeIx = buff.GetCodedIndex(CIx.CustomAttributeType);
             valIx = buff.GetBlobIx();
@@ -79,6 +81,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] attrs)
         {
+            Contract.Requires(buff != null);
             for (int i = 0; i < attrs.Length; i++)
             {
                 attrs[i] = new CustomAttribute(buff);
@@ -167,6 +170,7 @@ namespace QUT.PERWAPI
 
         internal void DecodeCustomAttributeBlob()
         {
+            Contract.Requires(buffer != null);
             MemoryStream caBlob = new MemoryStream(byteVal);
             BinaryReader blob = new BinaryReader(caBlob, System.Text.Encoding.UTF8);
             if (blob.ReadUInt16() != CustomAttribute.prolog) throw new PEFileException("Invalid Custom Attribute Blob");

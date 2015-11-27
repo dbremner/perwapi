@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -478,6 +479,7 @@ namespace QUT.PERWAPI
         /// <param name="aClass">The class to be added</param>
         public void AddClass(ClassDef aClass)
         {
+            Contract.Requires(aClass != null);
             ClassDef eClass = GetClass(aClass.NameSpace(), aClass.Name());
             if (eClass != null)
                 throw new DescriptorException("Class " + aClass.NameString());
@@ -658,6 +660,7 @@ namespace QUT.PERWAPI
         /// returned by GetMethods()) to be deleted</param>
         public void RemoveMethod(int ix)
         {
+            Contract.Requires(ix >= 0);
             defaultClass.RemoveMethod(ix);
         }
 
@@ -768,6 +771,7 @@ namespace QUT.PERWAPI
 
         internal void SetDefaultClass(ClassDef dClass)
         {
+            Contract.Requires(dClass != null);
             defaultClass = dClass;
         }
 

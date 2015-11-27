@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using JetBrains.Annotations;
 
@@ -55,6 +56,7 @@ namespace QUT.PERWAPI
 
         internal ClassLayout(PEReader buff)
         {
+            Contract.Requires(buff != null);
             packSize = buff.ReadUInt16();
             classSize = buff.ReadUInt32();
             parentIx = buff.GetIndex(MDTable.TypeDef);
@@ -64,6 +66,7 @@ namespace QUT.PERWAPI
         [CanBeNull]
         internal static ClassLayout FindLayout(PEReader buff, ClassDef paren, uint classIx)
         {
+            Contract.Requires(buff != null);
             buff.SetElementPosition(MDTable.ClassLayout, 0);
             for (int i = 0; i < buff.GetTableSize(MDTable.ClassLayout); i++)
             {
@@ -77,6 +80,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] layouts)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(layouts != null);
             for (int i = 0; i < layouts.Length; i++)
             {
                 layouts[i] = new ClassLayout(buff);
@@ -105,6 +110,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return 6 + md.TableIndexSize(MDTable.TypeDef);
         }
 

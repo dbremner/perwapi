@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -47,6 +48,7 @@ namespace QUT.Symbols {
     /// </summary>
     /// <param name="filename"></param>
     public SymbolReader(string filename) {
+        Contract.Requires(filename != null);
         IntPtr importer = IntPtr.Zero;
 
         try {
@@ -385,8 +387,10 @@ namespace QUT.Symbols {
   public class SymbolScope : ISymbolScope {
     private readonly ISymUnmanagedScope private_scope;
 
-    internal SymbolScope(ISymUnmanagedScope unScope) {
-      private_scope = unScope;
+    internal SymbolScope(ISymUnmanagedScope unScope)
+    {
+        Contract.Requires(unScope != null);
+        private_scope = unScope;
     }
 
     /// <summary>

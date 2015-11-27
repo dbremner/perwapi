@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -42,9 +43,16 @@ namespace QUT.PERWAPI
 
         internal TableRow(PEReader buff, uint ix, MDTable tableIx)
         {
+            Contract.Requires(buff != null);
             buffer = buff;
             Row = ix;
             tabIx = tableIx;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(buffer != null);
         }
 
         /// <summary>
@@ -102,9 +110,15 @@ namespace QUT.PERWAPI
 
         internal virtual bool isDef() { return false; }
 
-        internal virtual void Resolve(PEReader buff) { }
+        internal virtual void Resolve(PEReader buff)
+        {
+            Contract.Requires(buff != null);
+        }
 
-        internal virtual void ResolveDetails(PEReader buff) { }
+        internal virtual void ResolveDetails(PEReader buff)
+        {
+            Contract.Requires(buff != null);
+        }
 
         internal virtual uint GetCodedIx(CIx code) { return 0; }
 
@@ -127,6 +141,8 @@ namespace QUT.PERWAPI
             {
                 customAttributes = new ArrayList();
             }
+            Contract.Requires(ctorMeth != null);
+            Contract.Requires(val != null);
             customAttributes.Add(new CustomAttribute(this, ctorMeth, val));
         }
 
@@ -141,6 +157,8 @@ namespace QUT.PERWAPI
             {
                 customAttributes = new ArrayList();
             }
+            Contract.Requires(ctorMeth != null);
+            Contract.Requires(cVals != null);
             customAttributes.Add(new CustomAttribute(this, ctorMeth, cVals));
         }
 
@@ -153,6 +171,7 @@ namespace QUT.PERWAPI
             {
                 customAttributes = new ArrayList();
             }
+            Contract.Requires(ca != null);
             customAttributes.Add(ca);
         }
 
@@ -164,6 +183,7 @@ namespace QUT.PERWAPI
 
         internal void BuildMDTables(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             if (done) return;
             done = true;
             if (Diag.DiagOn) Console.WriteLine("In BuildMDTables");
@@ -178,24 +198,36 @@ namespace QUT.PERWAPI
             }
         }
 
-        internal virtual void BuildTables(MetaDataOut md) { }
+        internal virtual void BuildTables(MetaDataOut md)
+        {
+            Contract.Requires(md != null);
+        }
 
         internal virtual void BuildSignatures(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             done = false;
         }
 
-        internal virtual void BuildCILInfo(CILWriter output) { }
+        internal virtual void BuildCILInfo(CILWriter output)
+        {
+            Contract.Requires(output != null);
+        }
 
         internal virtual void AddToTable(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             md.AddToTable(tabIx, this);
         }
 
-        internal virtual void Write(PEWriter output) { }
+        internal virtual void Write(PEWriter output)
+        {
+            Contract.Requires(output != null);
+        }
 
         internal virtual void Write(CILWriter output)
         {
+            Contract.Requires(output != null);
             throw new Exception("CIL backend not yet fully implemented - " + GetType().ToString());
         }
 
@@ -203,6 +235,7 @@ namespace QUT.PERWAPI
 
         internal void DescriptorError(MetaDataElement elem)
         {
+            Contract.Requires(elem != null);
             throw new DescriptorException(elem.NameString());
         }
         #region IComparable Members
@@ -260,6 +293,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] gpars)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(gpars != null);
             for (int i = 0; i < gpars.Length; i++)
                 gpars[i] = new GenericParamConstraint(buff);
         }
@@ -314,6 +349,7 @@ namespace QUT.PERWAPI
 
         internal ImplMap(PEReader buff)
         {
+            Contract.Requires(buff != null);
             flags = buff.ReadUInt16();
             memForIndex = buff.GetCodedIndex(CIx.MemberForwarded);
             importName = buff.GetString();
@@ -322,8 +358,16 @@ namespace QUT.PERWAPI
             tabIx = MDTable.ImplMap;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(meth != null);
+        }
+
         internal static void Read(PEReader buff, TableRow[] impls)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(impls != null);
             for (int i = 0; i < impls.Length; i++)
                 impls[i] = new ImplMap(buff);
         }
@@ -350,6 +394,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return 2 + md.CodedIndexSize(CIx.MemberForwarded) +
                 md.StringsIndexSize() + md.TableIndexSize(MDTable.ModuleRef);
         }
@@ -380,6 +425,8 @@ namespace QUT.PERWAPI
 
         internal Member(string memName, Class paren)
         {
+            Contract.Requires(memName != null);
+            Contract.Requires(paren != null);
             name = memName;
             parent = paren;
             tabIx = MDTable.MemberRef;
@@ -387,6 +434,7 @@ namespace QUT.PERWAPI
 
         internal Member(uint parenIx, string name, uint sIx)
         {
+            Contract.Requires(name != null);
             parentIx = parenIx;
             this.name = name;
             sigIx = sIx;
@@ -395,12 +443,15 @@ namespace QUT.PERWAPI
 
         internal Member(string name)
         {
+            Contract.Requires(name != null);
             this.name = name;
             tabIx = MDTable.MemberRef;
         }
 
         internal static void ReadMember(PEReader buff, TableRow[] members)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(members != null);
             for (int i = 0; i < members.Length; i++)
             {
                 uint parenIx = buff.GetCodedIndex(CIx.MemberRefParent);
@@ -425,6 +476,7 @@ namespace QUT.PERWAPI
 
         internal void SetParent(Class paren)
         {
+            Contract.Requires(paren != null);
             parent = paren;
         }
 
@@ -439,6 +491,7 @@ namespace QUT.PERWAPI
 
         protected void WriteFlags(CILWriter output, uint flags)
         {
+            Contract.Requires(output != null);
             uint vis = (flags & 0x07);  // visibility mask
             switch (vis)
             {
@@ -537,6 +590,8 @@ namespace QUT.PERWAPI
 
         internal InterfaceImpl(ClassDef theClass, Class theInterface)
         {
+            Contract.Requires(theClass != null);
+            Contract.Requires(theInterface != null);
             this.theClass = theClass;
             this.theInterface = theInterface;
             tabIx = MDTable.InterfaceImpl;
@@ -544,6 +599,8 @@ namespace QUT.PERWAPI
 
         internal InterfaceImpl(ClassDef theClass, TableRow theInterface)
         {
+            Contract.Requires(theClass != null);
+            Contract.Requires(theInterface != null);
             this.theClass = theClass;
             this.theInterface = (Class)theInterface;
             tabIx = MDTable.InterfaceImpl;
@@ -551,9 +608,17 @@ namespace QUT.PERWAPI
 
         internal InterfaceImpl(PEReader buff)
         {
+            Contract.Requires(buff != null);
             classIx = buff.GetIndex(MDTable.TypeDef);
             interfacesIndex = buff.GetCodedIndex(CIx.TypeDefOrRef);
             tabIx = MDTable.InterfaceImpl;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(theClass != null);
+            Contract.Invariant(theInterface != null);
         }
 
         internal override void Resolve(PEReader buff)
@@ -565,6 +630,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] impls)
         {
+            Contract.Requires(buff != null);
             for (int i = 0; i < impls.Length; i++)
                 impls[i] = new InterfaceImpl(buff);
         }
@@ -614,12 +680,18 @@ namespace QUT.PERWAPI
 
         internal ManifestResource(PEFile pefile, string name, byte[] resBytes, bool isPub)
         {
+            Contract.Requires(pefile != null);
+            Contract.Requires(name != null);
+            Contract.Requires(resBytes != null);
             InitResource(pefile, name, isPub);
             this.ResourceBytes = resBytes;
         }
 
         internal ManifestResource(PEFile pefile, string name, MetaDataElement fileRef, uint offset, bool isPub)
         {
+            Contract.Requires(pefile != null);
+            Contract.Requires(name != null);
+            Contract.Requires(fileRef != null);
             InitResource(pefile, name, isPub);
             impl = fileRef;
             FileOffset = offset;
@@ -627,6 +699,8 @@ namespace QUT.PERWAPI
 
         internal ManifestResource(PEFile pefile, ManifestResource mres, bool isPub)
         {
+            Contract.Requires(pefile != null);
+            Contract.Requires(mres != null);
             this.pefile = pefile;
             Name = mres.Name;
             flags = mres.flags;
@@ -637,6 +711,7 @@ namespace QUT.PERWAPI
 
         internal ManifestResource(PEReader buff)
         {
+            Contract.Requires(buff != null);
             FileOffset = buff.ReadUInt32();
             flags = buff.ReadUInt32();
             Name = buff.GetString();
@@ -644,8 +719,17 @@ namespace QUT.PERWAPI
             tabIx = MDTable.ManifestResource;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(impl != null);
+            Contract.Invariant(pefile != null);
+        }
+
         private void InitResource(PEFile pefile, string name, bool isPub)
         {
+            Contract.Requires(pefile != null);
+            Contract.Requires(name != null);
             this.pefile = pefile;
             Name = name;
             if (isPub) flags = PublicResource;
@@ -655,6 +739,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] mrs)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(mrs != null);
             for (int i = 0; i < mrs.Length; i++)
                 mrs[i] = new ManifestResource(buff);
         }
@@ -690,7 +776,11 @@ namespace QUT.PERWAPI
         public ModuleRef ResourceModule
         {
             get { if (impl is ModuleFile) return ((ModuleFile)impl).fileModule; return null; }
-            set { impl = value.modFile; }
+            set
+            {
+                Contract.Requires(value != null);
+                impl = value.modFile;
+            }
         }
 
         public uint FileOffset { get; set; } = 0;
@@ -732,6 +822,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return 8 + md.StringsIndexSize() +
                 md.CodedIndexSize(CIx.Implementation);
         }
@@ -765,6 +856,7 @@ namespace QUT.PERWAPI
 
         internal MapElem(ClassDef classDef, uint elIx, MDTable tableIx)
         {
+            Contract.Requires(classDef != null);
             theClass = classDef;
             elemIx = elIx;
             tabIx = tableIx;
@@ -773,6 +865,8 @@ namespace QUT.PERWAPI
 
         internal MapElem(ClassDef classDef, ClassDef paren, MDTable tableIx)
         {
+            Contract.Requires(classDef != null);
+            Contract.Requires(paren != null);
             theClass = classDef;
             parent = paren;
             tabIx = tableIx;
@@ -781,14 +875,23 @@ namespace QUT.PERWAPI
 
         internal MapElem(PEReader buff, MDTable tab)
         {
+            Contract.Requires(buff != null);
             tabIx = tab;
             classIx = buff.GetIndex(MDTable.TypeDef);
             elemIx = buff.GetIndex(tab);
             sortTable = tabIx == MDTable.NestedClass;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(theClass != null);
+        }
+
         internal static void Read(PEReader buff, TableRow[] maps, MDTable tab)
         {
+            Contract.Requires(maps != null);
+            Contract.Requires(buff != null);
             if (tab == MDTable.NestedClass)
             {
                 for (int i = 0; i < maps.Length; i++)
@@ -829,6 +932,8 @@ namespace QUT.PERWAPI
         internal static void ReadNestedClassInfo(PEReader buff, uint num, uint[] parIxs)
         {
             for (int i = 0; i < parIxs.Length; i++) parIxs[i] = 0;
+            Contract.Requires(buff != null);
+            Contract.Requires(parIxs != null);
             for (int i = 0; i < num; i++)
             {
                 int ix = (int)buff.GetIndex(MDTable.TypeDef);
@@ -899,6 +1004,9 @@ namespace QUT.PERWAPI
 
         internal MethodImpl(ClassDef par, Method decl, Method bod)
         {
+            Contract.Requires(par != null);
+            Contract.Requires(decl != null);
+            Contract.Requires(bod != null);
             parent = par;
             header = decl;
             body = bod;
@@ -907,6 +1015,8 @@ namespace QUT.PERWAPI
 
         internal MethodImpl(PEReader buff, ClassDef par, uint bIx, uint dIx)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(par != null);
             buffer = buff;
             parent = par;
             methBodyIx = bIx;
@@ -917,6 +1027,7 @@ namespace QUT.PERWAPI
 
         internal MethodImpl(PEReader buff)
         {
+            Contract.Requires(buff != null);
             classIx = buff.GetIndex(MDTable.TypeDef);
             methBodyIx = buff.GetCodedIndex(CIx.MethodDefOrRef);
             methDeclIx = buff.GetCodedIndex(CIx.MethodDefOrRef);
@@ -969,11 +1080,14 @@ namespace QUT.PERWAPI
 
         internal void SetOwner(ClassDef cl)
         {
+            Contract.Requires(cl != null);
             parent = cl;
         }
 
         internal static void Read(PEReader buff, TableRow[] impls)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(impls != null);
             for (int i = 0; i < impls.Length; i++)
                 impls[i] = new MethodImpl(buff);
         }
@@ -996,6 +1110,7 @@ namespace QUT.PERWAPI
 
         internal void ChangeRefsToDefs(ClassDef newType, ClassDef[] oldTypes)
         {
+            Contract.Requires(newType != null);
             throw new NotYetImplementedException("Merge for MethodImpls");
         }
 
@@ -1046,6 +1161,7 @@ namespace QUT.PERWAPI
 
         internal MethodSemantics(PEReader buff)
         {
+            Contract.Requires(buff != null);
             type = (MethodType)buff.ReadUInt16();
             methIx = buff.GetIndex(MDTable.Method);
             assocIx = buff.GetCodedIndex(CIx.HasSemantics);
@@ -1055,6 +1171,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] methSems)
         {
+            Contract.Requires(buff != null);
             for (int i = 0; i < methSems.Length; i++)
                 methSems[i] = new MethodSemantics(buff);
         }
@@ -1263,6 +1380,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return 4 + md.StringsIndexSize();
         }
 
@@ -1316,6 +1434,7 @@ namespace QUT.PERWAPI
 
         internal ConstantElem(PEReader buff)
         {
+            Contract.Requires(buff != null);
             byte constType = buff.ReadByte();
             byte pad = buff.ReadByte();
             parentIx = buff.GetCodedIndex(CIx.HasConstant);
@@ -1338,6 +1457,7 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] consts)
         {
+            Contract.Requires(buff != null);
             for (int i = 0; i < consts.Length; i++)
                 consts[i] = new ConstantElem(buff);
         }

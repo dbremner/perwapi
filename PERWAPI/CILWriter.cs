@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -37,6 +38,8 @@ namespace QUT.PERWAPI
         public CILWriter(string filename, bool debug, PEFile pefile)
             : base(new FileStream(filename, FileMode.Create))
         {
+            Contract.Requires(filename != null);
+            Contract.Requires(pefile != null);
             this.pefile = pefile;
             WriteLine("// ILASM output by PERWAPI");
             WriteLine("// for file <" + pefile.GetFileName() + ">");
@@ -44,6 +47,7 @@ namespace QUT.PERWAPI
 
         internal void AddRef(ReferenceScope refScope)
         {
+            Contract.Requires(refScope != null);
             if (!externRefs.Contains(refScope))
             {
                 externRefs.Add(refScope);

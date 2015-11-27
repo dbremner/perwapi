@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -54,6 +55,7 @@ namespace QUT.PERWAPI
 
         internal FieldMarshal(MetaDataElement field, NativeType nType)
         {
+            Contract.Requires(field != null);
             this.field = field;
             this.nt = nType;
             sortTable = true;
@@ -62,14 +64,22 @@ namespace QUT.PERWAPI
 
         internal FieldMarshal(PEReader buff)
         {
+            Contract.Requires(buff != null);
             parentIx = buff.GetCodedIndex(CIx.HasFieldMarshal);
             ntIx = buff.GetBlobIx();
             sortTable = true;
             tabIx = MDTable.FieldMarshal;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(field != null);
+        }
+
         internal static void Read(PEReader buff, TableRow[] fMarshal)
         {
+            Contract.Requires(buff != null);
             for (int i = 0; i < fMarshal.Length; i++)
                 fMarshal[i] = new FieldMarshal(buff);
         }

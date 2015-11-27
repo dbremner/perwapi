@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -335,6 +336,7 @@ namespace QUT.PERWAPI
 
         protected Field FindField(string name)
         {
+            Contract.Requires(fields != null);
             for (int i = 0; i < fields.Count; i++)
             {
                 if (((Field)fields[i]).Name() == name)

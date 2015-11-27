@@ -5,6 +5,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -63,8 +64,10 @@ namespace QUT.Symbols {
   /// Some static helper methods
   /// </summary>
   internal static class Util {
-    internal static void ComCheck(bool test, string message) {
-      if (!test)
+    internal static void ComCheck(bool test, string message)
+    {
+        Contract.Requires(message != null);
+        if (!test)
         throw new COMException(message);
     }
 
@@ -73,10 +76,12 @@ namespace QUT.Symbols {
         throw new COMException(message);
     }
 
-    internal static void ArgCheck(bool test, string message) {
-      if (!test)
+      internal static void ArgCheck(bool test, string message)
+      {
+          Contract.Requires(message != null);
+          if (!test)
         throw new ArgumentException(message);
-    }
+      }
   }
 
   #endregion // Utility Classes

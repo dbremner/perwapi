@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -36,11 +37,14 @@ namespace QUT.PERWAPI
 
         internal MethSig(string nam)
         {
+            Contract.Requires(nam != null);
             name = nam;
         }
 
         internal MethSig InstantiateGenTypes(Class classType, Type[] genTypes)
         {
+            Contract.Requires(classType != null);
+            Contract.Requires(genTypes != null);
             MethSig newSig = new MethSig(name);
             newSig.callConv = callConv;
             newSig.numPars = numPars;
@@ -65,6 +69,9 @@ namespace QUT.PERWAPI
 
         private static Type SubstituteType(Type origType, MetaDataElement paren, Type[] genTypes)
         {
+            Contract.Requires(origType != null);
+            Contract.Requires(paren != null);
+            Contract.Requires(genTypes != null);
             if ((origType is GenericParam) && (((GenericParam)origType).GetParent() == paren))
                 return genTypes[((GenericParam)origType).Index];
             return origType;
@@ -72,6 +79,7 @@ namespace QUT.PERWAPI
 
         internal void SetParTypes(Param[] parList)
         {
+            Contract.Requires(parList != null);
             if (parList == null) { numPars = 0; return; }
             numPars = (uint)parList.Length;
             parTypes = new Type[numPars];
@@ -84,6 +92,7 @@ namespace QUT.PERWAPI
         internal void ChangeParTypes(ClassDef newType, ClassDef[] oldTypes)
         {
             System.Diagnostics.Debug.Assert(newType != null);
+            Contract.Requires(oldTypes != null);
             foreach (ClassDef oldType in oldTypes)
             {
                 if (retType == oldType) retType = newType;
@@ -143,6 +152,7 @@ namespace QUT.PERWAPI
 
         internal bool HasSig(Type[] sigTypes)
         {
+            Contract.Requires(sigTypes != null);
             if (sigTypes == null) return (numPars == 0);
             if (sigTypes.Length != numPars) return false;
             for (int i = 0; i < numPars; i++)
@@ -191,6 +201,7 @@ namespace QUT.PERWAPI
 
         internal void TypeSig(MemoryStream sig)
         {
+            Contract.Requires(sig != null);
             sig.WriteByte((byte)callConv);
             if (numGenPars > 0) 
                 MetaDataOut.CompressNum(BlobUtil.CompressUInt(numGenPars), sig);
@@ -222,6 +233,7 @@ namespace QUT.PERWAPI
 
         internal void WriteCallConv(CILWriter output)
         {
+            Contract.Requires(output != null);
             if ((callConv & CallConv.Instance) != 0)
             {
                 output.Write("instance ");
@@ -244,12 +256,14 @@ namespace QUT.PERWAPI
 
         internal void Write(CILWriter output)
         {
+            Contract.Requires(output != null);
             WriteCallConv(output);
             retType.WriteType(output);
         }
 
         internal void WriteParTypes(CILWriter output)
         {
+            Contract.Requires(output != null);
             output.Write("(");
             for (int i = 0; i < numPars; i++)
             {
@@ -291,6 +305,7 @@ namespace QUT.PERWAPI
 
         internal void BuildTables(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             if (!retType.isDef())
                 retType.BuildMDTables(md);
             for (int i = 0; i < numPars; i++)
@@ -307,6 +322,7 @@ namespace QUT.PERWAPI
 
         internal void BuildCILInfo(CILWriter output)
         {
+            Contract.Requires(output != null);
             if (!retType.isDef())
                 retType.BuildCILInfo(output);
             for (int i = 0; i < numPars; i++)
@@ -323,6 +339,7 @@ namespace QUT.PERWAPI
 
         internal void BuildSignatures(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             if (!retType.isDef())
                 retType.BuildSignatures(md);
             for (int i = 0; i < numPars; i++)

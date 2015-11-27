@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -43,6 +44,7 @@ namespace QUT.PERWAPI
 
         internal virtual void AddToClassList(Class aClass)
         {
+            Contract.Requires(aClass != null);
             classes.Add(aClass);
         }
 
@@ -59,6 +61,7 @@ namespace QUT.PERWAPI
 
         protected Class GetClass(string nameSpace, string name, bool both)
         {
+            Contract.Requires(classes != null);
             foreach (object aClass in classes)
             {
                 if ((((Class)aClass).Name() == name) &&
@@ -83,6 +86,7 @@ namespace QUT.PERWAPI
         /// <param name="ix">The index of the class to be deleted (from 0)</param>
         public void RemoveClass(int ix)
         {
+            Contract.Requires(ix >= 0);
             classes.RemoveAt(ix);
         }
 

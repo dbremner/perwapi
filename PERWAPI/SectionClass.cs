@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -83,6 +84,7 @@ namespace QUT.PERWAPI
 
         internal Section(string sName, uint sFlags)
         {
+            Contract.Requires(sName != null);
             nameString = sName;
             name = sName.ToCharArray();
             flags = sFlags;
@@ -90,6 +92,7 @@ namespace QUT.PERWAPI
 
         internal Section(PEReader input)
         {
+            Contract.Requires(input != null);
             name = new char[8];
             for (int i = 0; i < name.Length; i++)
                 name[i] = (char)input.ReadByte();
@@ -147,6 +150,7 @@ namespace QUT.PERWAPI
 
         internal void DoBlock(BinaryWriter reloc, uint page, int start, int end)
         {
+            Contract.Requires(reloc != null);
             //Console.WriteLine("rva = " + rva + "  page = " + page);
             if (Diag.DiagOn) Console.WriteLine("writing reloc block at " + reloc.BaseStream.Position);
             reloc.Write(loadedRVA + page);
@@ -164,6 +168,7 @@ namespace QUT.PERWAPI
 
         internal void DoRelocs(BinaryWriter reloc)
         {
+            Contract.Requires(reloc != null);
             if (relocTide > 0)
             {
                 // align block to 32 bit boundary
@@ -223,6 +228,7 @@ namespace QUT.PERWAPI
 
         internal void WriteHeader(BinaryWriter output, uint relocRVA)
         {
+            Contract.Requires(output != null);
             if (Diag.DiagOn) Console.WriteLine("relocTide = " + relocTide);
             output.Write(name);
             output.Write(loadedSize);                 // Virtual size

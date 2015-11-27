@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -36,6 +37,7 @@ namespace QUT.PERWAPI
 
         private SourceFile(string name, Guid lang, Guid vend, Guid docu)
         {
+            Contract.Requires(name != null);
             this.name = name;
             language = lang;
             vendor = vend;
@@ -61,6 +63,7 @@ namespace QUT.PERWAPI
 
         public static SourceFile GetSourceFile(string name, Guid lang, Guid vend, Guid docu)
         {
+            Contract.Requires(name != null);
             foreach (SourceFile sFile in sourceFiles)
             {
                 if ((sFile.name == name) && sFile.GuidsMatch(lang, vend, docu))
@@ -71,7 +74,11 @@ namespace QUT.PERWAPI
 
         public string Name
         {
-            get { return name; }
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+                return name;
+            }
         }
 
     }

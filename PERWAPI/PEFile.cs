@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QUT.PERWAPI
 {
@@ -58,6 +59,7 @@ namespace QUT.PERWAPI
         public PEFile(string fileName)
             : base(fileName)
         {
+            Contract.Requires(fileName != null);
             //PrimitiveType.ClearAddedFlags();   // KJG 18-April-2005 - Now done in MetaDataOut
             this.fileName = fileName;
             metaData = new MetaDataOut();
@@ -75,6 +77,8 @@ namespace QUT.PERWAPI
         public PEFile(string fileName, string assemblyName)
             : base(fileName)
         {
+            Contract.Requires(fileName != null);
+            Contract.Requires(assemblyName != null);
             //PrimitiveType.ClearAddedFlags();   // KJG 18-April-2005 - Now done in MetaDataOut
             this.fileName = fileName;
             thisAssembly = new Assembly(assemblyName, this);
@@ -90,6 +94,7 @@ namespace QUT.PERWAPI
         /// <returns>PEFile object representing "filename"</returns>
         public static PEFile ReadPEFile(string filename)
         {
+            Contract.Requires(filename != null);
             return PEReader.ReadPEFile(filename, false);
         }
         /// <summary>
@@ -101,11 +106,13 @@ namespace QUT.PERWAPI
         /// <returns>The AssemblyRef or ModuleRef describing the exported interface of the specified file</returns>
         public static ReferenceScope ReadExportedInterface(string filename)
         {
+            Contract.Requires(filename != null);
             return PEReader.GetExportedInterface(filename);
         }
 
         public static PEFile ReadPublicClasses(string filename)
         {
+            Contract.Requires(filename != null);
             PEFile pefile = PEReader.ReadPEFile(filename, true);
             ArrayList newClasses = new ArrayList();
             foreach (object cls in pefile.classes)
@@ -168,7 +175,8 @@ namespace QUT.PERWAPI
         /// <param name="assemName">the external assembly name</param>
         /// <returns>a descriptor for this external assembly</returns>
         public AssemblyRef MakeExternAssembly(string assemName) {
-          AssemblyRef result = null;
+            Contract.Requires(assemName != null);
+            AssemblyRef result = null;
           if (assemName.CompareTo(MSCorLib.mscorlib.Name()) == 0) return MSCorLib.mscorlib;
           else if (!asmRefDict.TryGetValue(assemName, out result)) {
             result = new AssemblyRef(assemName);
@@ -184,6 +192,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this external module</returns>
         public ModuleRef MakeExternModule(string name)
         {
+            Contract.Requires(name != null);
             return new ModuleRef(name);
         }
 
@@ -194,6 +203,7 @@ namespace QUT.PERWAPI
         /// <param name="outputDir">The directory to write the PE File to.</param>
         public void SetOutputDirectory(string outputDir)
         {
+            Contract.Requires(outputDir != null);
             this.outputDir = outputDir;
         }
 
@@ -204,6 +214,7 @@ namespace QUT.PERWAPI
         /// <param name="output">The output stream</param>
         public void SetOutputStream(Stream output)
         {
+            Contract.Requires(output != null);
             this.outStream = output;
         }
 
@@ -244,6 +255,7 @@ namespace QUT.PERWAPI
 
         public void SetFileName(string filename)
         {
+            Contract.Requires(filename != null);
             this.fileName = filename;
         }
 
@@ -266,6 +278,7 @@ namespace QUT.PERWAPI
         /// </summary>
         public void AddUnmanagedResourceFile(string resFilename)
         {
+            Contract.Requires(resFilename != null);
             if (!System.IO.File.Exists(resFilename))
                 throw (new FileNotFoundException("Unmanaged Resource File Not Found", resFilename));
             // unmanagedResources = System.IO.File.OpenRead(resFilename);
@@ -280,6 +293,8 @@ namespace QUT.PERWAPI
         /// <param name="isPublic">Access for the resource</param>
         public void AddManagedResource(string resName, byte[] resBytes, bool isPublic)
         {
+            Contract.Requires(resName != null);
+            Contract.Requires(resBytes != null);
             resources.Add(new ManifestResource(this, resName, resBytes, isPublic));
         }
 
@@ -291,6 +306,8 @@ namespace QUT.PERWAPI
         /// <param name="isPublic">Access for the resource</param>
         public void AddExternalManagedResource(string resName, AssemblyRef assem, bool isPublic)
         {
+            Contract.Requires(resName != null);
+            Contract.Requires(assem != null);
             resources.Add(new ManifestResource(this, resName, assem, 0, isPublic));
         }
 
@@ -302,6 +319,7 @@ namespace QUT.PERWAPI
         /// <param name="isPublic">Access for the resource</param>
         public void AddExternalManagedResource(string resName, ResourceFile resFile, uint offset, bool isPublic)
         {
+            Contract.Requires(resName != null);
             resources.Add(new ManifestResource(this, resName, resFile, offset, isPublic));
         }
 
@@ -313,6 +331,8 @@ namespace QUT.PERWAPI
         /// <param name="isPublic">Access for the resource</param>
         public void AddExternalManagedResource(string resName, ModuleRef mod, uint offset, bool isPublic)
         {
+            Contract.Requires(resName != null);
+            Contract.Requires(mod != null);
             resources.Add(new ManifestResource(this, resName, mod.modFile, offset, isPublic));
         }
 
@@ -323,6 +343,7 @@ namespace QUT.PERWAPI
         /// <param name="isPublic"></param>
         public void AddExternalManagedResource(ManifestResource mr, bool isPublic)
         {
+            Contract.Requires(mr != null);
             resources.Add(new ManifestResource(this, mr, isPublic));
         }
 
@@ -339,6 +360,7 @@ namespace QUT.PERWAPI
                     return (ManifestResource)resources[i];
             }
             return null;
+            Contract.Requires(name != null);
         }
 
         public ManifestResource[] GetResources()

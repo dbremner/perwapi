@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Diagnostics.Contracts;
 
 namespace QUT.PERWAPI
 {
@@ -274,6 +275,7 @@ namespace QUT.PERWAPI
 
         internal string AddMethodName(string name)
         {
+            Contract.Requires(name != null);
             string istr = " ";
             switch (iType)
             {
@@ -301,7 +303,10 @@ namespace QUT.PERWAPI
         /// <param name="msg"></param>
         public DescriptorException(string msg)
             :
-            base("Descriptor for " + msg + " already exists") { }
+            base("Descriptor for " + msg + " already exists")
+        {
+            Contract.Requires(msg != null);
+        }
 
         /// <summary>
         /// exception
@@ -322,7 +327,10 @@ namespace QUT.PERWAPI
         /// PEFile exception constructor
         /// </summary>
         /// <param name="msg"></param>
-        public PEFileException(string msg) : base("Error in PE File:  " + msg) { }
+        public PEFileException(string msg) : base("Error in PE File:  " + msg)
+        {
+            Contract.Requires(msg != null);
+        }
     }
 
     /// <summary>
@@ -346,7 +354,10 @@ namespace QUT.PERWAPI
         /// <summary>
         /// Constructor
         /// </summary>
-        public InvalidStackDepth(string msg) : base("Invalid stack depth reached: " + msg) { }
+        public InvalidStackDepth(string msg) : base("Invalid stack depth reached: " + msg)
+        {
+            Contract.Requires(msg != null);
+        }
     }
 
 }

@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 
 namespace QUT.PERWAPI
@@ -83,6 +84,7 @@ namespace QUT.PERWAPI
 
         internal static NativeType GetNativeType(int ix)
         {
+            Contract.Requires(ix > 0);
             if (ix < nativeTypes.Length)
                 return nativeTypes[ix];
             return null;
@@ -97,9 +99,9 @@ namespace QUT.PERWAPI
 
         internal void Write(CILWriter output)
         {
+            Contract.Requires(output != null);
             throw new NotYetImplementedException("Native types for CIL");
         }
-
     }
 
     /**************************************************************************/

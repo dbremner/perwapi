@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Security.Cryptography;
+using System.Diagnostics.Contracts;
 using JetBrains.Annotations;
 
 
@@ -350,6 +351,7 @@ namespace QUT.PERWAPI
         //  FIXME: need a Setter for interfaces too!
         public void SetInterfaces(Class[] iFaces)
         {
+            Contract.Requires(iFaces != null);
             interfaces = new ArrayList(iFaces.Length);
             foreach (Class iFace in iFaces)
                 interfaces.Add(iFace);
@@ -363,6 +365,9 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new field</returns>
         public FieldDef AddField(string name, Type fType)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(fType != null);
+            Contract.Ensures(Contract.Result<FieldDef>() != null);
             FieldDef field = (FieldDef)FindField(name);
             if (field != null)
                 throw new DescriptorException("Field " + field.NameString());
@@ -952,6 +957,7 @@ namespace QUT.PERWAPI
         // fix for Whidbey bug
         internal void AddGenericsToTable(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             //for (int i=0; i < methods.Count; i++) {
             //  ((MethodDef)methods[i]).AddGenericsToTable(md);
             //}

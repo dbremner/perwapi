@@ -31,6 +31,7 @@ using System.IO;
 using System.Collections;
 using System.Text;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Reflection; // For the assembly attributes
 
 //
@@ -43,8 +44,10 @@ namespace QUT.PERWAPI {
   internal class MetaDataTables {
     private readonly TableRow[][] tables;
 
-    internal MetaDataTables(TableRow[][] tabs) {
-      tables = tabs;
+    internal MetaDataTables(TableRow[][] tabs)
+    {
+        Contract.Requires(tabs != null);
+        tables = tabs;
     }
 
     internal MetaDataElement GetTokenElement(uint token) {
@@ -68,8 +71,10 @@ namespace QUT.PERWAPI {
     protected byte[] data;
 
     public MetaDataInStream(byte[] streamBytes)
-      : base(new MemoryStream(streamBytes)) {
-      data = streamBytes;
+      : base(new MemoryStream(streamBytes))
+    {
+        Contract.Requires(streamBytes != null);
+        data = streamBytes;
     }
 
     public uint ReadCompressedNum() {
@@ -180,8 +185,10 @@ namespace QUT.PERWAPI {
     //BinaryReader br;
 
     internal MetaDataStringStream(byte[] bytes)
-      : base(new MemoryStream(bytes), Encoding.Unicode) {
-      //br = new BinaryReader(new MemoryStream(bytes)/*,Encoding.Unicode*/);
+      : base(new MemoryStream(bytes), Encoding.Unicode)
+    {
+        Contract.Requires(bytes != null);
+        //br = new BinaryReader(new MemoryStream(bytes)/*,Encoding.Unicode*/);
     }
 
     private uint GetStringLength() {
@@ -232,14 +239,16 @@ namespace QUT.PERWAPI {
 
     internal MetaDataStream(char[] name, bool addInitByte)
       : base(new MemoryStream()) {
-      if (addInitByte) { Write((byte)0); size = 1; }
+        Contract.Requires(name != null);
+        if (addInitByte) { Write((byte)0); size = 1; }
       this.name = name;
       sizeOfHeader = StreamHeaderSize + (uint)name.Length;
     }
 
     internal MetaDataStream(char[] name, System.Text.Encoding enc, bool addInitByte)
       : base(new MemoryStream(), enc) {
-      if (addInitByte) { Write((byte)0); size = 1; }
+        Contract.Requires(name != null);
+        if (addInitByte) { Write((byte)0); size = 1; }
       this.name = name;
       sizeOfHeader = StreamHeaderSize + (uint)name.Length;
     }
@@ -268,7 +277,8 @@ namespace QUT.PERWAPI {
     }
 
     internal uint Add(string str, bool prependSize) {
-      Object val = htable[str];
+        Contract.Requires(str != null);
+        Object val = htable[str];
       uint index = 0;
       if (val == null) {
         index = size;
@@ -293,7 +303,8 @@ namespace QUT.PERWAPI {
     }
 
     internal uint Add(byte[] blob) {
-      uint ix = size;
+        Contract.Requires(blob != null);
+        uint ix = size;
       CompressNum((uint)blob.Length);
       Write(blob);
       size = (uint)Seek(0, SeekOrigin.Current);
@@ -389,14 +400,17 @@ namespace QUT.PERWAPI {
       }
     }
 
-    internal void WriteHeader(BinaryWriter output) {
-      output.Write(Start);
-      output.Write(size);
-      output.Write(name);
+    internal void WriteHeader(BinaryWriter output)
+    {
+        Contract.Requires(output != null);
+        output.Write(Start);
+        output.Write(size);
+        output.Write(name);
     }
 
     internal virtual void Write(BinaryWriter output) {
       // Console.WriteLine("Writing " + name + " stream at " + output.Seek(0,SeekOrigin.Current) + " = " + start);
+      Contract.Requires(output != null);
       MemoryStream str = (MemoryStream)BaseStream;
       output.Write(str.ToArray());
     }

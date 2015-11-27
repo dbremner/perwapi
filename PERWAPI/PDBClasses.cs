@@ -26,6 +26,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.SymbolStore;
 using QSy = QUT.Symbols;
 
@@ -156,6 +157,7 @@ namespace QUT.PERWAPI
         /// <param name="endOffset">The ending offset for the binding.  Set to 0 to default to current scope.</param>
         public void BindLocal(string name, int idx, uint token, int startOffset, int endOffset)
         {
+            Contract.Requires(name != null);
 
             // Check to make sure a scope is open
             if (currentScope == null)
@@ -205,6 +207,7 @@ namespace QUT.PERWAPI
         /// <param name="endCol">The ending column for the sequence point.</param>
         public void AddSequencePoint(string sourceFile, Guid docLanguage, Guid langVendor, Guid docType, int offset, int line, int col, int endLine, int endCol)
         {
+            Contract.Requires(sourceFile != null);
             Document sourceDoc = null;
 
             // Make sure we are in a method
@@ -519,6 +522,7 @@ namespace QUT.PERWAPI
         /// <param name="fileName">The filename and path to the PDB file.</param>
         public PDBReader(string fileName)
         {
+            Contract.Requires(fileName != null);
             _reader = (ISymbolReader)(new QSy.SymbolReader(fileName));
             _fileName = fileName;
         }
@@ -560,6 +564,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">The ISymbolMethod object to wrap.</param>
         internal PDBMethod(ISymbolMethod meth)
         {
+            Contract.Requires(meth != null);
             _meth = meth;
         }
 
@@ -614,7 +619,14 @@ namespace QUT.PERWAPI
         /// <param name="scope"></param>
         internal PDBScope(ISymbolScope scope)
         {
+            Contract.Requires(scope != null);
             _scope = scope;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_scope != null);
         }
 
         /// <summary>
@@ -695,12 +707,19 @@ namespace QUT.PERWAPI
         /// <param name="endCol">The column the point ends with.</param>
         internal PDBSequencePoint(int offset, PDBDocument doc, int line, int col, int endLine, int endCol)
         {
+            Contract.Requires(doc != null);
             _offset = offset;
             _document = doc;
             _line = line;
             _column = col;
             _endLine = endLine;
             _endColumn = endCol;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_document != null);
         }
 
         /// <summary>
@@ -787,6 +806,12 @@ namespace QUT.PERWAPI
             _var = var;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_var != null);
+        }
+
         /// <summary>
         /// The name of the variable.
         /// </summary>
@@ -824,7 +849,14 @@ namespace QUT.PERWAPI
         /// <param name="doc">The ISymbolDocument to wrap.</param>
         internal PDBDocument(ISymbolDocument doc)
         {
+            Contract.Requires(doc != null);
             _doc = doc;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_doc != null);
         }
 
         /// <summary>
@@ -886,6 +918,12 @@ namespace QUT.PERWAPI
         {
             _debugBuffer = new ArrayList();
             _buffer = buffer;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_debugBuffer != null);
         }
 
         public void Add(CILInstruction inst, uint offset)

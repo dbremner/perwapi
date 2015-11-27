@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using JetBrains.Annotations;
 using SCG = System.Collections.Generic;
 
@@ -1566,8 +1567,10 @@ namespace QUT.PERWAPI {
     internal uint size = 1;
     internal uint offset, index;
 
-    internal virtual bool Check(MetaDataOut md) {
-      return false;
+    internal virtual bool Check(MetaDataOut md)
+    {
+        Contract.Requires(md != null);
+        return false;
     }
 
     internal virtual void Resolve() { }
@@ -1586,14 +1589,25 @@ namespace QUT.PERWAPI {
     /// <returns>An integer value representing the delta distance.</returns>
     internal abstract int GetDeltaDistance();
 
-    internal virtual void BuildTables(MetaDataOut md) { }
+    internal virtual void BuildTables(MetaDataOut md)
+    {
+        Contract.Requires(md != null);      
+    }
 
-    internal virtual void BuildCILInfo(CILWriter output) { }
+    internal virtual void BuildCILInfo(CILWriter output)
+    {
+        Contract.Requires(output != null);
+    }
 
-    internal virtual void Write(PEWriter output) { }
+    internal virtual void Write(PEWriter output)
+    {
+        Contract.Requires(output != null);
+    }
 
-    internal virtual void Write(CILWriter output) { }
-
+    internal virtual void Write(CILWriter output)
+    {
+        Contract.Requires(output != null);
+    }
   }
 
   /**************************************************************************/
