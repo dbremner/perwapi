@@ -42,6 +42,13 @@ namespace QUT.PERWAPI
             name = nam;
         }
 
+        internal MethSig(string name, Type rettype) :
+            this(name)
+        {
+            Contract.Requires(name != null);
+            Contract.Requires(rettype != null);
+        }
+
         internal MethSig InstantiateGenTypes(Class classType, Type[] genTypes)
         {
             Contract.Requires(classType != null);

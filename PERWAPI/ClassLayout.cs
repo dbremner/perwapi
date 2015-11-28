@@ -39,11 +39,8 @@ namespace QUT.PERWAPI
         /*-------------------- Constructors ---------------------------------*/
 
         internal ClassLayout(int pack, int cSize, ClassDef par)
+            : this((ushort) pack, (uint) cSize, par)
         {
-            packSize = (ushort)pack;
-            classSize = (uint)cSize;
-            parent = par;
-            tabIx = MDTable.ClassLayout;
         }
 
         internal ClassLayout(ushort pack, uint cSize, ClassDef par)

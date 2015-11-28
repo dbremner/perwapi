@@ -40,11 +40,10 @@ namespace QUT.PERWAPI
         internal Method(string methName, Type rType, Class paren)
             : base(methName, paren)
         {
-            sig = new MethSig(methName);
-            sig.retType = rType;
             Contract.Requires(methName != null);
             Contract.Requires(rType != null);
             Contract.Requires(paren != null);
+            sig = new MethSig(methName, rType);
         }
 
         internal Method(string name) : base(name)

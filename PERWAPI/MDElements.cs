@@ -426,22 +426,20 @@ namespace QUT.PERWAPI
 
         /*-------------------- Constructors ---------------------------------*/
 
-        internal Member(string memName, Class paren)
+        internal Member(string memName, Class paren) :
+            this(memName)
         {
             Contract.Requires(memName != null);
             Contract.Requires(paren != null);
-            name = memName;
             parent = paren;
-            tabIx = MDTable.MemberRef;
         }
 
-        internal Member(uint parenIx, string name, uint sIx)
+        internal Member(uint parenIx, string name, uint sIx) :
+            this(name)
         {
             Contract.Requires(name != null);
             parentIx = parenIx;
-            this.name = name;
             sigIx = sIx;
-            tabIx = MDTable.MemberRef;
         }
 
         internal Member(string name)
