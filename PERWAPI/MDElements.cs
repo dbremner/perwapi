@@ -75,7 +75,7 @@ namespace QUT.PERWAPI
         protected ArrayList customAttributes;
         protected bool done = false;
         
-        protected bool sortTable = false;
+        protected bool sortTable = true; // FIXME only used in one child class
         internal bool unresolved = false;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -346,7 +346,6 @@ namespace QUT.PERWAPI
             importScope = mScope;
             tabIx = MDTable.ImplMap;
             if (iName == null) flags |= NoMangle;
-            sortTable = true;
             //throw(new NotYetImplementedException("PInvoke "));
         }
 
@@ -357,7 +356,6 @@ namespace QUT.PERWAPI
             memForIndex = buff.GetCodedIndex(CIx.MemberForwarded);
             importName = buff.GetString();
             scopeIx = buff.GetIndex(MDTable.ModuleRef);
-            sortTable = true;
             tabIx = MDTable.ImplMap;
         }
 
@@ -1162,7 +1160,6 @@ namespace QUT.PERWAPI
             type = mType;
             meth = method;
             eventOrProp = feature;
-            sortTable = true;
             tabIx = MDTable.MethodSemantics;
         }
 
@@ -1172,7 +1169,6 @@ namespace QUT.PERWAPI
             type = (MethodType)buff.ReadUInt16();
             methIx = buff.GetIndex(MDTable.Method);
             assocIx = buff.GetCodedIndex(CIx.HasSemantics);
-            sortTable = true;
             tabIx = MDTable.MethodSemantics;
         }
 
@@ -1435,7 +1431,6 @@ namespace QUT.PERWAPI
         {
             this.parent = parent;
             cValue = val;
-            sortTable = true;
             tabIx = MDTable.Constant;
         }
 
@@ -1447,7 +1442,6 @@ namespace QUT.PERWAPI
             parentIx = buff.GetCodedIndex(CIx.HasConstant);
             //valIx = buff.GetBlobIx();
             cValue = buff.GetBlobConst(constType);
-            sortTable = true;
             tabIx = MDTable.Constant;
         }
 
@@ -1517,7 +1511,6 @@ namespace QUT.PERWAPI
             parent = paren;
             action = act;
             permissionSet = perSet;
-            sortTable = true;
             tabIx = MDTable.DeclSecurity;
         }
 
@@ -1526,7 +1519,6 @@ namespace QUT.PERWAPI
             action = (SecurityAction)buff.ReadUInt16();
             parentIx = buff.GetCodedIndex(CIx.HasDeclSecurity);
             permissionSet = buff.GetBlob();
-            sortTable = true;
             tabIx = MDTable.DeclSecurity;
         }
 

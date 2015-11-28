@@ -54,7 +54,6 @@ namespace QUT.PERWAPI
             type = constrType;
             argVals = val;
             changed = true;
-            sortTable = true;
             tabIx = MDTable.CustomAttribute;
         }
 
@@ -65,7 +64,6 @@ namespace QUT.PERWAPI
             type = constrType;
             tabIx = MDTable.CustomAttribute;
             byteVal = val;
-            sortTable = true;
             changed = true;
         }
 
@@ -75,7 +73,6 @@ namespace QUT.PERWAPI
             parentIx = buff.GetCodedIndex(CIx.HasCustomAttr);
             typeIx = buff.GetCodedIndex(CIx.CustomAttributeType);
             valIx = buff.GetBlobIx();
-            sortTable = true;
             tabIx = MDTable.CustomAttribute;
         }
 

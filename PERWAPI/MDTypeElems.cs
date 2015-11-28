@@ -357,7 +357,6 @@ namespace QUT.PERWAPI
             : base(elemIx)
         {
             this.index = (ushort)index;
-            sortTable = true;
         }
 
         internal GenericParam(string name, MetaDataElement parent, int index)
@@ -367,7 +366,6 @@ namespace QUT.PERWAPI
             this.parent = parent;
             this.index = (ushort)index;
             if (parent is Method) typeIndex = MVAR;
-            sortTable = true;
             tabIx = MDTable.GenericParam;
         }
 
@@ -379,7 +377,6 @@ namespace QUT.PERWAPI
             parentIx = buff.GetCodedIndex(CIx.TypeOrMethodDef);
             name = buff.GetString();
             if (extraField) kind = buff.ReadUInt16();
-            sortTable = true;
             tabIx = MDTable.GenericParam;
             // resolve generic param immediately for signature resolution
             parent = buff.GetCodedElement(CIx.TypeOrMethodDef, parentIx);
@@ -401,7 +398,6 @@ namespace QUT.PERWAPI
             : base(MVAR)
         {
             this.name = name;
-            sortTable = true;
             tabIx = MDTable.GenericParam;
         }
 

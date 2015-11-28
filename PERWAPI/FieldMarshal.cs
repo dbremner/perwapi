@@ -58,7 +58,6 @@ namespace QUT.PERWAPI
             Contract.Requires(field != null);
             this.field = field;
             this.nt = nType;
-            sortTable = true;
             tabIx = MDTable.FieldMarshal;
         }
 
@@ -67,7 +66,6 @@ namespace QUT.PERWAPI
             Contract.Requires(buff != null);
             parentIx = buff.GetCodedIndex(CIx.HasFieldMarshal);
             ntIx = buff.GetBlobIx();
-            sortTable = true;
             tabIx = MDTable.FieldMarshal;
         }
 
