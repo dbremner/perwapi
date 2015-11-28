@@ -32,7 +32,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public abstract class Method : Member
     {
-        protected MethSig sig;
+        [CanBeNull] protected MethSig sig;
         protected ArrayList genericParams;
 
         /*-------------------- Constructors ---------------------------------*/
@@ -75,7 +75,7 @@ namespace QUT.PERWAPI
         /// <param name="retT">type returned</param>
         internal void AddRetType(Type retT)
         {
-            System.Diagnostics.Debug.Assert(retT != null);
+            Contract.Requires(retT != null);
             sig.retType = retT;
         }
 
@@ -935,6 +935,7 @@ namespace QUT.PERWAPI
         /// <returns></returns>
         public MethodRef MakeVarArgSignature(Type[] optPars)
         {
+            Contract.Requires(optPars != null);
             MethSig mSig = new MethSig(name);
             mSig.parTypes = sig.parTypes;
             mSig.retType = sig.retType;

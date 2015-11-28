@@ -55,9 +55,9 @@ namespace QUT.PERWAPI
             return true;
         }
 
-        internal bool Match([CanBeNull] SourceFile file)
+        internal bool Match(SourceFile file)
         {
-            if (file == null) return false;
+            Contract.Requires(file != null);
             if (this == file) return true;
             if (name != file.name) return false;
             return GuidsMatch(file.language, file.vendor, file.document);

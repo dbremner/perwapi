@@ -217,6 +217,7 @@ namespace QUT.PERWAPI
         public void MergeClasses(ClassDef[] classes)
         {
             // FIXME Contract.Requires(methods != null);
+            Contract.Requires(classes != null);
             ChangeRefsToDefs(this, classes);
             foreach (ClassDef cls in classes)
             {
@@ -437,8 +438,8 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new method</returns>
         public MethodDef AddMethod(string name, Type retType, Param[] pars)
         {
-            System.Diagnostics.Debug.Assert(retType != null);
             MethSig mSig = new MethSig(name);
+            Contract.Requires(retType != null);
             mSig.SetParTypes(pars);
             MethodDef meth = (MethodDef)GetMethod(mSig);
             if (meth != null)

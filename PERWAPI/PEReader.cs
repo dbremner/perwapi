@@ -1149,6 +1149,7 @@ namespace QUT.PERWAPI
         }
 
         private MethSig ReadMethSig(Method currMeth, bool firstByteRead)
+        [CanBeNull]
         {
             Contract.Requires(currMeth != null);
             MethSig meth = new MethSig(null);

@@ -18,7 +18,9 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -30,7 +32,7 @@ namespace QUT.PERWAPI
     /// </summary>
     public class ClassRef : ClassDesc
     {
-        protected ReferenceScope scope;
+        [CanBeNull] protected ReferenceScope scope;
         protected uint resScopeIx = 0;
         internal ExternClass externClass;
         internal ClassDef defOf;
@@ -145,7 +147,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this method</returns>
         public MethodRef AddMethod(string name, Type retType, Type[] pars)
         {
-            System.Diagnostics.Debug.Assert(retType != null);
+            Contract.Requires(retType != null);
             MethodRef meth = (MethodRef)GetMethodDesc(name, pars);
             if (meth != null) DescriptorError(meth);
             meth = new MethodRef(this, name, retType, pars);
@@ -356,6 +358,7 @@ namespace QUT.PERWAPI
 
         internal void AddMethod(MethodRef meth)
         {
+            Contract.Requires(meth != null);
             MethodRef m = (MethodRef)GetMethodDesc(meth.Name(), meth.GetParTypes());
             if (m == null)
             {

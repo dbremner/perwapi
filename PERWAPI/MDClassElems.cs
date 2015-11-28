@@ -21,6 +21,7 @@ using System.Linq;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 
 
 namespace QUT.PERWAPI
@@ -96,6 +97,7 @@ namespace QUT.PERWAPI
         /// <param name="name">The name of the method</param>
         /// <param name="parTypes">The signature of the method</param>
         /// <returns>The method descriptor for name(parTypes)</returns>
+        [CanBeNull]
         public Method GetMethodDesc(string name, Type[] parTypes)
         {
             foreach (object method in methods)
@@ -319,6 +321,7 @@ namespace QUT.PERWAPI
             nestedClasses.Add(nClass);
         }
 
+        [CanBeNull]
         internal Class GetNested(string name)
         {
             for (int i = 0; i < nestedClasses.Count; i++)

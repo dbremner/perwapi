@@ -127,6 +127,7 @@ namespace QUT.PERWAPI
         [NotNull]
         public static String Byte(int b)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             char[] str = new char[2];
             uint num = (uint)b;
             uint b1 = num & nibble0Mask;
@@ -144,6 +145,7 @@ namespace QUT.PERWAPI
         [NotNull]
         public static String Short(int b)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             char[] str = new char[4];
             uint num1 = (uint)b & iByteMask[0];
             uint num2 = ((uint)b & iByteMask[1]) >> 8;
@@ -166,6 +168,7 @@ namespace QUT.PERWAPI
         [NotNull]
         public static String Int(int val)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             char[] str = new char[8];
             uint num = (uint)val;
             int strIx = 7;
@@ -189,6 +192,7 @@ namespace QUT.PERWAPI
         [NotNull]
         public static String Int(uint num)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             char[] str = new char[8];
             int strIx = 7;
             for (int i = 0; i < iByteMask.Length; i++)
@@ -211,6 +215,7 @@ namespace QUT.PERWAPI
         [NotNull]
         public static String Long(long lnum)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             ulong num = (ulong)lnum;
             return Long(num);
         }
@@ -222,6 +227,7 @@ namespace QUT.PERWAPI
         /// <returns>hex string for the unsigned long value</returns>
         public static String Long(ulong num)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             char[] str = new char[16];
             int strIx = 15;
             for (int i = 0; i < lByteMask.Length; i++)

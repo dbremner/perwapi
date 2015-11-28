@@ -40,7 +40,15 @@ namespace QUT.PERWAPI
 
         internal ResolutionScope(string name)
         {
+            Contract.Requires(name != null);
             this.name = name;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(name != null);
+            Contract.Invariant(classes != null);
         }
 
         internal virtual void AddToClassList(Class aClass)
@@ -52,6 +60,8 @@ namespace QUT.PERWAPI
         [CanBeNull]
         internal Class GetExistingClass(string nameSpace, string name)
         {
+            Contract.Requires(nameSpace != null);
+            Contract.Requires(name != null);
             foreach (object cls in classes)
             {
                 Class aClass = (Class)cls;
@@ -64,6 +74,8 @@ namespace QUT.PERWAPI
         [CanBeNull]
         protected Class GetClass(string nameSpace, string name, bool both)
         {
+            Contract.Requires(nameSpace != null);
+            Contract.Requires(name != null);
             Contract.Requires(classes != null);
             foreach (object aClass in classes)
             {
@@ -80,6 +92,7 @@ namespace QUT.PERWAPI
         /// <param name="aClass">The name of the class to be deleted</param>
         public void RemoveClass(Class aClass)
         {
+            Contract.Requires(aClass != null);
             classes.Remove(aClass);
         }
 
@@ -115,6 +128,7 @@ namespace QUT.PERWAPI
         internal ReferenceScope(string name)
             : base(name)
         {
+            Contract.Requires(name != null);
             defaultClass = new ClassRef(this, "", "");
             defaultClass.MakeSpecial();
         }
@@ -128,6 +142,7 @@ namespace QUT.PERWAPI
 
         internal void SetDefaultClass(ClassRef dClass)
         {
+            Contract.Requires(dClass != null);
             defaultClass = dClass;
         }
 
@@ -139,6 +154,7 @@ namespace QUT.PERWAPI
 
         internal void ReplaceClass(Class aClass)
         {
+            Contract.Requires(aClass != null);
             bool found = false;
             for (int i = 0; (i < classes.Count) && !found; i++)
             {
@@ -151,7 +167,11 @@ namespace QUT.PERWAPI
                 classes.Add(aClass);
         }
 
-        internal bool isDefaultClass(ClassRef aClass) { return aClass == defaultClass; }
+        internal bool isDefaultClass(ClassRef aClass)
+        {
+            Contract.Requires(aClass != null);
+            return aClass == defaultClass;
+        }
 
         /// <summary>
         /// Add a class to this Scope.  If this class already exists, throw
@@ -160,6 +180,7 @@ namespace QUT.PERWAPI
         /// <param name="newClass">The class to be added</param>
         public void AddClass(ClassRef newClass)
         {
+            Contract.Requires(newClass != null);
             ClassRef aClass = (ClassRef)GetClass(newClass.NameSpace, newClass.Name, true);
             if (aClass != null)
                 throw new DescriptorException("Class " + newClass.NameString());
@@ -178,6 +199,8 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this class in another module</returns>
         public virtual ClassRef AddClass(string nsName, string name)
         {
+            Contract.Requires(nsName != null);
+            Contract.Requires(name != null);
             ClassRef aClass = GetClass(nsName, name);
             if (aClass != null)
             {
@@ -204,6 +227,8 @@ namespace QUT.PERWAPI
         /// <returns></returns>
         public virtual ClassRef AddValueClass(string nsName, string name)
         {
+            Contract.Requires(nsName != null);
+            Contract.Requires(name != null);
             ClassRef aClass = AddClass(nsName, name);
             aClass.MakeValueClass();
             return aClass;
@@ -216,6 +241,7 @@ namespace QUT.PERWAPI
         /// <returns>ClassRef for "name".</returns>
         public ClassRef GetClass(string name)
         {
+            Contract.Requires(name != null);
             return (ClassRef)GetClass(null, name, false);
         }
 
@@ -227,6 +253,8 @@ namespace QUT.PERWAPI
         /// <returns>ClassRef for "nsName.name".</returns>
         public ClassRef GetClass(string nsName, string name)
         {
+            Contract.Requires(nsName != null);
+            Contract.Requires(name != null);
             return (ClassRef)GetClass(nsName, name, true);
         }
 
@@ -249,6 +277,9 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this method in anther module</returns>
         public MethodRef AddMethod(string name, Type retType, Type[] pars)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
             MethodRef meth = defaultClass.AddMethod(name, retType, pars);
             return meth;
         }
@@ -264,6 +295,10 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this method</returns>
         public MethodRef AddVarArgMethod(string name, Type retType, Type[] pars, Type[] optPars)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
+            Contract.Requires(optPars != null);
             MethodRef meth = defaultClass.AddVarArgMethod(name, retType, pars, optPars);
             return meth;
         }
@@ -274,6 +309,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">The method to be added.</param>
         public void AddMethod(MethodRef meth)
         {
+            Contract.Requires(meth != null);
             defaultClass.AddMethod(meth);
         }
 
@@ -301,6 +337,7 @@ namespace QUT.PERWAPI
         /// <returns>MethodRef for "name", or null if none exists.</returns>
         public MethodRef GetMethod(string name)
         {
+            Contract.Requires(name != null);
             return defaultClass.GetMethod(name);
         }
 
@@ -311,6 +348,7 @@ namespace QUT.PERWAPI
         /// <returns>An array of all the methods called "name".</returns>
         public MethodRef[] GetMethods(string name)
         {
+            Contract.Requires(name != null);
             return defaultClass.GetMethods(name);
         }
 
@@ -323,6 +361,8 @@ namespace QUT.PERWAPI
         /// <returns>MethodRef for name(parTypes).</returns>
         public MethodRef GetMethod(string name, Type[] parTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
             return defaultClass.GetMethod(name, parTypes);
         }
 
@@ -335,6 +375,9 @@ namespace QUT.PERWAPI
         /// <returns>MethodRef for name(parTypes,optPars).</returns>
         public MethodRef GetMethod(string name, Type[] parTypes, Type[] optPars)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
+            Contract.Requires(optPars != null);
             return defaultClass.GetMethod(name, parTypes, optPars);
         }
 
@@ -353,6 +396,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">The method to be deleted.</param>
         public void RemoveMethod(MethodRef meth)
         {
+            Contract.Requires(meth != null);
             defaultClass.RemoveMethod(meth);
         }
 
@@ -363,6 +407,7 @@ namespace QUT.PERWAPI
         /// <param name="name">The name of the method to delete.</param>
         public void RemoveMethod(string name)
         {
+            Contract.Requires(name != null);
             defaultClass.RemoveMethod(name);
         }
 
@@ -373,6 +418,8 @@ namespace QUT.PERWAPI
         /// <param name="parTypes">The signature of the method to be deleted.</param>
         public void RemoveMethod(string name, Type[] parTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
             defaultClass.RemoveMethod(name, parTypes);
         }
 
@@ -384,6 +431,9 @@ namespace QUT.PERWAPI
         /// <param name="optTypes">The optional parameters of the vararg method.</param>
         public void RemoveMethod(string name, Type[] parTypes, Type[] optTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
+            Contract.Requires(optTypes != null);
             defaultClass.RemoveMethod(name, parTypes, optTypes);
         }
 
@@ -394,6 +444,7 @@ namespace QUT.PERWAPI
         /// into array returned by GetMethods().</param>
         public void RemoveMethod(int index)
         {
+            Contract.Requires(index >= 0);
             defaultClass.RemoveMethod(index);
         }
 
@@ -405,6 +456,8 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for the field "name" in this scope</returns>
         public FieldRef AddField(string name, Type fType)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(fType != null);
             FieldRef field = defaultClass.AddField(name, fType);
             return field;
         }
@@ -415,6 +468,7 @@ namespace QUT.PERWAPI
         /// <param name="fld">The field to be added</param>
         public void AddField(FieldRef fld)
         {
+            Contract.Requires(fld != null);
             defaultClass.AddField(fld);
         }
 
@@ -424,6 +478,7 @@ namespace QUT.PERWAPI
         /// <param name="flds">The fields to be added.</param>
         internal void AddFields(ArrayList flds)
         {
+            Contract.Requires(flds != null);
             foreach (object obj in flds)
             {
                 FieldRef fld = (FieldRef)obj;
@@ -439,6 +494,7 @@ namespace QUT.PERWAPI
         /// <returns>FieldRef descriptor for "name" or null</returns>
         public FieldRef GetField(string name)
         {
+            Contract.Requires(name != null);
             return defaultClass.GetField(name);
         }
 
@@ -453,16 +509,19 @@ namespace QUT.PERWAPI
 
         internal void AddToMethodList(MethodRef meth)
         {
+            Contract.Requires(meth != null);
             defaultClass.AddToMethodList(meth);
         }
 
         internal void AddToFieldList(FieldRef fld)
         {
+            Contract.Requires(fld != null);
             defaultClass.AddToFieldList(fld);
         }
 
         internal MethodRef GetMethod(MethSig mSig)
         {
+            Contract.Requires(mSig != null);
             return (MethodRef)defaultClass.GetMethod(mSig);
         }
 
@@ -806,6 +865,7 @@ namespace QUT.PERWAPI
         internal ModuleRef(string name)
             : base(name)
         {
+            Contract.Requires(name != null);
             ismscorlib = name.ToLower() == "mscorlib.dll";
             tabIx = MDTable.ModuleRef;
         }
@@ -819,6 +879,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] mods, bool resolve)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(mods != null);
             for (int i = 0; i < mods.Length; i++)
             {
                 string name = buff.GetString();
@@ -852,6 +914,9 @@ namespace QUT.PERWAPI
         public ClassRef AddExternClass(TypeAttr attrSet, string nsName,
             string name, bool isValueClass, PEFile pefile)
         {
+            Contract.Requires(nsName != null);
+            Contract.Requires(name != null);
+            Contract.Requires(pefile != null);
             ClassRef cRef = new ClassRef(this, nsName, name);
             if (isValueClass) cRef.MakeValueClass();
             ExternClass eClass = new ExternClass(attrSet, nsName, name, modFile);
@@ -863,6 +928,8 @@ namespace QUT.PERWAPI
 
         public static ModuleRef MakeModuleRef(string name, bool entryPoint, byte[] hashValue)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(hashValue != null);
             ModuleRef mRef = new ModuleRef(name, entryPoint, hashValue);
             return mRef;
         }
@@ -874,6 +941,7 @@ namespace QUT.PERWAPI
 
         public void SetHash(byte[] hashVal)
         {
+            Contract.Requires(hashVal != null);
             modFile.SetHash(hashVal);
         }
 
@@ -894,17 +962,20 @@ namespace QUT.PERWAPI
 
         internal void AddToExportedClassList(ClassRef exClass)
         {
+            Contract.Requires(exClass != null);
             if (exportedClasses.Contains(exClass)) return;
             exportedClasses.Add(exClass);
         }
 
         internal void AddExternClass(ExternClass eClass)
         {
+            Contract.Requires(eClass != null);
             exportedClasses.Add(eClass);
         }
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return md.StringsIndexSize();
         }
 

@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace QUT.PERWAPI
 {
@@ -524,7 +525,7 @@ namespace QUT.PERWAPI
                 }
         }
 
-        private static Scope ReadPDBScope(PDBScope scope, MergeBuffer mergeBuffer, Scope parent, MethodDef thisMeth)
+        private static Scope ReadPDBScope(PDBScope scope, MergeBuffer mergeBuffer, [CanBeNull] Scope parent, MethodDef thisMeth)
         {
             Scope thisScope = new Scope(parent, thisMeth);
 

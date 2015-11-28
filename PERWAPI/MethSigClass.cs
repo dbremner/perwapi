@@ -99,7 +99,7 @@ namespace QUT.PERWAPI
 
         internal void ChangeParTypes(ClassDef newType, ClassDef[] oldTypes)
         {
-            System.Diagnostics.Debug.Assert(newType != null);
+            Contract.Requires(newType != null);
             Contract.Requires(oldTypes != null);
             foreach (ClassDef oldType in oldTypes)
             {

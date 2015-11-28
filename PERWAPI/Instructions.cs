@@ -397,7 +397,8 @@ namespace QUT.PERWAPI {
     /// </summary>
     /// <param name="lab">the label to be added</param>
     public void CodeLabel(CILLabel lab) {
-      if (lab.Buffer == null) {
+        Contract.Requires(lab != null);
+        if (lab.Buffer == null) {
         lab.Buffer = this;
       }
       else if (lab.Buffer != this) {
@@ -412,7 +413,7 @@ namespace QUT.PERWAPI {
     /// <param name="inst">the CIL instruction</param>
     /// <param name="f">the field parameter</param>
     public void FieldInst(FieldOp inst, Field f) {
-      Debug.Assert(f != null);
+      Contract.Requires(f != null);
       if (f is FieldDef)
         if (((FieldDef)f).GetScope() != thisMeth.GetScope())
           throw new DescriptorException();
@@ -425,7 +426,7 @@ namespace QUT.PERWAPI {
     /// <param name="inst">the CIL instruction</param>
     /// <param name="m">the method parameter</param>
     public void MethInst(MethodOp inst, Method m) {
-      Debug.Assert(m != null);
+      Contract.Requires(m != null);
       if (m is MethodDef)
         if (((MethodDef)m).GetScope() != thisMeth.GetScope())
           throw new DescriptorException();
@@ -451,17 +452,20 @@ namespace QUT.PERWAPI {
     /// </summary>
     /// <param name="inst">the branch instruction</param>
     /// <param name="lab">the label that is the target of the branch</param>
-    public void Branch(BranchOp inst, CILLabel lab) {
-      Debug.Assert(lab != null);
-      AddToBuffer(new BranchInstr(inst, lab));
+    public void Branch(BranchOp inst, CILLabel lab)
+    {
+        Contract.Requires(lab != null);
+        AddToBuffer(new BranchInstr(inst, lab));
     }
 
     /// <summary>
     /// Add a switch instruction
     /// </summary>
     /// <param name="labs">the target labels for the switch</param>
-    public void Switch(CILLabel[] labs) {
-      AddToBuffer(new SwitchInstr(labs));
+    public void Switch(CILLabel[] labs)
+    {
+        Contract.Requires(labs != null);
+        AddToBuffer(new SwitchInstr(labs));
     }
 
     /// <summary>

@@ -338,7 +338,7 @@ namespace QUT.PERWAPI
 
         /*-------------------- Constructors ---------------------------------*/
 
-        internal ImplMap(ushort flag, MethodDef implMeth, string iName, ModuleRef mScope)
+        internal ImplMap(ushort flag, MethodDef implMeth, [CanBeNull] string iName, ModuleRef mScope)
         {
             flags = flag;
             meth = implMeth;
@@ -422,7 +422,7 @@ namespace QUT.PERWAPI
         protected uint nameIx = 0, sigIx = 0;
         protected byte[] signature;
         protected uint parentIx = 0;
-        protected Class parent;
+        [CanBeNull] protected Class parent;
 
         /*-------------------- Constructors ---------------------------------*/
 

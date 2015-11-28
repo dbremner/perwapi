@@ -284,6 +284,7 @@ namespace QUT.PERWAPI
       /// </summary>
       /// <param name="reader"></param>
         internal void PopulateResourceData(PEReader reader, long baseOffset) {
+          Contract.Requires(reader != null);
           uint dataRVA = reader.ReadUInt32();
           int dataLength = reader.ReadInt32();
           this.CodePage = reader.ReadInt32();
