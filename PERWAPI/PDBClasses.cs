@@ -689,13 +689,6 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PDBSequencePoint
     {
-        internal PDBDocument _document;
-        internal int _offset;
-        internal int _line;
-        internal int _column;
-        internal int _endLine;
-        internal int _endColumn;
-
         /// <summary>
         /// Create a new sequence point.
         /// </summary>
@@ -708,86 +701,49 @@ namespace QUT.PERWAPI
         internal PDBSequencePoint(int offset, PDBDocument doc, int line, int col, int endLine, int endCol)
         {
             Contract.Requires(doc != null);
-            _offset = offset;
-            _document = doc;
-            _line = line;
-            _column = col;
-            _endLine = endLine;
-            _endColumn = endCol;
+            Offset = offset;
+            Document = doc;
+            Line = line;
+            Column = col;
+            EndLine = endLine;
+            EndColumn = endCol;
         }
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(_document != null);
+            Contract.Invariant(Document != null);
         }
 
         /// <summary>
         /// The source file for this sequence point.
         /// </summary>
-        public PDBDocument Document
-        {
-            get
-            {
-                return _document;
-            }
-        }
+        public PDBDocument Document { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public int Offset
-        {
-            get
-            {
-                return _offset;
-            }
-        }
+        public int Offset { get; }
 
         /// <summary>
         /// The line this sequence point starts on.
         /// </summary>
-        public int Line
-        {
-            get
-            {
-                return _line;
-            }
-        }
+        public int Line { get; }
 
         /// <summary>
         /// The column this sequnce point starts with.
         /// </summary>
-        public int Column
-        {
-            get
-            {
-                return _column;
-            }
-        }
+        public int Column { get; }
 
         /// <summary>
         /// The line this sequence point ends with.
         /// </summary>
-        public int EndLine
-        {
-            get
-            {
-                return _endLine;
-            }
-        }
+        public int EndLine { get; }
 
         /// <summary>
         /// The column this sequence point ends with.
         /// </summary>
-        public int EndColumn
-        {
-            get
-            {
-                return _endColumn;
-            }
-        }
-
+        public int EndColumn { get; }
     }
 
     /// <summary>
