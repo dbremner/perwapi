@@ -60,7 +60,11 @@ namespace QUT.PERWAPI
         /// </summary>
         public string PDBFilename
         {
-            get { return Path.ChangeExtension(PEFilename, ".pdb"); }
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+                return Path.ChangeExtension(PEFilename, ".pdb");
+            }
         }
 
         /// <summary>
@@ -82,7 +86,14 @@ namespace QUT.PERWAPI
         /// <param name="PEFilename">The name of the PE file we are writting the PDB file for.</param>
         public PDBWriter(string PEFilename)
         {
+            Contract.Requires(PEFilename != null);
             this.PEFilename = PEFilename;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(PEFilename != null);
         }
 
         /// <summary>
@@ -502,6 +513,13 @@ namespace QUT.PERWAPI
             internal SymbolToken Token;
             internal int OffsetStart;
             internal int OffsetEnd;
+                Contract.Requires(name != null);
+
+            [ContractInvariantMethod]
+            private void ObjectInvariant()
+            {
+                Contract.Invariant(Name != null);
+            }
         }
 
     }
@@ -525,6 +543,13 @@ namespace QUT.PERWAPI
             Contract.Requires(fileName != null);
             _reader = (ISymbolReader)(new QSy.SymbolReader(fileName));
             _fileName = fileName;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_reader != null);
+            Contract.Invariant(_fileName != null);
         }
 
         /// <summary>
@@ -568,6 +593,13 @@ namespace QUT.PERWAPI
             _meth = meth;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_meth != null);
+            Contract.Invariant(SequencePoints != null);
+        }
+
         /// <summary>
         /// The root scope of the method.
         /// </summary>
@@ -575,6 +607,7 @@ namespace QUT.PERWAPI
         {
             get
             {
+                Contract.Ensures(Contract.Result<PDBScope>() != null);
                 return new PDBScope(_meth.RootScope);
             }
         }
@@ -759,6 +792,7 @@ namespace QUT.PERWAPI
         /// <param name="var"></param>
         internal PDBVariable(ISymbolVariable var)
         {
+            Contract.Requires(var != null);
             _var = var;
         }
 
@@ -775,6 +809,7 @@ namespace QUT.PERWAPI
         {
             get
             {
+                Contract.Ensures(Contract.Result<string>() != null);
                 return _var.Name;
             }
         }
@@ -873,17 +908,21 @@ namespace QUT.PERWAPI
         public MergeBuffer(CILInstruction[] buffer)
         {
             _debugBuffer = new List<CILInstruction>();
+            Contract.Requires(buffer != null);
             _buffer = buffer;
         }
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
+            Contract.Invariant(_buffer != null);
             Contract.Invariant(_debugBuffer != null);
+            Contract.Invariant(_current >= 0);
         }
 
         public void Add(CILInstruction inst, uint offset)
         {
+            Contract.Requires(inst != null);
             while (_current < _buffer.Length && _buffer[_current].offset < offset)
                 _debugBuffer.Add(_buffer[_current++]);
             if (_debugBuffer.Count > 0 && offset >= ((CILInstruction)_debugBuffer[_debugBuffer.Count - 1]).offset)

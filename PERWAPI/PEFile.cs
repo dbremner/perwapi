@@ -98,8 +98,10 @@ namespace QUT.PERWAPI
         public static PEFile ReadPEFile(string filename)
         {
             Contract.Requires(filename != null);
+            Contract.Ensures(Contract.Result<PEFile>() != null);
             return PEReader.ReadPEFile(filename, false);
         }
+
         /// <summary>
         /// Read an existing PE File and return the exported interface 
         /// (ie. anything that was specified as public).  
@@ -111,12 +113,14 @@ namespace QUT.PERWAPI
         public static ReferenceScope ReadExportedInterface(string filename)
         {
             Contract.Requires(filename != null);
+            Contract.Ensures(Contract.Result<ReferenceScope>() != null);
             return PEReader.GetExportedInterface(filename);
         }
 
         public static PEFile ReadPublicClasses(string filename)
         {
             Contract.Requires(filename != null);
+            Contract.Ensures(Contract.Result<PEFile>() != null);
             PEFile pefile = PEReader.ReadPEFile(filename, true);
             ArrayList newClasses = new ArrayList();
             foreach (object cls in pefile.classes)
@@ -170,6 +174,7 @@ namespace QUT.PERWAPI
         /// <returns>string representing the .NET version</returns>
         public string GetNetVersionString()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             return versionInfo.netVerString.Trim();
         }
 
@@ -180,6 +185,7 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this external assembly</returns>
         public AssemblyRef MakeExternAssembly(string assemName) {
             Contract.Requires(assemName != null);
+            Contract.Ensures(Contract.Result<AssemblyRef>() != null);
             AssemblyRef result = null;
           if (assemName.CompareTo(MSCorLib.mscorlib.Name()) == 0) return MSCorLib.mscorlib;
           else if (!asmRefDict.TryGetValue(assemName, out result)) {
@@ -197,6 +203,7 @@ namespace QUT.PERWAPI
         public ModuleRef MakeExternModule(string name)
         {
             Contract.Requires(name != null);
+            Contract.Ensures(Contract.Result<ModuleRef>() != null);
             return new ModuleRef(name);
         }
 
@@ -254,6 +261,7 @@ namespace QUT.PERWAPI
 
         public string GetFileName()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             return fileName;
         }
 
@@ -270,6 +278,7 @@ namespace QUT.PERWAPI
         /// <returns>The meta data element denoted by token</returns>
         public MetaDataElement GetElement(uint token)
         {
+            Contract.Ensures(Contract.Result<MetaDataElement>() != null);
             if (buffer != null)
                 return buffer.GetTokenElement(token);
             if (metaDataTables != null)
@@ -531,6 +540,8 @@ namespace QUT.PERWAPI
 
         private static Scope ReadPDBScope(PDBScope scope, MergeBuffer mergeBuffer, [CanBeNull] Scope parent, MethodDef thisMeth)
         {
+            Contract.Requires(scope != null);
+            Contract.Requires(thisMeth != null);
             Scope thisScope = new Scope(parent, thisMeth);
 
             if (parent != null) mergeBuffer.Add(new OpenScope(thisScope), (uint)scope.StartOffset);
@@ -578,6 +589,7 @@ namespace QUT.PERWAPI
 
         internal void SetDefaults(string name)
         {
+            Contract.Requires(name != null);
             fromExisting = false;
             isDLL = name.EndsWith(".dll") || name.EndsWith(".DLL");
             if (isDLL)

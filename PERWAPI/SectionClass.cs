@@ -113,6 +113,12 @@ namespace QUT.PERWAPI
             }
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(name != null);
+        }
+
         internal bool ContainsRVA(uint rvaPos)
         {
             return (loadedRVA <= rvaPos) && (rvaPos <= loadedRVA + loadedSize);

@@ -124,6 +124,7 @@ namespace QUT.PERWAPI
         public NativeArray(NativeType elemType, int len)
             : base((byte)NativeTypeIx.Array)
         {
+            Contract.Requires(len >= 0);
             this.elemType = elemType;
             this.len = (uint)len;
         }
@@ -133,6 +134,7 @@ namespace QUT.PERWAPI
         {
             this.elemType = elemType;
             len = (uint)numElem;
+            Contract.Requires(numElem >= 0);
             parNum = (uint)parNumForLen;
         }
 

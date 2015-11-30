@@ -47,6 +47,12 @@ namespace QUT.PERWAPI
             sourceFiles.Add(this);
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(name != null);
+        }
+
         private bool GuidsMatch(Guid lang, Guid vend, Guid docu)
         {
             if (language != lang) return false;

@@ -1245,6 +1245,7 @@ namespace QUT.PERWAPI
         {
             pName = parName;
             pType = parType;
+            Contract.Requires(parName != null);
             parMode = (ushort)mode;
             tabIx = MDTable.Param;
         }
@@ -1257,6 +1258,7 @@ namespace QUT.PERWAPI
 
         internal Param(PEReader buff)
         {
+            Contract.Requires(buff != null);
             parMode = buff.ReadUInt16();
             seqNo = buff.ReadUInt16();
             pName = buff.GetString();
@@ -1265,6 +1267,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] pars)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(pars != null);
             for (int i = 0; i < pars.Length; i++)
                 pars[i] = new Param(buff);
         }
@@ -1272,6 +1276,7 @@ namespace QUT.PERWAPI
         internal void Resolve(PEReader buff, uint fIx, Type type)
         {
             this.pType = type;
+            Contract.Requires(buff != null);
         }
 
         /// <summary>
@@ -1280,6 +1285,7 @@ namespace QUT.PERWAPI
         /// <param name="cVal">the default value for the parameter</param>
         public void AddDefaultValue(Constant cVal)
         {
+            Contract.Requires(cVal != null);
             defaultVal = cVal;
             parMode |= hasDefault;
         }
@@ -1379,6 +1385,7 @@ namespace QUT.PERWAPI
         internal void TypeSig(MemoryStream str)
         {
             pType.TypeSig(str);
+            Contract.Requires(str != null);
         }
 
         internal static uint Size(MetaData md)

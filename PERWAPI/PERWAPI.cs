@@ -50,7 +50,13 @@ namespace QUT.PERWAPI {
         tables = tabs;
     }
 
-    internal MetaDataElement GetTokenElement(uint token) {
+      [ContractInvariantMethod]
+      private void ObjectInvariant()
+      {
+          Contract.Invariant(tables != null);
+      }
+
+      internal MetaDataElement GetTokenElement(uint token) {
       uint tabIx = (token & FileImage.TableMask) >> 24;
       uint elemIx = (token & FileImage.ElementMask) - 1;
       return (MetaDataElement)tables[tabIx][(int)elemIx];
@@ -77,7 +83,13 @@ namespace QUT.PERWAPI {
         data = streamBytes;
     }
 
-    public uint ReadCompressedNum() {
+    [ContractInvariantMethod]
+    private void ObjectInvariant()
+    {
+        Contract.Invariant(data != null);
+    }
+
+        public uint ReadCompressedNum() {
       //int pos = (int)BaseStream.Position;
       //Console.WriteLine("Position = " + BaseStream.Position);
       byte b = ReadByte();
@@ -145,7 +157,8 @@ namespace QUT.PERWAPI {
     }
 
     internal string GetString(uint ix) {
-      uint end;
+        Contract.Ensures(Contract.Result<string>() != null);
+        uint end;
         // ReSharper disable once EmptyEmbeddedStatement
       for (end = ix; data[end] != '\0'; end++) ;
       char[] str = new char[end - ix];
@@ -156,13 +169,15 @@ namespace QUT.PERWAPI {
     }
 
     internal string GetBlobString(uint ix) {
-      if (ix == 0) return "";
+        Contract.Ensures(Contract.Result<string>() != null);
+        if (ix == 0) return "";
       BaseStream.Seek(ix, SeekOrigin.Begin);
       return GetBlobString();
     }
 
     internal string GetBlobString() {
-      uint strLen = ReadCompressedNum();
+        Contract.Ensures(Contract.Result<string>() != null);
+        uint strLen = ReadCompressedNum();
       char[] str = new char[strLen];
       uint readpos = (uint)this.BaseStream.Position;
       for (int i = 0; i < strLen; i++) {
@@ -208,7 +223,8 @@ namespace QUT.PERWAPI {
     }
 
     internal string GetUserString(uint ix) {
-      BaseStream.Seek(ix, SeekOrigin.Begin);
+        Contract.Ensures(Contract.Result<string>() != null);
+        BaseStream.Seek(ix, SeekOrigin.Begin);
       uint strLen = GetStringLength() / 2;
       char[] strArray = new char[strLen];
       for (int i = 0; i < strLen; i++) {

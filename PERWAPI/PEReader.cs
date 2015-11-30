@@ -126,6 +126,7 @@ namespace QUT.PERWAPI
         private static System.IO.FileStream GetFile([NotNull] string filename)
         {
             Contract.Requires(filename != null);
+            Contract.Ensures(Contract.Result<FileStream>() != null);
             if (Diag.DiagOn)
             {
                 Console.WriteLine("Current directory is " + System.Environment.CurrentDirectory);
@@ -143,6 +144,7 @@ namespace QUT.PERWAPI
         public static PEFile ReadPEFile([NotNull] string filename, bool skipBody)
         {
             Contract.Requires(filename != null);
+            Contract.Ensures(Contract.Result<PEFile>() != null);
             System.IO.FileStream file = GetFile(filename);
             PEFile pefile = new PEFile(filename);
             PEReader reader = new PEReader(pefile, file, false, skipBody);
@@ -166,6 +168,7 @@ namespace QUT.PERWAPI
         internal string[] GetAssemblyRefNames()
         {
             string[] assemNames = new string[tableLengths[(int)MDTable.AssemblyRef]];
+            Contract.Ensures(Contract.Result<string[]>() != null);
             for (int i = 0; i < assemNames.Length; i++)
             {
                 assemNames[i] = ((AssemblyRef)tables[(int)MDTable.AssemblyRef][i]).Name();
@@ -177,6 +180,7 @@ namespace QUT.PERWAPI
         internal AssemblyRef[] GetAssemblyRefs()
         {
             Contract.Requires((int)MDTable.AssemblyRef > 0);
+            Contract.Ensures(Contract.Result<AssemblyRef[]>() != null);
             AssemblyRef[] assemRefs = new AssemblyRef[tableLengths[(int)MDTable.AssemblyRef]];
             for (int i = 0; i < assemRefs.Length; i++)
             {
@@ -978,6 +982,7 @@ namespace QUT.PERWAPI
 
         internal byte[] GetBlob()
         {
+            Contract.Ensures(Contract.Result<byte[]>() != null);
             // FIXME Contract.Requires(blob != null);
             /* pre:  buffer is at correct position to read blob index */
             uint ix;
@@ -988,6 +993,7 @@ namespace QUT.PERWAPI
 
         internal byte[] GetBlob(uint ix)
         {
+            Contract.Ensures(Contract.Result<byte[]>() != null);
             return blob.GetBlob(ix);
         }
 
@@ -1008,6 +1014,7 @@ namespace QUT.PERWAPI
 
         internal Constant GetBlobConst(int constType)
         {
+            Contract.Ensures(Contract.Result<Constant>() != null);
             // FIXME Contract.Requires(blob != null);
             uint ix;
             if (md.largeBlob) ix = ReadUInt32();
@@ -1032,6 +1039,7 @@ namespace QUT.PERWAPI
         internal static Constant ReadConst(int constType, BinaryReader blob)
         {
             Contract.Requires(blob != null);
+            Contract.Ensures(Contract.Result<Constant>() != null);
             switch (constType)
             {
                 case ((int)ElementType.Boolean):
@@ -1075,6 +1083,7 @@ namespace QUT.PERWAPI
 
         internal string GetBlobString()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             uint ix;
             if (md.largeBlob) ix = ReadUInt32();
             else ix = ReadUInt16();
@@ -1083,6 +1092,7 @@ namespace QUT.PERWAPI
 
         internal string GetString()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             uint ix;
             if (md.largeStrings) ix = ReadUInt32();
             else ix = ReadUInt16();
@@ -1091,6 +1101,7 @@ namespace QUT.PERWAPI
 
         internal string GetString(uint ix)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             return strings.GetString(ix);
         }
 
@@ -1117,6 +1128,7 @@ namespace QUT.PERWAPI
 
         public string GetUserString()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             uint ix;
             if (md.largeUS) ix = ReadUInt32();
             else ix = ReadUInt16();
@@ -1134,6 +1146,7 @@ namespace QUT.PERWAPI
         internal MethSig ReadMethSig(Method thisMeth, uint blobIx)
         {
             Contract.Requires(thisMeth != null);
+            Contract.Ensures(Contract.Result<MethSig>() != null);
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             return ReadMethSig(thisMeth, false);
@@ -1142,6 +1155,8 @@ namespace QUT.PERWAPI
         internal MethSig ReadMethSig(Method thisMeth, string name, uint blobIx)
         {
             Contract.Requires(thisMeth != null);
+            Contract.Requires(name != null);
+            Contract.Ensures(Contract.Result<MethSig>() != null);
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             MethSig mSig = ReadMethSig(thisMeth, false);
@@ -1153,6 +1168,7 @@ namespace QUT.PERWAPI
         [CanBeNull]
         {
             Contract.Requires(currMeth != null);
+            Contract.Ensures(Contract.Result<MethSig>() != null);
             MethSig meth = new MethSig(null);
             if (!firstByteRead)
             {
@@ -1209,6 +1225,7 @@ namespace QUT.PERWAPI
 
         internal Type[] ReadMethSpecSig(uint blobIx)
         { //ClassDef currClass, Method currMeth, uint blobIx) {
+            Contract.Ensures(Contract.Result<Type[]>() != null);
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             if (blob.ReadByte() != MethodSpec.GENERICINST)
@@ -1218,6 +1235,7 @@ namespace QUT.PERWAPI
 
         internal Type GetFieldType(uint blobIx)
         {
+            Contract.Ensures(Contract.Result<Type>() != null);
             //Console.WriteLine("Getting field type");
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
@@ -1230,7 +1248,9 @@ namespace QUT.PERWAPI
         }
 
         internal Type GetBlobType(uint blobIx)
-        { //Class currClass, Method currMeth, uint blobIx) {
+        {
+            Contract.Ensures(Contract.Result<Type>() != null);
+//Class currClass, Method currMeth, uint blobIx) {
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             return GetBlobType(); //currClass,currMeth);
@@ -1238,6 +1258,7 @@ namespace QUT.PERWAPI
 
         private Type[] GetListOfType()
         { //Class currClass | Method currMeth) {
+            Contract.Ensures(Contract.Result<Type[]>() != null);
             uint numPars = blob.ReadCompressedNum();
             Type[] gPars = new Type[numPars];
             for (int i = 0; i < numPars; i++)
@@ -1361,6 +1382,7 @@ namespace QUT.PERWAPI
 
         internal NativeType GetBlobNativeType(uint blobIx)
         {
+            Contract.Ensures(Contract.Result<NativeType>() != null);
             blob.GoToIndex(blobIx);
             uint blobSize = blob.ReadCompressedNum();
             return GetBlobNativeType();
@@ -1368,6 +1390,7 @@ namespace QUT.PERWAPI
 
         internal NativeType GetBlobNativeType()
         {
+            Contract.Ensures(Contract.Result<NativeType>() != null);
             byte typeIx = blob.ReadByte();
             if (typeIx == (byte)NativeTypeIx.Array)
             {
@@ -1380,6 +1403,7 @@ namespace QUT.PERWAPI
 
         internal Local[] ReadLocalSig(uint sigIx)
         { //Class currClass, Method currMeth, uint sigIx) {
+            Contract.Ensures(Contract.Result<Local[]>() != null);
             blob.GoToIndex(sigIx);
             uint blobSize = blob.ReadCompressedNum();
             if (blob.ReadByte() != LocalSig.LocalSigByte) InputError();
@@ -1397,6 +1421,7 @@ namespace QUT.PERWAPI
 
         internal void ReadPropertySig(uint sigIx, Property prop)
         {
+            Contract.Requires(prop != null);
             blob.GoToIndex(sigIx);
             uint blobSize = blob.ReadCompressedNum();
             if ((blob.ReadByte() & Property.PropertyTag) != Property.PropertyTag) InputError();
@@ -1409,7 +1434,8 @@ namespace QUT.PERWAPI
         }
 
         internal DataConstant GetDataConstant(uint rva, Type constType) {
-          ManagedPointer pointer;
+            Contract.Requires(constType != null);
+            ManagedPointer pointer;
           ClassDef image;
           BaseStream.Seek(GetOffset(rva), SeekOrigin.Begin);
           if (constType is PrimitiveType) {
@@ -1439,6 +1465,7 @@ namespace QUT.PERWAPI
 
         internal ModuleFile GetFileDesc(string name)
         {
+            Contract.Requires(name != null);
             if (tables[(int)MDTable.File] == null) return null;
             for (int i = 0; i < tables[(int)MDTable.File].Length; i++)
             {
@@ -1514,6 +1541,8 @@ namespace QUT.PERWAPI
     */
         private CILInstruction[] DoByteCodes(uint len, MethodDef thisMeth)
         {
+            Contract.Requires(thisMeth != null);
+            Contract.Ensures(Contract.Result<CILInstruction[]>() != null);
             uint pos = 0;
             List<CILInstruction> instrList = new List<CILInstruction>();
             //int instrIx = 0;
@@ -1643,6 +1672,7 @@ namespace QUT.PERWAPI
 
         public void ReadByteCodes(MethodDef meth, uint rva)
         {
+            Contract.Requires(meth != null);
             if (rva == 0) return;
             BaseStream.Seek(GetOffset(rva), SeekOrigin.Begin);
             CILInstructions instrs = meth.CreateCodeBuffer();

@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 
@@ -38,6 +39,8 @@ namespace QUT.PERWAPI
 
         internal FieldRVA(FieldDef field, DataConstant data)
         {
+            Contract.Requires(field != null);
+            Contract.Requires(data != null);
             this.field = field;
             this.data = data;
             tabIx = MDTable.FieldRVA;
@@ -45,6 +48,7 @@ namespace QUT.PERWAPI
 
         internal FieldRVA(PEReader buff)
         {
+            Contract.Requires(buff != null);
             rva = buff.ReadUInt32();
             fieldIx = buff.GetIndex(MDTable.Field);
             tabIx = MDTable.FieldRVA;
@@ -52,6 +56,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] fRVAs)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(fRVAs != null);
             for (int i = 0; i < fRVAs.Length; i++)
                 fRVAs[i] = new FieldRVA(buff);
         }
@@ -70,6 +76,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return 4 + md.TableIndexSize(MDTable.Field);
         }
 

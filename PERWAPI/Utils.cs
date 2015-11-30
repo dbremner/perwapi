@@ -41,6 +41,7 @@ namespace QUT.PERWAPI
             // ECMA-335 spec which clarifies the encoding of 
             // array lower bounds. (kjg 2008-Feb-22 )
             //
+            Contract.Ensures(Contract.Result<byte[]>() != null);
             uint uVal = ((uint)val) << 1;
             uint sign = (val < 0 ? (uint)1 : 0);
 
@@ -69,6 +70,7 @@ namespace QUT.PERWAPI
 
         public static byte[] CompressUInt(uint val)
         {
+            Contract.Ensures(Contract.Result<byte[]>() != null);
             if (val > 0x1fffffff)
                 throw new OverflowException("Value cannot be compressed");
             return CompressNum(val);
@@ -76,6 +78,7 @@ namespace QUT.PERWAPI
 
         private static byte[] CompressNum(uint num)
         {
+            Contract.Ensures(Contract.Result<byte[]>() != null);
             byte[] rslt;            
             if (num <= 0x7f)
             {

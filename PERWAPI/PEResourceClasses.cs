@@ -137,6 +137,7 @@ namespace QUT.PERWAPI
 
       private static string ReadName(BinaryReader rdr, long offset) {
           Contract.Requires(rdr != null);
+          Contract.Ensures(Contract.Result<string>() != null);
           long savedPos = rdr.BaseStream.Position;
         rdr.BaseStream.Seek(offset, SeekOrigin.Begin);
         ushort nLength = rdr.ReadUInt16();

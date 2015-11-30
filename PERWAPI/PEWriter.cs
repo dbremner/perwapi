@@ -488,8 +488,10 @@ namespace QUT.PERWAPI
             data.Add(cVal);
         }
 
-        internal void AddUnmanagedResourceDirectory(PEResourceDirectory directory) {
-          if (rsrc == null)
+        internal void AddUnmanagedResourceDirectory(PEResourceDirectory directory)
+        {
+            Contract.Requires(directory != null);
+            if (rsrc == null)
             rsrc = new Section(FileImage.rsrcName, 0x40000040);
           rsrc.IncTide(directory.Size());
           unmanagedResourceRoot = directory;
@@ -583,6 +585,7 @@ namespace QUT.PERWAPI
 
         private void Align(MemoryStream str, int val)
         {
+            Contract.Requires(str != null);
             if ((str.Position % val) != 0)
             {
                 for (int i = val - (int)(str.Position % val); i > 0; i--)
