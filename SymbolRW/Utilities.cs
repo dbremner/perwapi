@@ -71,11 +71,6 @@ namespace QUT.Symbols {
         throw new COMException(message);
     }
 
-    internal static void ComCheckHR(int hr, string message) {
-      if (hr == OLE32.hr_E_FAIL)
-        throw new COMException(message);
-    }
-
       internal static void ArgCheck(bool test, string message)
       {
           Contract.Requires(message != null);
