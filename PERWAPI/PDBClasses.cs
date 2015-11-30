@@ -488,7 +488,7 @@ namespace QUT.PERWAPI
             internal int OffsetEnd;
             internal Scope ParentScope = null;
             internal readonly List<LocalBinding> Locals = new List<LocalBinding>();
-            internal ArrayList Constants = new ArrayList();
+            // FIXME dead internal ArrayList Constants = new ArrayList();
             internal readonly List<Scope> ChildScopes = new List<Scope>();
         }
 

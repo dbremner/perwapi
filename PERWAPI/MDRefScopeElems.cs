@@ -466,6 +466,7 @@ namespace QUT.PERWAPI
         /// Add a field to this scope.
         /// </summary>
         /// <param name="fld">The field to be added</param>
+        // FIXME not called
         public void AddField(FieldRef fld)
         {
             Contract.Requires(fld != null);
@@ -476,6 +477,7 @@ namespace QUT.PERWAPI
         /// Add a number of fields to this scope.
         /// </summary>
         /// <param name="flds">The fields to be added.</param>
+        // FIXME not called
         internal void AddFields(ArrayList flds)
         {
             Contract.Requires(flds != null);

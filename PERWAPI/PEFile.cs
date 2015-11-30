@@ -106,6 +106,7 @@ namespace QUT.PERWAPI
         /// </summary>
         /// <param name="filename">The name of the pe file</param>
         /// <returns>The AssemblyRef or ModuleRef describing the exported interface of the specified file</returns>
+        // FIXME not called
         public static ReferenceScope ReadExportedInterface(string filename)
         {
             Contract.Requires(filename != null);
