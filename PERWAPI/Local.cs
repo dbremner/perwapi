@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace QUT.PERWAPI
@@ -42,6 +43,8 @@ namespace QUT.PERWAPI
         /// <param name="lType">type of the local variable</param>
         public Local(string lName, Type lType)
         {
+            Contract.Requires(lName != null);
+            Contract.Requires(lType != null);
             Name = lName;
             type = lType;
         }
@@ -57,6 +60,13 @@ namespace QUT.PERWAPI
             Name = lName;
             type = lType;
             Pinned = isPinned;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(Name != null);
+            Contract.Invariant(type != null);
         }
 
         public int GetIndex() { return index; }
@@ -86,24 +96,28 @@ namespace QUT.PERWAPI
 
         internal void TypeSig(MemoryStream str)
         {
+            Contract.Requires(str != null);
             if (Pinned) str.WriteByte(PINNED);
             type.TypeSig(str);
         }
 
         internal void BuildTables(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             if (!(type is ClassDef))
                 type.BuildMDTables(md);
         }
 
         internal void BuildCILInfo(CILWriter output)
         {
+            Contract.Requires(output != null);
             if (!(type is ClassDef))
                 type.BuildCILInfo(output);
         }
 
         internal void Write(CILWriter output)
         {
+            Contract.Requires(output != null);
             type.WriteType(output);
             output.Write("\t" + Name);
         }

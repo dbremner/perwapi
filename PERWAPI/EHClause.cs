@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QUT.PERWAPI
 {
@@ -28,6 +29,7 @@ namespace QUT.PERWAPI
 
         internal void ClassToken(MetaDataElement cToken)
         {
+            Contract.Requires(cToken != null);
             classToken = cToken;
         }
 
@@ -38,6 +40,8 @@ namespace QUT.PERWAPI
 
         internal TryBlock MakeTryBlock(List<CILLabel> labels)
         {
+            Contract.Requires(labels != null);
+            Contract.Ensures(Contract.Result<TryBlock>() != null);
             TryBlock tBlock = new TryBlock(CILInstructions.GetLabel(labels, tryOffset),
                 CILInstructions.GetLabel(labels, tryOffset + tryLength));
             CILLabel hStart = CILInstructions.GetLabel(labels, handlerOffset);

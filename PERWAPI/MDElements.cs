@@ -1429,6 +1429,7 @@ namespace QUT.PERWAPI
 
         internal ConstantElem(MetaDataElement parent, Constant val)
         {
+            Contract.Requires(val != null);
             this.parent = parent;
             cValue = val;
             tabIx = MDTable.Constant;
@@ -1508,6 +1509,7 @@ namespace QUT.PERWAPI
 
         internal DeclSecurity(MetaDataElement paren, SecurityAction act, byte[] perSet)
         {
+            Contract.Requires(perSet != null);
             parent = paren;
             action = act;
             permissionSet = perSet;
@@ -1516,6 +1518,7 @@ namespace QUT.PERWAPI
 
         internal DeclSecurity(PEReader buff)
         {
+            Contract.Requires(buff != null);
             action = (SecurityAction)buff.ReadUInt16();
             parentIx = buff.GetCodedIndex(CIx.HasDeclSecurity);
             permissionSet = buff.GetBlob();

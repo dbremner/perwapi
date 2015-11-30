@@ -73,11 +73,13 @@ namespace QUT.PERWAPI
         private void ObjectInvariant()
         {
             Contract.Invariant(field != null);
+            Contract.Invariant(nt != null);
         }
 
         internal static void Read(PEReader buff, TableRow[] fMarshal)
         {
             Contract.Requires(buff != null);
+            Contract.Requires(fMarshal != null);
             for (int i = 0; i < fMarshal.Length; i++)
                 fMarshal[i] = new FieldMarshal(buff);
         }
@@ -110,6 +112,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return md.CodedIndexSize(CIx.HasFieldMarshal) + md.BlobIndexSize();
         }
 

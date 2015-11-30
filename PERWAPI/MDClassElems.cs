@@ -83,6 +83,7 @@ namespace QUT.PERWAPI
         /// <returns>The method descriptor for "name"</returns>
         public Method GetMethodDesc(string name)
         {
+            Contract.Requires(name != null);
             foreach (object method in methods)
             {
                 if (((Method)method).HasName(name))
@@ -100,6 +101,8 @@ namespace QUT.PERWAPI
         [CanBeNull]
         public Method GetMethodDesc(string name, Type[] parTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
             foreach (object method in methods)
             {
                 if (((Method)method).HasNameAndSig(name, parTypes))
@@ -117,6 +120,9 @@ namespace QUT.PERWAPI
         /// <returns>Descriptor for "name(parTypes,optTypes)"</returns>
         public Method GetMethodDesc(string name, Type[] parTypes, Type[] optParTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
+            Contract.Requires(optParTypes != null);
             foreach (object method in methods)
             {
                 if (((Method)method).HasNameAndSig(name, parTypes, optParTypes))
@@ -132,6 +138,7 @@ namespace QUT.PERWAPI
         /// <returns>List of methods called "name"</returns>
         public Method[] GetMethodDescs(string name)
         {
+            Contract.Requires(name != null);
             ArrayList meths = GetMeths(name);
             return (Method[])meths.ToArray(typeof(Method));
         }
@@ -151,6 +158,7 @@ namespace QUT.PERWAPI
         /// <param name="name">method name</param>
         public void RemoveMethod(string name)
         {
+            Contract.Requires(name != null);
             Method meth = GetMethodDesc(name);
             if (meth != null) methods.Remove(meth);
         }
@@ -162,6 +170,8 @@ namespace QUT.PERWAPI
         /// <param name="parTypes">method parameter types</param>
         public void RemoveMethod(string name, Type[] parTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
             Method meth = GetMethodDesc(name, parTypes);
             if (meth != null) methods.Remove(meth);
         }
@@ -174,6 +184,9 @@ namespace QUT.PERWAPI
         /// <param name="optTypes">optional method parameter types</param>
         public void RemoveMethod(string name, Type[] parTypes, Type[] optTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
+            Contract.Requires(optTypes != null);
             Method meth = GetMethodDesc(name, parTypes, optTypes);
             if (meth != null) methods.Remove(meth);
         }
@@ -184,6 +197,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">method descriptor</param>
         public void RemoveMethod(Method meth)
         {
+            Contract.Requires(meth != null);
             methods.Remove(meth);
         }
 
@@ -203,6 +217,7 @@ namespace QUT.PERWAPI
         /// <returns>Descriptor for field "name"</returns>
         public Field GetFieldDesc(string name)
         {
+            Contract.Requires(name != null);
             return FindField(name);
         }
 
@@ -221,6 +236,7 @@ namespace QUT.PERWAPI
         /// <param name="name">field name</param>
         public void RemoveField(string name)
         {
+            Contract.Requires(name != null);
             Field f = FindField(name);
             if (f != null) fields.Remove(f);
         }
@@ -232,6 +248,7 @@ namespace QUT.PERWAPI
         /// <returns>descriptor for instantiated generic type</returns>
         public virtual ClassSpec Instantiate(Type[] genTypes)
         {
+            Contract.Requires(genTypes != null);
             return new ClassSpec(this, genTypes);
         }
 
@@ -273,6 +290,8 @@ namespace QUT.PERWAPI
 
         protected ArrayList GetMeths(string name)
         {
+            Contract.Requires(name != null);
+            Contract.Ensures(Contract.Result<ArrayList>() != null);
             ArrayList meths = new ArrayList();
             foreach (object method in methods)
             {
@@ -295,12 +314,14 @@ namespace QUT.PERWAPI
 
         internal void AddToFieldList(Field f)
         {
+            Contract.Requires(f != null);
             f.SetParent(this);
             fields.Add(f);
         }
 
         internal void AddToList(ArrayList list, MDTable tabIx)
         {
+            Contract.Requires(list != null);
             switch (tabIx)
             {
                 case (MDTable.Field): fields.AddRange(list); break;
@@ -312,18 +333,21 @@ namespace QUT.PERWAPI
 
         internal void AddToMethodList(Method m)
         {
+            Contract.Requires(m != null);
             m.SetParent(this);
             methods.Add(m);
         }
 
         internal void AddToClassList(Class nClass)
         {
+            Contract.Requires(nClass != null);
             nestedClasses.Add(nClass);
         }
 
         [CanBeNull]
         internal Class GetNested(string name)
         {
+            Contract.Requires(name != null);
             for (int i = 0; i < nestedClasses.Count; i++)
             {
                 if (((Class)nestedClasses[i]).Name == name)
@@ -334,6 +358,7 @@ namespace QUT.PERWAPI
 
         internal Method GetMethod(MethSig mSig)
         {
+            Contract.Requires(mSig != null);
             return GetMethodDesc(mSig.name, mSig.parTypes, mSig.optParTypes);
         }
 
@@ -348,7 +373,11 @@ namespace QUT.PERWAPI
             return null;
         }
 
-        internal void SetBuffer(PEReader buff) { buffer = buff; }
+        internal void SetBuffer(PEReader buff)
+        {
+            Contract.Requires(buff != null);
+            buffer = buff;
+        }
 
         internal override void TypeSig(MemoryStream sig)
         {
@@ -376,6 +405,8 @@ namespace QUT.PERWAPI
 
         internal ClassSpec(Class clType, Type[] gPars)
         {
+            Contract.Requires(clType != null);
+            Contract.Requires(gPars != null);
             this.typeIndex = GENERICINST;
             genClass = clType;
             genericParams = new ArrayList(gPars);
@@ -454,6 +485,7 @@ namespace QUT.PERWAPI
 
         internal void AddMethod(Method meth)
         {
+            Contract.Requires(meth != null);
             methods.Add(meth);
             meth.SetParent(this);
         }
@@ -543,6 +575,7 @@ namespace QUT.PERWAPI
         public ConstructedTypeSpec(TypeSpec tySpec)
             : base()
         {
+            Contract.Requires(tySpec != null);
             Spec = tySpec;
             this.typeIndex = Spec.GetTypeIndex();
         }
@@ -571,6 +604,8 @@ namespace QUT.PERWAPI
 
         internal ClassDesc(string nameSpaceName, string className)
         {
+            Contract.Requires(nameSpaceName != null);
+            Contract.Requires(className != null);
             NameSpace = nameSpaceName;
             Name = className;
         }
@@ -594,6 +629,7 @@ namespace QUT.PERWAPI
 
         public virtual void SetGenericParams(GenericParam[] genPars)
         {
+            Contract.Requires(genPars != null);
             for (int i = 0; i < genPars.Length; i++)
             {
                 genPars[i].SetClassParam(this, i);
@@ -605,6 +641,7 @@ namespace QUT.PERWAPI
 
         protected void DeleteGenericParam(int pos)
         {
+            Contract.Requires(pos >= 0);
             genericParams.RemoveAt(pos);
             for (int i = pos; i < genericParams.Count; i++)
             {
@@ -615,6 +652,7 @@ namespace QUT.PERWAPI
 
         internal void AddGenericParam(GenericParam par)
         {
+            Contract.Requires(par != null);
             genericParams.Add(par);
             //par.SetClassParam(this,genericParams.Count-1);
         }

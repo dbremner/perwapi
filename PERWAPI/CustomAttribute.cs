@@ -50,6 +50,7 @@ namespace QUT.PERWAPI
         internal CustomAttribute(MetaDataElement paren, Method constrType,
             Constant[] val)
         {
+            Contract.Requires(constrType != null);
             parent = paren;
             type = constrType;
             argVals = val;
@@ -59,10 +60,12 @@ namespace QUT.PERWAPI
 
         internal CustomAttribute(MetaDataElement paren, Method constrType,
             byte[] val)
+            Contract.Requires(val != null);
         {
             parent = paren;
             type = constrType;
             tabIx = MDTable.CustomAttribute;
+            Contract.Requires(val != null);
             byteVal = val;
             changed = true;
         }

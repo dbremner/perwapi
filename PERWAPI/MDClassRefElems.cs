@@ -237,6 +237,9 @@ namespace QUT.PERWAPI
         /// <returns>Descriptor for "name(parTypes,optTypes)"</returns>
         public MethodRef GetMethod(string name, Type[] parTypes, Type[] optTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
+            Contract.Requires(optTypes != null);
             return (MethodRef)GetMethodDesc(name, parTypes, optTypes);
         }
 
@@ -269,6 +272,8 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this field</returns>
         public FieldRef AddField(string name, Type fType)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(fType != null);
             FieldRef fld = (FieldRef)FindField(name);
             if (fld != null) DescriptorError(fld);
             fld = new FieldRef(this, name, fType);
@@ -302,6 +307,7 @@ namespace QUT.PERWAPI
         /// <returns>Descriptor for the nested class "name"</returns>
         public NestedClassRef AddNestedClass(string name)
         {
+            Contract.Requires(name != null);
             NestedClassRef nestedClass = (NestedClassRef)GetNested(name);
             if (nestedClass != null) DescriptorError(nestedClass);
             nestedClass = new NestedClassRef(this, name);
@@ -316,6 +322,7 @@ namespace QUT.PERWAPI
         /// <returns>Descriptor for the nested class "name"</returns>
         public NestedClassRef GetNestedClass(string name)
         {
+            Contract.Requires(name != null);
             // check nested names
             return (NestedClassRef)GetNested(name);
         }
@@ -352,6 +359,7 @@ namespace QUT.PERWAPI
 
         internal void AddField(FieldRef fld)
         {
+            Contract.Requires(fld != null);
             fields.Add(fld);
             fld.SetParent(this);
         }
@@ -428,6 +436,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return md.CodedIndexSize(CIx.ResolutionScope) + 2 * md.StringsIndexSize();
         }
 
@@ -596,6 +605,12 @@ namespace QUT.PERWAPI
             : base(paren, "System", eType.GetName())
         {
             elemType = eType;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(elemType != null);
         }
 
         //   internal override sealed void AddTypeSpec(MetaDataOut md) {

@@ -61,6 +61,7 @@ namespace QUT.PERWAPI
         internal ClassDef(PEFile scope, TypeAttr attrSet, string nsName, string name)
             : base(nsName, name)
         {
+            Contract.Requires(scope != null);
             this.scope = scope;
             superType = MSCorLib.mscorlib.ObjectClass;
             flags = (uint)attrSet;
@@ -83,6 +84,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] typeDefs, bool isMSCorLib)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(typeDefs != null);
             ClassDef prevDef = new ClassDef(buff, 1, isMSCorLib);
             typeDefs[0] = prevDef;
             for (int i = 1; i < typeDefs.Length; i++)
@@ -99,6 +102,8 @@ namespace QUT.PERWAPI
 
         private static uint GetParentClassIx(uint[] enclClasses, uint[] nestClasses, uint classIx)
         {
+            Contract.Requires(enclClasses != null);
+            Contract.Requires(nestClasses != null);
             if (enclClasses == null) return 0;
             for (uint i = 0; i < enclClasses.Length; i++)
             {
@@ -110,6 +115,10 @@ namespace QUT.PERWAPI
 
         internal static void GetClassRefs(PEReader buff, TableRow[] typeRefs, ReferenceScope paren, uint[] parIxs)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(typeRefs != null);
+            Contract.Requires(paren != null);
+            Contract.Requires(parIxs != null);
             int num = typeRefs.Length;
             uint[] fieldStart = new uint[num + 1], methStart = new uint[num + 1], extends = new uint[num + 1];
             for (int i = 0; i < num; i++)
@@ -195,6 +204,8 @@ namespace QUT.PERWAPI
 
         internal void ChangeRefsToDefs(ClassDef newType, ClassDef[] oldTypes)
         {
+            Contract.Requires(newType != null);
+            Contract.Requires(oldTypes != null);
             foreach (ClassDef oldType in oldTypes)
             {
                 foreach (object field in oldType.fields)
@@ -439,7 +450,9 @@ namespace QUT.PERWAPI
         public MethodDef AddMethod(string name, Type retType, Param[] pars)
         {
             MethSig mSig = new MethSig(name);
+            Contract.Requires(methodName != null);
             Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
             mSig.SetParTypes(pars);
             MethodDef meth = (MethodDef)GetMethod(mSig);
             if (meth != null)
@@ -460,6 +473,10 @@ namespace QUT.PERWAPI
         /// <returns>a descriptor for this new method</returns>
         public MethodDef AddMethod(string name, GenericParam[] genPars, Type retType, Param[] pars)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(genPars != null);
+            Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
             MethodDef meth = AddMethod(name, retType, pars);
             if ((genPars != null) && (genPars.Length > 0))
             {
@@ -484,6 +501,9 @@ namespace QUT.PERWAPI
         public MethodDef AddMethod(MethAttr mAtts, ImplAttr iAtts, string name,
             Type retType, Param[] pars)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
             MethodDef meth = AddMethod(name, retType, pars);
             meth.AddMethAttribute(mAtts);
             meth.AddImplAttribute(iAtts);
@@ -502,6 +522,10 @@ namespace QUT.PERWAPI
         public MethodDef AddMethod(MethAttr mAtts, ImplAttr iAtts, string name,
             GenericParam[] genPars, Type retType, Param[] pars)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(genPars != null);
+            Contract.Requires(retType != null);
+            Contract.Requires(pars != null);
             MethodDef meth = AddMethod(name, genPars, retType, pars);
             meth.AddMethAttribute(mAtts);
             meth.AddImplAttribute(iAtts);
@@ -514,6 +538,7 @@ namespace QUT.PERWAPI
         /// <param name="meth">Descriptor for the method to be added</param>
         public void AddMethod(MethodDef meth)
         {
+            Contract.Requires(meth != null);
             MethodDef m = (MethodDef)GetMethodDesc(meth.Name(), meth.GetParTypes());
             if (m != null)
                 throw new DescriptorException("Method " + m.NameString());
@@ -528,6 +553,7 @@ namespace QUT.PERWAPI
         /// <returns>The method descriptor for "name"</returns>
         public MethodDef GetMethod(string name)
         {
+            Contract.Requires(name != null);
             return (MethodDef)GetMethodDesc(name);
         }
 
@@ -539,6 +565,8 @@ namespace QUT.PERWAPI
         /// <returns>The method descriptor for name(parTypes)</returns>
         public MethodDef GetMethod(string name, Type[] parTypes)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parTypes != null);
             return (MethodDef)GetMethodDesc(name, parTypes);
         }
 
@@ -876,6 +904,7 @@ namespace QUT.PERWAPI
         [CanBeNull]
         private static Feature FindFeature(string name, ArrayList featureList)
         {
+            Contract.Requires(name != null);
             if (featureList == null) return null;
             for (int i = 0; i < featureList.Count; i++)
             {

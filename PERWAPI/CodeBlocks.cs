@@ -36,8 +36,17 @@ namespace QUT.PERWAPI
 
         protected CodeBlock(CILLabel start, CILLabel end)
         {
+            Contract.Requires(start != null);
+            Contract.Requires(end != null);
             this.start = start;
             this.end = end;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(start != null);
+            Contract.Invariant(end != null);
         }
 
         /// <summary>
@@ -88,6 +97,12 @@ namespace QUT.PERWAPI
         /// <param name="start">start label for the try block</param>
         /// <param name="end">end label for the try block</param>
         public TryBlock(CILLabel start, CILLabel end) : base(start, end) { }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(handlers != null);
+        }
 
         /// <summary>
         /// Add a handler to this try block
@@ -219,6 +234,12 @@ namespace QUT.PERWAPI
             exceptType = except;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(exceptType != null);
+        }
+
         internal override void BuildTables(MetaDataOut md)
         {
             if (!(exceptType is ClassDef)) exceptType.BuildMDTables(md);
@@ -257,6 +278,12 @@ namespace QUT.PERWAPI
             : base(handlerStart, handlerEnd)
         {
             this.filterLabel = filterLabel;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(filterLabel != null);
         }
 
         internal override ushort GetFlag()

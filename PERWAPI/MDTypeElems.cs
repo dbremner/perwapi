@@ -105,13 +105,20 @@ namespace QUT.PERWAPI
         public CustomModifiedType(Type type, CustomModifier cmod, Class cmodType)
             : base((byte)cmod)
         {
+            Contract.Requires(type != null);
+            Contract.Requires(cmodType != null);
             this.type = type;
             this.cmodType = cmodType;
         }
 
         /*------------------------- public set and get methods --------------------------*/
 
-        public void SetModifiedType(Type modType) { type = modType; }
+        public void SetModifiedType(Type modType)
+        {
+            Contract.Requires(modType != null);
+            type = modType;
+        }
+
         public Type GetModifiedType() { return type; }
 
         public void SetModifingType(Class mod) { cmodType = mod; }
@@ -179,6 +186,7 @@ namespace QUT.PERWAPI
         internal static void Read(PEReader buff, TableRow[] specs)
         {
             Contract.Requires(buff != null);
+            Contract.Requires(specs != null);
             for (int i = 0; i < specs.Length; i++)
             {
                 specs[i] = new UnresolvedTypeSpec(buff, i);
@@ -208,6 +216,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return md.BlobIndexSize();
         }
 
@@ -273,6 +282,7 @@ namespace QUT.PERWAPI
         internal PrimitiveType(byte typeIx, string name, int STIx)
             : base(typeIx)
         {
+            Contract.Requires(name != null);
             this.name = name;
             this.systemTypeIndex = STIx;
         }
@@ -362,6 +372,8 @@ namespace QUT.PERWAPI
         internal GenericParam(string name, MetaDataElement parent, int index)
             : base(VAR)
         {
+            Contract.Requires(name != null);
+            Contract.Requires(parent != null);
             this.name = name;
             this.parent = parent;
             this.index = (ushort)index;
@@ -372,6 +384,7 @@ namespace QUT.PERWAPI
         internal GenericParam(PEReader buff)
             : base(VAR)
         {
+            Contract.Requires(buff != null);
             index = buff.ReadUInt16();
             flags = buff.ReadUInt16();
             parentIx = buff.GetCodedIndex(CIx.TypeOrMethodDef);
@@ -397,6 +410,7 @@ namespace QUT.PERWAPI
         internal GenericParam(string name)
             : base(MVAR)
         {
+            Contract.Requires(name != null);
             this.name = name;
             tabIx = MDTable.GenericParam;
         }
@@ -413,6 +427,8 @@ namespace QUT.PERWAPI
 
         internal static void Read(PEReader buff, TableRow[] gpars)
         {
+            Contract.Requires(buff != null);
+            Contract.Requires(gpars != null);
             for (int i = 0; i < gpars.Length; i++)
                 gpars[i] = new GenericParam(buff);
         }
@@ -442,6 +458,7 @@ namespace QUT.PERWAPI
         /// <param name="cType">type constraining the parameter type</param>
         public void AddConstraint(Type cType)
         {
+            Contract.Requires(cType != null);
             constraintTypes.Add(cType);
         }
 
@@ -451,6 +468,7 @@ namespace QUT.PERWAPI
         /// <param name="cType">class type of constraint</param>
         public void RemoveConstraint(Type cType)
         {
+            Contract.Requires(cType != null);
             for (int i = 0; i < constraintTypes.Count; i++)
             {
                 if (constraintTypes[i] == cType)
@@ -517,6 +535,7 @@ namespace QUT.PERWAPI
 
         internal void CheckParent(MethodDef paren, PEReader buff)
         {
+            Contract.Requires(buff != null);
             if (paren == buff.GetCodedElement(CIx.TypeOrMethodDef, parentIx))
             {
                 parent = paren;
@@ -532,6 +551,8 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
+            Contract.Requires(12 < md.lgeCIx.Length);
             if (extraField)
                 return 6 + md.CodedIndexSize(CIx.TypeOrMethodDef) + md.StringsIndexSize();
             else
@@ -606,6 +627,7 @@ namespace QUT.PERWAPI
 
         internal void AddConstraints(MetaDataOut md)
         {
+            Contract.Requires(md != null);
             foreach (GenericParamConstraint constraint in constraints)
             {
                 md.AddToTable(MDTable.GenericParamConstraint, constraint);
@@ -631,6 +653,7 @@ namespace QUT.PERWAPI
         internal UnresolvedTypeSpec(PEReader buff, int i)
             : base(0)
         {
+            Contract.Requires(buff != null);
             blobIx = buff.GetBlobIx();
             Row = (uint)i + 1;
             this.unresolved = true;
@@ -658,6 +681,7 @@ namespace QUT.PERWAPI
         internal GenericParTypeSpec(GenericParam gPar)
             : base(gPar.GetTypeIndex())
         {
+            Contract.Requires(gPar != null);
             this.gPar = gPar;
         }
 
@@ -670,6 +694,7 @@ namespace QUT.PERWAPI
 
         internal GenericParam GetGenericParam(MethodDef meth)
         {
+            Contract.Requires(meth != null);
             if (gPar == null)
             {
                 if (isClassPar)
@@ -710,8 +735,15 @@ namespace QUT.PERWAPI
         internal Array(Type eType, byte TypeId)
             : base(TypeId)
         {
+            Contract.Requires(eType != null);
             elemType = eType;
             tabIx = MDTable.TypeSpec;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(elemType != null);
         }
 
         public Type ElemType() { return elemType; }
@@ -757,6 +789,9 @@ namespace QUT.PERWAPI
             int[] loBounds,
             int[] upBounds) : base(elementType, 0x14)
         {
+            Contract.Requires(elementType != null);
+            Contract.Requires(loBounds != null);
+            Contract.Requires(upBounds != null);
             numDims = (uint)dimensions;
             lowerBounds = loBounds;
 
@@ -785,6 +820,7 @@ namespace QUT.PERWAPI
         public BoundArray(Type elementType, int dimensions, int[] bounds)
             : base(elementType, 0x14)
         {
+            Contract.Requires(bounds != null);
             if (bounds.Length > dimensions)
                 throw new TypeSignatureException("Array cannot have more bounds than rank");
             numDims = (uint)dimensions;
@@ -803,6 +839,13 @@ namespace QUT.PERWAPI
             numDims = (uint)dimensions;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(sizes != null);
+            Contract.Invariant(lowerBounds != null);
+        }
+
         internal override bool SameType(Type tstType)
         {
             if (this == tstType) return true;
@@ -815,6 +858,8 @@ namespace QUT.PERWAPI
 
         internal bool SameBounds(uint dims, int[] lbounds, int[] sizs)
         {
+            Contract.Requires(lbounds != null);
+            Contract.Requires(sizs != null);
             if (dims != numDims) return false;
             if (lowerBounds != null)
             {
