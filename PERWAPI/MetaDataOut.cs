@@ -54,7 +54,6 @@ namespace QUT.PERWAPI
         public bool Debug = false;
 
         internal MetaDataOut()
-            : base()
         {
         }
 
@@ -115,7 +114,7 @@ namespace QUT.PERWAPI
 
         internal uint AddToStringsHeap(string str)
         {
-            if ((str == null) || (str == "")) return 0;
+            if (String.IsNullOrEmpty(str)) return 0;
             return strings.Add(str, false);
         }
 
