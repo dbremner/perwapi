@@ -30,8 +30,11 @@ namespace QUT.PERWAPI
         internal string name;
         internal CallConv callConv = CallConv.Default;
         internal Type retType;
-        internal Type[] parTypes, optParTypes;
-        internal uint numPars = 0, numOptPars = 0, numGenPars = 0;
+        internal Type[] parTypes;
+        internal Type[] optParTypes;
+        internal uint numPars = 0;
+        internal uint numOptPars = 0;
+        internal uint numGenPars = 0;
         //uint sigIx;
 
         /*-------------------- Constructors ---------------------------------*/

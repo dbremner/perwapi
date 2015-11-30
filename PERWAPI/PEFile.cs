@@ -37,7 +37,8 @@ namespace QUT.PERWAPI
     /// </summary>
     public class PEFile : Module
     {
-        private string outputDir, fileName;
+        private string outputDir;
+        private string fileName;
         private Stream outStream;
         private Assembly thisAssembly;
         private PEWriter output;
