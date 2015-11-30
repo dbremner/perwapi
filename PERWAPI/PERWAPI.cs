@@ -146,6 +146,7 @@ namespace QUT.PERWAPI {
 
     internal string GetString(uint ix) {
       uint end;
+        // ReSharper disable once EmptyEmbeddedStatement
       for (end = ix; data[end] != '\0'; end++) ;
       char[] str = new char[end - ix];
       for (int i = 0; i < str.Length; i++) {
