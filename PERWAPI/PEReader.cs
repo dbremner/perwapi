@@ -154,6 +154,7 @@ namespace QUT.PERWAPI
         internal static ReferenceScope GetExportedInterface([NotNull] string filename)
         {
             Contract.Requires(filename != null);
+            Contract.Ensures(Contract.Result<ReferenceScope>() != null);
             System.IO.FileStream file = GetFile(filename);
             PEReader reader = new PEReader(null, file, true, true);
             return (ReferenceScope)reader.thisScope;

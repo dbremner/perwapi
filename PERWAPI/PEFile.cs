@@ -470,12 +470,14 @@ namespace QUT.PERWAPI
 
         internal void SetThisAssembly(Assembly assem)
         {
+            Contract.Requires(assem != null);
             if (Diag.DiagOn) Console.WriteLine("Setting fileScope to assembly " + assem.Name());
             thisAssembly = assem;
         }
 
         internal void AddToResourceList(ManifestResource res)
         {
+            Contract.Requires(res != null);
             resources.Add(res);
         }
 

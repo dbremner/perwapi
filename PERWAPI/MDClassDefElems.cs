@@ -799,6 +799,7 @@ namespace QUT.PERWAPI
 
         public void RemoveMethodOverride(MethodImpl mImpl)
         {
+            Contract.Requires(mImpl != null);
             if (methodImpls != null)
                 methodImpls.Remove(mImpl);
         }
@@ -811,6 +812,7 @@ namespace QUT.PERWAPI
         /// <param name="permissionSet">Permission set</param>
         public void AddSecurity(SecurityAction act, byte[] permissionSet)
         {
+            Contract.Requires(permissionSet != null);
             AddSecurity(new DeclSecurity(this, act, permissionSet));
             // securityActions = permissionSet;
         }
@@ -821,6 +823,7 @@ namespace QUT.PERWAPI
         /// <param name="sec">The descriptor for the security to add to this class</param>
         internal void AddSecurity(DeclSecurity sec)
         {
+            Contract.Requires(sec != null);
             flags |= HasSecurity;
             if (security == null) security = new ArrayList();
             security.Add(sec);
@@ -896,15 +899,21 @@ namespace QUT.PERWAPI
 
         internal ClassLayout Layout { set; get; }
 
-        internal void SetScope(PEFile mod) { scope = mod; }
+        internal void SetScope(PEFile mod)
+        {
+            Contract.Requires(mod != null);
+            scope = mod;
+        }
 
         internal void AddImplementedInterface(InterfaceImpl iImpl)
         {
+            Contract.Requires(iImpl != null);
             interfaces.Add(iImpl);
         }
 
         internal NestedClassDef MakeNestedClass(ClassDef parent)
         {
+            Contract.Requires(parent != null);
             NestedClassDef nClass = new NestedClassDef(parent, (TypeAttr)flags, Name);
             ClassDef tmp = nClass;
             tmp.fieldIx = fieldIx;
@@ -932,11 +941,13 @@ namespace QUT.PERWAPI
 
         internal void AddMethodImpl(MethodImpl impl)
         {
+            Contract.Requires(impl != null);
             methodImpls.Add(impl);
         }
 
         internal void AddEvent(Event ev)
         {
+            Contract.Requires(ev != null);
             if (ev == null) return;
             ev.SetParent(this);
             events.Add(ev);
@@ -944,6 +955,7 @@ namespace QUT.PERWAPI
 
         internal void AddProperty(Property prop)
         {
+            Contract.Requires(prop != null);
             if (prop == null) return;
             prop.SetParent(this);
             properties.Add(prop);
@@ -951,6 +963,7 @@ namespace QUT.PERWAPI
 
         internal void AddToFeatureList(ArrayList list, MDTable tabIx)
         {
+            Contract.Requires(list != null);
             if (tabIx == MDTable.Event)
             {
                 events.AddRange(list);
@@ -1121,6 +1134,7 @@ namespace QUT.PERWAPI
 
         internal static uint Size(MetaData md)
         {
+            Contract.Requires(md != null);
             return 4 + 2 * md.StringsIndexSize() +
                 md.CodedIndexSize(CIx.TypeDefOrRef) +
                 md.TableIndexSize(MDTable.Field) +
@@ -1160,6 +1174,7 @@ namespace QUT.PERWAPI
 
         private void WriteFlags(CILWriter output)
         {
+            Contract.Requires(output != null);
             uint vis = flags & VisibilityMask;
             switch (vis)
             {

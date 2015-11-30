@@ -64,6 +64,7 @@ namespace QUT.PERWAPI
         internal static ClassLayout FindLayout(PEReader buff, ClassDef paren, uint classIx)
         {
             Contract.Requires(buff != null);
+            Contract.Requires(paren != null);
             buff.SetElementPosition(MDTable.ClassLayout, 0);
             for (int i = 0; i < buff.GetTableSize(MDTable.ClassLayout); i++)
             {

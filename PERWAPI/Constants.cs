@@ -260,14 +260,22 @@ namespace QUT.PERWAPI
 
         public ClassTypeConst(string className)
         {
+            Contract.Requires(className != null);
             name = className;
             type = ElementType.ClassType;
         }
 
         public ClassTypeConst(Class classDesc)
         {
+            Contract.Requires(classDesc != null);
             desc = classDesc;
             type = ElementType.ClassType;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant((name != null) || (desc != null) );
         }
 
         public Class GetClass()
@@ -307,8 +315,15 @@ namespace QUT.PERWAPI
             type = (ElementType)sConst.GetTypeIndex();
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(sConst != null);
+        }
+
         public SimpleConstant GetConst()
         {
+            Contract.Ensures(Contract.Result<SimpleConstant>() != null);
             return sConst;
         }
 
@@ -424,6 +439,12 @@ namespace QUT.PERWAPI
             size = data.GetSize() * repCount;
         }
 
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(data != null);
+        }
+
         public DataConstant GetConst()
         {
             return data;
@@ -454,6 +475,7 @@ namespace QUT.PERWAPI
 
         public StringConst(string val)
         {
+            Contract.Requires(val != null);
             this.val = val;
             size = (uint)val.Length;  // need to add null ??
             type = ElementType.String;
@@ -469,6 +491,7 @@ namespace QUT.PERWAPI
 
         public string GetString()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
             return val;
         }
 
@@ -724,6 +747,7 @@ namespace QUT.PERWAPI
 
         internal FloatConst(PEReader buff)
         {
+            Contract.Requires(buff != null);
             val = buff.ReadSingle();
             size = 4;
             type = ElementType.R4;
@@ -772,6 +796,7 @@ namespace QUT.PERWAPI
 
         internal DoubleConst(PEReader buff)
         {
+            Contract.Requires(buff != null);
             val = buff.ReadDouble();
             size = 8;
             type = ElementType.R8;
